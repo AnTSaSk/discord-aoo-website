@@ -1,0 +1,111 @@
+---
+title: Commande /add - Rapporter un objectif
+description: Référence complète de la commande /add. Rapportez les objectifs de Black Zone d'Albion Online — nodes de ressources, cores d'énergie et vortex — avec le type, la rareté, la carte et le temps restant.
+navLabel: /add
+---
+
+import CommandPreview from '@/components/docs/CommandPreview';
+import Screenshot from '@/components/docs/Screenshot.astro';
+import ScrollReveal from '@/components/docs/ScrollReveal.astro';
+import Callout from '@/components/docs/Callout.astro';
+
+La commande `/add` rapporte un nouvel objectif de Black Zone dans la liste de suivi de votre serveur. Tous les membres du serveur peuvent utiliser cette commande.
+
+<CommandPreview
+  client:load
+  command="/add"
+  syntax="/add type:<type> rarity:<rarity> map:<map> time:<HH:MM>"
+  ephemeral
+  example={{
+    input: "/add type:Core rarity:Purple map:Avalanche Ravine time:00:45",
+    output: "Your objective (Core) has been successfully added!\nIt will be available at 15:20 UTC (<t:1709730000:R>) on the map Avalanche Ravine"
+  }}
+  parameters={[
+    { name: "type", type: "choice", description: "The objective type (node, core, or vortex)", required: true },
+    { name: "rarity", type: "choice", description: "Tier for nodes or color for cores/vortexes", required: true },
+    { name: "map", type: "string", description: "Black Zone map name", required: true },
+    { name: "time", type: "string", description: "Time remaining until spawn (HH:MM format)", required: true }
+  ]}
+/>
+
+## Syntaxe
+
+```
+/add type:<type> rarity:<rarity> map:<map> time:<HH:MM>
+```
+
+## Paramètres
+
+Les quatre paramètres sont **obligatoires**.
+
+| Paramètre | Type | Description |
+|-----------|------|-------------|
+| `type` | Autocomplétion | Le type d'objectif — une des 6 valeurs (voir [types d'objectifs](/docs/guides/objective-types/)) |
+| `rarity` | Autocomplétion | Tier pour les nodes (`4.4`–`8.4`) ou couleur pour les cores/vortex (`Green`, `Blue`, `Purple`, `Gold`) |
+| `map` | Autocomplétion | Nom de la carte de Black Zone — 276 cartes supportées (voir [liste des cartes](/docs/guides/black-zone-maps/)) |
+| `time` | Texte | Temps restant avant l'apparition de l'objectif, au format `HH:MM` (24 heures). Exemple : `02:30` (2 heures et 30 minutes à partir de maintenant) |
+
+### Valeurs de type
+
+| Type | Catégorie |
+|------|----------|
+| `Fiber node` | Node |
+| `Hide node` | Node |
+| `Ore node` | Node |
+| `Wood node` | Node |
+| `Core` | Core |
+| `Vortex` | Vortex |
+
+### Valeurs de rareté
+
+**Pour les nodes :** `4.4`, `5.4`, `6.4`, `7.4`, `8.4`
+
+**Pour les cores et vortex :** `Green`, `Blue`, `Purple`, `Gold`
+
+## Autocomplétion
+
+Les paramètres `type`, `rarity` et `map` supportent tous la fonctionnalité d'autocomplétion de Discord. Commencez à taper et les options correspondantes apparaîtront. Pour les cartes, la recherche fonctionne sur n'importe quelle partie du nom — début, milieu ou fin.
+
+De plus, les champs `type` et `rarity` sont contextuels : sélectionner une rareté de node (4.4–8.4) filtre la liste des types pour n'afficher que les nodes, et sélectionner un type core ou vortex filtre les raretés pour n'afficher que les couleurs.
+
+<ScrollReveal animation="fade-in">
+  <Screenshot src="/screenshots/add-autocomplete.png" alt="Menu déroulant d'autocomplétion Discord pour la commande /add" mode="discord" />
+</ScrollReveal>
+
+## Exemples
+
+```
+/add type:Ore node rarity:7.4 map:Murdergulch Ravine time:02:30
+/add type:Core rarity:Gold map:Hightree Enclave time:01:15
+/add type:Vortex rarity:Purple map:Deepwood Gorge time:04:00
+```
+
+## Comportement
+
+### Prévention des doublons
+
+<Callout variant="info">Albion Online Objectives empêche automatiquement les doublons. Si le même type d'objectif, la même rareté et la même carte sont rapportés dans un intervalle de 8 minutes, le bot rejette le rapport.</Callout>
+
+Si un objectif avec le même type, la même rareté et la même carte existe déjà dans une **fenêtre de 8 minutes** (±4 minutes par rapport au temps rapporté), le bot rejette le nouveau rapport et vous en informe. Cela évite les doublons accidentels lorsque plusieurs membres de la guilde repèrent le même objectif.
+
+<ScrollReveal animation="fade-in">
+  <Screenshot src="/screenshots/add-error.png" alt="Message d'erreur lors de la détection d'un objectif en doublon" mode="discord" />
+</ScrollReveal>
+
+### Détection de la maintenance
+
+<Callout variant="warning">Lorsque l'heure d'apparition calculée chevauche la fenêtre de maintenance quotidienne de 10:00 UTC, le bot ajoute un avertissement à l'objectif.</Callout>
+
+La maintenance quotidienne des serveurs d'Albion Online a lieu à **10:00 UTC**. Si l'heure d'apparition calculée chevauche la fenêtre de maintenance de **10:00 UTC**, le bot l'indique automatiquement. Cela indique à vos compagnons de guilde que l'objectif pourrait ne pas survivre au redémarrage du serveur.
+
+### Temps de recharge
+
+Cette commande a un **temps de recharge de 2 secondes** par utilisateur.
+
+### Validation du temps
+
+Le paramètre `time` doit respecter le format 24 heures `HH:MM` (ex. : `01:30`, `04:00`, `12:45`). Les formats invalides sont rejetés.
+
+## Après l'ajout
+
+Une fois ajouté, l'objectif apparaît dans le résultat de [`/list`](/docs/commands/list/). Pour supprimer une entrée incorrecte, utilisez [`/remove`](/docs/commands/remove/).

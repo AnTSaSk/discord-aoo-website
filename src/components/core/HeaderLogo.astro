@@ -1,0 +1,17 @@
+---
+import { Button } from "@/components/ui/button";
+import { defaultLang, useTranslatedPath, type Lang } from "@/i18n";
+
+interface Props {
+    lang?: Lang;
+}
+
+const { lang = defaultLang } = Astro.props;
+const tp = useTranslatedPath(lang);
+---
+
+<Button variant="ghost" size="icon">
+    <a href={tp("/")} class="flex items-center gap-2" aria-label="Home">
+        <img src="/crystal-icon.svg" alt="AOO" class="size-5" />
+    </a>
+</Button>

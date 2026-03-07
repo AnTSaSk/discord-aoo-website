@@ -1,0 +1,169 @@
+---
+import { SITE } from "@data/config";
+import { getImage } from "astro:assets";
+import { ClientRouter } from "astro:transitions";
+
+import "@/styles/global.css";
+
+// Supports weights 300-700
+import "@fontsource-variable/fira-code";
+// Supports weights 100-900
+import "@fontsource-variable/inter";
+// Supports weights 300-700
+import "@fontsource-variable/cormorant-garamond";
+
+import { languages, defaultLang } from "@/i18n";
+import type { HeadSEOProps } from "@/lib/types";
+
+// Props with fallbacks from SITE config
+const {
+    title = SITE.title,
+    description = SITE.description,
+    image = SITE.image, // string | imported asset | content collection image()
+    imageAlt = SITE.imageAlt,
+    contentType,
+    noIndex = false,
+    lang: _lang = defaultLang,
+    breadcrumbs,
+} = Astro.props as HeadSEOProps;
+
+const canonicalURL = new URL(Astro.url);
+// Prefer configured site URL when Astro.site isn't available (e.g., in dev)
+const siteUrl = Astro.site ?? SITE.website ?? "http://127.0.0.1:4321";
+
+// Generate a fully qualified OG image URL
+let ogImageUrl: string;
+
+if (typeof image === "object" && "src" in image) {
+    // Case 1: Imported asset or content collection image()
+    ogImageUrl = new URL(image.src, siteUrl).toString();
+} else if (typeof image === "string" && !image.startsWith("http")) {
+    // Case 2: Local relative path (blogs/assets or similar)
+    try {
+        const { src } = await getImage({
+            src: image,
+            width: 1200,
+            height: 630,
+            format: "webp",
+        });
+        ogImageUrl = new URL(src, siteUrl).toString();
+    } catch {
+        // Fallback: just prefix with siteUrl if optimization fails
+        ogImageUrl = new URL(image, siteUrl).toString();
+    }
+} else {
+    // Case 3: External full URL
+    ogImageUrl = image;
+}
+
+// Build hreflang alternate URLs
+const pathname = Astro.url.pathname;
+// Strip locale prefix to get the canonical route (e.g. "/fr/docs/faq" → "/docs/faq")
+const langKeys = Object.keys(languages);
+let canonicalRoute = pathname;
+for (const l of langKeys) {
+    if (l !== defaultLang && pathname.startsWith(`/${l}/`)) {
+        canonicalRoute = pathname.slice(l.length + 1);
+        break;
+    }
+}
+const hreflangAlternates = langKeys.map((l) => ({
+    lang: l,
+    href: new URL(l === defaultLang ? canonicalRoute : `/${l}${canonicalRoute}`, siteUrl).toString(),
+}));
+---
+
+<!-- Global Metadata -->
+<title>{title}</title>
+<meta name="description" content={description} />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta name="theme-color" content="#141008" media="(prefers-color-scheme: dark)" />
+<meta name="theme-color" content="#f7f4f0" media="(prefers-color-scheme: light)" />
+<meta name="generator" content={Astro.generator} />
+<meta charset="UTF-8" />
+<meta name="robots" content={noIndex ? "noindex, nofollow" : "index, follow"} />
+<meta name="googlebot" content={noIndex ? "noindex, nofollow" : "index, follow"} />
+
+<!-- Canonical URL -->
+<link rel="canonical" href={canonicalURL} />
+
+<!-- Hreflang alternates -->
+{hreflangAlternates.map(({ lang: l, href }) => (
+    <link rel="alternate" hreflang={l} href={href} />
+))}
+<link rel="alternate" hreflang="x-default" href={hreflangAlternates.find((a) => a.lang === defaultLang)?.href ?? canonicalURL.toString()} />
+
+<!-- Sitemap -->
+<link rel="sitemap" href="/sitemap-index.xml" />
+
+<!-- Favicon -->
+<link rel="apple-touch-icon" type="image/svg+xml" href="/favicon.svg" />
+<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+
+<!-- OpenGraph Meta Tags -->
+<meta property="og:type" content={contentType === "article" ? "article" : "website"} />
+<meta property="og:site_name" content={SITE.title} />
+<meta property="og:url" content={canonicalURL} />
+<meta property="og:title" content={title} />
+<meta property="og:description" content={description} />
+<meta property="og:image" content={ogImageUrl} />
+<meta property="og:image:alt" content={imageAlt} />
+<meta property="og:image:width" content="1200" />
+<meta property="og:image:height" content="630" />
+
+<!-- Twitter Card Meta Tags -->
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content={title} />
+<meta name="twitter:description" content={description} />
+<meta name="twitter:image" content={ogImageUrl} />
+<meta name="twitter:image:alt" content={imageAlt} />
+{SITE.twitterHandle && <meta name="twitter:creator" content={SITE.twitterHandle} />}
+
+<!-- JSON-LD Structured Data -->
+<script is:inline type="application/ld+json" set:html={JSON.stringify({
+    "@context": "https://schema.org",
+    "@graph": [
+        {
+            "@type": "SoftwareApplication",
+            name: "Albion Online Objectives",
+            description: "Open-source Discord bot for Albion Online guilds — report and track Black Zone objectives in real time: resource nodes, energy cores, and vortexes.",
+            applicationCategory: "GameApplication",
+            operatingSystem: "Discord",
+            offers: { "@type": "Offer", price: "0", priceCurrency: "USD" },
+            url: "https://albion-online-objectives.com",
+        },
+        {
+            "@type": "WebSite",
+            name: "AOO — Albion Online Objectives Documentation",
+            url: "https://albion-online-objectives.com",
+        },
+    ],
+})} />
+
+{/* BreadcrumbList JSON-LD for documentation pages */}
+{breadcrumbs && breadcrumbs.length > 0 && (
+    <script is:inline type="application/ld+json" set:html={JSON.stringify({
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        itemListElement: breadcrumbs.map((item, index) => ({
+            "@type": "ListItem",
+            position: index + 1,
+            name: item.label,
+            ...(item.href ? { item: new URL(item.href, siteUrl).toString() } : {}),
+        })),
+    })} />
+)}
+
+<!-- Theme initialization script (inline to prevent flash) -->
+<script is:inline>
+    (function () {
+        const theme = localStorage.getItem("theme") || "dark";
+        if (theme === "dark") {
+            document.documentElement.classList.add("dark");
+        } else {
+            document.documentElement.classList.remove("dark");
+        }
+    })();
+</script>
+
+<ClientRouter />

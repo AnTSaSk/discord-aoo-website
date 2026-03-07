@@ -1,0 +1,135 @@
+---
+title: Bot Responses & Error Messages
+description: Complete reference of all Albion Online Objectives responses — success confirmations, error messages, and what they mean.
+navIcon: 💬
+---
+
+import Screenshot from '@/components/docs/Screenshot.astro';
+import ScrollReveal from '@/components/docs/ScrollReveal.astro';
+
+Albion Online Objectives (AOO) communicates through ephemeral messages — responses only visible to the user who triggered the command. This page documents every response you may encounter, what causes it, and how to resolve errors.
+
+## Success Messages
+
+### /add Confirmation
+
+When you successfully report an objective with [`/add`](/docs/commands/add/), the bot replies:
+
+> Your objective (Core) has been successfully added!
+> It will be available at 14:30 UTC (\<relative countdown\>) on the map Murdergulch Ravine
+
+The message confirms the objective type, the calculated UTC spawn time with a live Discord timestamp, and the map name. The objective immediately appears in the [`/list`](/docs/commands/list/) output for all server members.
+
+<ScrollReveal animation="fade-in">
+  <Screenshot src="/screenshots/add-success.png" alt="/add success confirmation message" mode="discord" />
+</ScrollReveal>
+
+### /remove Confirmation
+
+When you successfully remove an objective with [`/remove`](/docs/commands/remove/), the bot replies:
+
+> The objective has been removed successfully
+
+The objective is deleted from the database and disappears from `/list` immediately.
+
+<ScrollReveal animation="fade-in">
+  <Screenshot src="/screenshots/remove-success.png" alt="/remove success confirmation message" mode="discord" />
+</ScrollReveal>
+
+### /list Output
+
+The [`/list`](/docs/commands/list/) command displays all active objectives for your server, grouped by category (Nodes, Cores, Vortexes). Each entry includes the rarity, spawn time with live countdown, and map name. If no objectives exist, the bot replies:
+
+> No objectives to display
+
+<ScrollReveal animation="fade-in">
+  <Screenshot src="/screenshots/list-output.png" alt="Full /list output with objectives grouped by category" mode="discord" />
+</ScrollReveal>
+
+## Error Messages
+
+### Duplicate Detected
+
+**Message:**
+> It appears that the objective you are trying to add already exists
+
+**Cause:** Someone already reported an objective with the same type, rarity, and map within an 8-minute window (plus or minus 4 minutes of your reported time). This is intentional — Albion Online Objectives prevents the same objective from appearing twice when multiple scouts spot it.
+
+**Resolution:** No action needed. The objective is already tracked. Run `/list` to verify it appears in the list.
+
+<ScrollReveal animation="fade-in">
+  <Screenshot src="/screenshots/add-error.png" alt="Error message for duplicate objective detection" mode="discord" />
+</ScrollReveal>
+
+### Invalid Values
+
+**Message:**
+> One or multiple value(s) are incorrect, please try again.
+> If the problem persist, please contact the Bot Developer.
+
+**Cause:** One or more of the four `/add` parameters failed validation. Common triggers:
+
+- **Type** was typed manually instead of selected from autocomplete, resulting in a value not in the supported list
+- **Rarity** does not match the selected type (e.g., entering `7.4` for a Core, or `Gold` for a node)
+- **Map** name was misspelled or not in the [276 supported maps](/docs/guides/black-zone-maps/)
+- **Time** does not match the `HH:MM` 24-hour format (e.g., `2:30` instead of `02:30`, or `14:60` with invalid minutes)
+
+**Resolution:** Re-run `/add` and use the autocomplete suggestions for `type`, `rarity`, and `map`. For time, use two-digit hours and minutes: `01:30`, `04:00`, `12:45`.
+
+### Missing Values
+
+**Message:**
+> Something went wrong, please try again.
+> If the problem persist, please contact the Bot Developer.
+
+**Cause:** A required parameter was missing from the command. This typically happens due to a Discord client glitch rather than user error, since Discord enforces required fields.
+
+**Resolution:** Try the command again. If the error persists across multiple attempts, restart your Discord client.
+
+### Objective Not Found
+
+**Message:**
+> We cannot find the objective you want to remove
+
+**Cause:** The index number you provided to [`/remove`](/docs/commands/remove/) does not match any active objective. Either the objective was already removed by another user, it expired and was cleaned up, or the index number is incorrect.
+
+**Resolution:** Run `/list` to see current objectives and their index numbers (displayed as `#1`, `#2`, etc.), then use the correct index with `/remove`.
+
+### Permission Denied
+
+**Message:**
+> You don't have permission to remove this objective!
+
+**Cause:** You attempted to `/remove` an objective that was reported by another user, and you lack the required Discord permissions.
+
+**Who can remove an objective:**
+
+| Role | Can Remove |
+|------|-----------|
+| Original reporter | Their own objectives only |
+| Users with **Manage Messages** permission | Any objective |
+| Users with **Administrator** permission | Any objective |
+
+**Resolution:** Ask the original reporter to remove it, or have a moderator or administrator handle the removal.
+
+### Cooldown Active
+
+If you use a command too quickly after the previous one, Discord shows a cooldown notice. The bot enforces these delays:
+
+| Command | Cooldown |
+|---------|----------|
+| `/add` | 2 seconds |
+| `/remove` | 2 seconds |
+| `/list` | 5 seconds |
+
+**Resolution:** Wait for the cooldown to expire and try again.
+
+## Maintenance Flag
+
+When an objective's calculated spawn time crosses the **10:00 UTC** daily maintenance window, Albion Online Objectives flags it in the `/list` output. This tells your guild that the objective may not survive the server reset.
+
+- An objective flagged with the maintenance indicator means the game servers will restart before or around its spawn time
+- The daily reset occurs at **10:00 UTC** every day
+- Objectives that spawn well before or well after maintenance are not flagged
+
+Use this flag to avoid committing resources to an objective that may disappear during the server restart.

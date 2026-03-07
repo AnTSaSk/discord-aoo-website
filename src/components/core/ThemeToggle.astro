@@ -1,0 +1,32 @@
+---
+import { Icon } from "astro-icon/components";
+
+import { Button } from "@/components/ui/button";
+import { getLangFromUrl, useTranslations } from "@/i18n";
+import type { ThemeToggleProps } from "@/lib/types";
+
+// Component accepts no props
+Astro.props as ThemeToggleProps;
+
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
+---
+
+<Button
+    id="theme-toggle"
+    type="button"
+    variant="ghost"
+    size="icon"
+    className="relative"
+    aria-label={t("themeToggle.ariaLabel")}
+>
+    <Icon name="theme" class="size-5 transition-transform duration-200 dark:rotate-180" />
+    <span class="sr-only">{t("themeToggle.srOnly")}</span>
+</Button>
+
+<script>
+    import { initTheme } from "@/lib/theme";
+
+    initTheme();
+    document.addEventListener("astro:after-swap", initTheme);
+</script>

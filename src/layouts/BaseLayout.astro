@@ -1,0 +1,59 @@
+---
+import { HEADER_FEATURES } from "@data/config";
+
+import Footer from "@/components/core/Footer.astro";
+import Header from "@/components/core/Header.astro";
+import HeadSEO from "@/components/core/HeadSEO.astro";
+import { defaultLang, type Lang } from "@/i18n";
+import type { BaseLayoutProps } from "@/lib/docs/types";
+
+interface Props extends BaseLayoutProps {
+    lang?: Lang;
+}
+
+const {
+    title,
+    description,
+    image,
+    imageAlt,
+    contentType,
+    fullWidth = false,
+    lang = defaultLang,
+    breadcrumbs,
+} = Astro.props;
+---
+
+<html lang={lang}>
+    <head>
+        <HeadSEO
+            title={title}
+            description={description}
+            image={image}
+            imageAlt={imageAlt}
+            contentType={contentType}
+            lang={lang}
+            breadcrumbs={breadcrumbs}
+        />
+    </head>
+
+    <body
+        class="bg-background text-foreground min-h-screen antialiased"
+        data-layout={HEADER_FEATURES.enableLayoutWidthToggle ? undefined : "comfort"}
+    >
+        <div class="relative isolate flex min-h-screen flex-col">
+            <Header lang={lang} />
+            <main class="relative z-10 flex flex-1 flex-col">
+                {
+                    fullWidth ? (
+                        <slot />
+                    ) : (
+                        <div id="main-content" class="mx-auto flex w-full flex-col px-4">
+                            <slot />
+                        </div>
+                    )
+                }
+            </main>
+            <Footer lang={lang} />
+        </div>
+    </body>
+</html>

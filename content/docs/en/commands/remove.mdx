@@ -1,0 +1,103 @@
+---
+title: /remove Command - Delete an Objective
+description: Reference for the /remove slash command. Delete a reported objective from the active list using its index number.
+navLabel: /remove
+---
+
+import CommandPreview from '@/components/docs/CommandPreview';
+import Screenshot from '@/components/docs/Screenshot.astro';
+import ScrollReveal from '@/components/docs/ScrollReveal.astro';
+
+The `/remove` command deletes a reported objective from your server's active list.
+
+<CommandPreview
+  client:load
+  command="/remove"
+  syntax="/remove index:<number>"
+  ephemeral
+  example={{
+    input: "/remove index:1",
+    output: "The objective has been removed successfully"
+  }}
+  parameters={[
+    { name: "index", type: "number", description: "Index number from /list output (#1, #2...)", required: true }
+  ]}
+/>
+
+## Syntax
+
+```
+/remove index:<number>
+```
+
+## Parameters
+
+| Parameter | Type | Required | Description |
+|-----------|------|----------|-------------|
+| `index` | Number | Yes | The index number of the objective to remove (shown in [`/list`](/docs/commands/list/) output) |
+
+## Permissions
+
+You can remove an objective if you meet **any one** of these conditions:
+
+| Who | Condition |
+|-----|-----------|
+| **Original reporter** | You added the objective with `/add` |
+| **Manage Messages** | You have the Manage Messages permission |
+| **Administrator** | You have the Administrator permission |
+
+If you don't have permission, the bot responds with an error message (visible only to you).
+
+## How to Find the Index
+
+1. Run [`/list`](/docs/commands/list/) to see all active objectives
+2. Each entry starts with `#N` — that's the index number
+3. Use that number with `/remove`
+
+<ScrollReveal animation="fade-in">
+  <Screenshot src="/screenshots/remove-autocomplete.png" alt="Discord autocomplete for /remove command parameters" mode="discord" />
+</ScrollReveal>
+
+### Example
+
+```
+/list
+```
+
+Output:
+```
+## Node ##
+- #1 — 7.4 Ore node —— 14:30 UTC (<t:...:R>) —— Murdergulch Ravine
+-# Maintenance added: ✅ —— Objective added by PlayerName
+- #2 — 5.4 Hide node —— 16:00 UTC (<t:...:R>) —— Hightree Dale
+-# Maintenance added: ✅ —— Objective added by PlayerName
+
+## Core ##
+- #3 — 🟠 Gold —— 09:15 UTC (<t:...:R>) —— Deepwood Gorge
+-# Maintenance added: ❌ —— Objective added by PlayerName
+```
+
+To remove the ore node on Murdergulch Ravine:
+
+```
+/remove index:1
+```
+
+<ScrollReveal animation="fade-in">
+  <Screenshot src="/screenshots/remove-success.png" alt="Success message after removing an objective" mode="discord" />
+</ScrollReveal>
+
+## Behavior
+
+### Message Refresh
+
+After a successful removal, the bot automatically refreshes the objective list message to reflect the change. Index numbers are recalculated.
+
+### Cooldown
+
+This command has a **2-second cooldown** per user.
+
+## Related Commands
+
+- [`/list`](/docs/commands/list/) — View active objectives and their index numbers
+- [`/add`](/docs/commands/add/) — Report a new objective

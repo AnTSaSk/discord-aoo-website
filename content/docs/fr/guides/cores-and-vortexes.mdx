@@ -1,0 +1,87 @@
+---
+title: Power Cores et Energy Vortex
+description: Tout savoir sur les Power Cores et les Energy Vortex en Black Zones d'Albion Online — raretés, récompenses, différences, et comment les suivre.
+navLabel: Cores et Vortex
+navIcon: 🌀
+---
+
+import Screenshot from '@/components/docs/Screenshot.astro';
+import ScrollReveal from '@/components/docs/ScrollReveal.astro';
+
+Les Power Cores et les Energy Vortex sont les objectifs en monde ouvert les plus risqués des Black Zones d'Albion Online. Ils attirent les guildes orientées PvP en compétition pour la Renommée, l'Argent et le butin — ce qui en fait à la fois le contenu le plus récompensant et le plus dangereux de la carte.
+
+Albion Online Objectives (AOO) suit les deux types d'objectifs avec prise en charge complète des raretés, pour que votre guilde sache toujours ce qui apparaît, où et quand.
+
+## Que sont les Power Cores ?
+
+Les Power Cores (désignés « Core » dans le bot) sont des objectifs PvP de groupe qui apparaissent sur les cartes de Black Zones. Activer un core déclenche une phase de canalisation que les joueurs ennemis peuvent contester. Réussir un core rapporte des récompenses substantielles en Renommée et en Argent, proportionnelles à la rareté.
+
+Les cores sont conçus pour des groupes organisés. Un joueur seul ne peut pas raisonnablement en venir à bout — il faut un groupe prêt au combat pour défendre l'objectif pendant la canalisation.
+
+## Que sont les Energy Vortex ?
+
+Les Energy Vortex (désignés « Vortex » dans le bot) sont des objectifs en monde ouvert similaires aux cores, mais avec des mécaniques d'apparition et des structures de récompenses distinctes. Comme les cores, ils nécessitent un groupe pour les capturer et sont entièrement contestables par les guildes rivales.
+
+Les vortex suivent le même système de rareté que les cores et offrent des récompenses compétitives, ce qui en fait une cible de choix lors des opérations de guilde.
+
+## Système de raretés
+
+Les cores et les vortex utilisent tous deux un système de rareté en quatre paliers basé sur les couleurs. Une rareté plus élevée signifie de meilleures récompenses — et plus de concurrence.
+
+| Rareté | Couleur | Niveau de puissance | Valeur relative |
+|--------|---------|---------------------|-----------------|
+| **Green** | 🟢 | Commun | Récompenses de base, faible concurrence |
+| **Blue** | 🔵 | Rare | Récompenses modérées, quelques confrontations |
+| **Purple** | 🟣 | Épique | Hautes récompenses, rencontres PvP probables |
+| **Gold** | 🟠 | Légendaire | Récompenses maximales, fortement contesté |
+
+L'écart de valeur entre les paliers est significatif. Un core Gold vaut nettement plus qu'un Green — aussi bien en Argent brut qu'en qualité du butin obtenu.
+
+## Cores vs Vortex
+
+| Aspect | Cores | Vortex |
+|--------|-------|--------|
+| Valeur type dans le bot | `Core` | `Vortex` |
+| Système de rareté | Green, Blue, Purple, Gold | Green, Blue, Purple, Gold |
+| Contenu de groupe | Oui — nécessite un groupe | Oui — nécessite un groupe |
+| Contestable | Oui — d'autres joueurs peuvent interrompre | Oui — d'autres joueurs peuvent interrompre |
+| Lieux d'apparition | Cartes de Black Zones | Cartes de Black Zones |
+
+Les deux types d'objectifs partagent la même progression de rareté et sont suivis de manière identique par Albion Online Objectives. Les différences principales résident dans leurs mécaniques en jeu, leurs schémas d'apparition et la distribution des récompenses.
+
+## Suivi avec Albion Online Objectives
+
+Utilisez la commande [`/add`](/docs/commands/add/) pour rapporter les cores et vortex dès qu'un éclaireur en repère un. L'autocomplétion du bot filtre automatiquement le type et la rareté — sélectionner `Core` ou `Vortex` comme type restreint les choix de rareté au système de couleurs (Green, Blue, Purple, Gold).
+
+### Exemples de commandes
+
+```
+/add type:Core rarity:Gold map:Hightree Enclave time:01:15
+/add type:Core rarity:Purple map:Murdergulch Ravine time:02:45
+/add type:Vortex rarity:Blue map:Deepwood Gorge time:03:00
+/add type:Vortex rarity:Gold map:Everwinter Peak time:00:50
+```
+
+Après l'ajout, l'objectif apparaît dans [`/list`](/docs/commands/list/) avec un compte à rebours en temps réel. Tous les membres du serveur peuvent le voir et s'organiser en conséquence.
+
+<ScrollReveal animation="fade-in">
+  <Screenshot src="/screenshots/core-tracked.png" alt="Core suivi dans la sortie de /list" mode="discord" caption="Un core suivi dans la sortie de /list du bot" />
+</ScrollReveal>
+
+<ScrollReveal animation="fade-in">
+  <Screenshot src="/screenshots/vortex-tracked.png" alt="Vortex suivi dans la sortie de /list" mode="discord" caption="Un vortex suivi dans la sortie de /list du bot" />
+</ScrollReveal>
+
+## Conseils stratégiques
+
+- **Les cores et vortex Gold sont la priorité absolue.** Si un éclaireur en signale un, redirigez immédiatement votre meilleur groupe PvP. Les récompenses justifient le risque.
+- **Calculez votre arrivée avec soin.** Arriver trop tôt signifie attendre sans rien faire en territoire hostile. Arriver trop tard signifie que quelqu'un d'autre l'a réclamé. Utilisez le compte à rebours du bot pour planifier vos déplacements.
+- **Apportez la bonne composition.** Les cores et vortex sont du contenu contesté. Votre groupe a besoin de suffisamment de DPS pour compléter l'objectif et d'assez de survivabilité pour repousser les ennemis.
+- **Signalez même si vous ne pouvez pas le contester.** Un autre groupe de votre guilde pourrait être en mesure de l'atteindre. Utilisez toujours `/add` pour ce que vous trouvez — laissez le shot caller décider quoi poursuivre.
+- **Coordonnez-vous grâce au [workflow de guilde](/docs/guides/guild-workflow/)** pour des sessions d'objectifs structurées qui maximisent le rendement de votre guilde.
+
+## Pages associées
+
+- [Référence des types d'objectifs](/docs/guides/objective-types/) — tous les types et raretés en un coup d'œil
+- [Commande `/add`](/docs/commands/add/) — référence complète des paramètres
+- [Guide des nodes de ressources](/docs/guides/resource-nodes/) — l'autre grande catégorie d'objectifs en Black Zone

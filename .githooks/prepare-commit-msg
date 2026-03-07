@@ -1,0 +1,84 @@
+#!/bin/sh
+# Auto-draft conventional commit message from staged files.
+# Activated via: git config core.hooksPath .githooks
+#
+# Analyzes staged file paths to suggest a type(scope): prefix.
+# The user completes the description in their editor.
+# Skipped for merges, amends, squashes, and -m messages.
+
+COMMIT_MSG_FILE="$1"
+COMMIT_SOURCE="$2"
+
+# Skip when a message is already provided (merge, amend, squash, -m)
+[ -n "$COMMIT_SOURCE" ] && exit 0
+
+STAGED=$(git diff --cached --name-only --diff-filter=ACMR)
+[ -z "$STAGED" ] && exit 0
+
+TOTAL=$(echo "$STAGED" | wc -l | tr -d ' ')
+
+# Helper: count files matching a pattern
+count() { result=$(echo "$STAGED" | grep -c "$1" 2>/dev/null) || true; echo "$result"; }
+
+TYPE="chore"
+SCOPE=""
+
+# Priority-ordered detection: most specific patterns first
+TEST_COUNT=$(count '\.test\.\|\.spec\.')
+CI_COUNT=$(count '^\.github/')
+DOCKER_COUNT=$(count '^Dockerfile\|^docker-compose')
+MD_COUNT=$(count '\.md$')
+CONTENT_COUNT=$(count '^content/')
+STYLE_COUNT=$(count 'eslint\|prettier\|\.editorconfig\|stylelint')
+CMD_COUNT=$(count '^src/commands/')
+LISTENER_COUNT=$(count '^src/listeners/')
+COMPONENT_COUNT=$(count '^src/components/')
+SRC_COUNT=$(count '^src/')
+PKG_COUNT=$(count '^package\.json$\|^pnpm-lock')
+
+if [ "$TEST_COUNT" -gt 0 ] && [ "$TEST_COUNT" -eq "$TOTAL" ]; then
+  TYPE="test"
+elif [ "$CI_COUNT" -gt 0 ] && [ "$CI_COUNT" -eq "$TOTAL" ]; then
+  TYPE="ci"
+elif [ "$DOCKER_COUNT" -gt 0 ] && [ "$DOCKER_COUNT" -eq "$TOTAL" ]; then
+  TYPE="ci"
+  SCOPE="docker"
+elif [ "$MD_COUNT" -gt 0 ] && [ "$MD_COUNT" -eq "$TOTAL" ]; then
+  TYPE="docs"
+elif [ "$CONTENT_COUNT" -gt 0 ] && [ "$CONTENT_COUNT" -eq "$TOTAL" ]; then
+  TYPE="docs"
+elif [ "$STYLE_COUNT" -gt 0 ] && [ "$STYLE_COUNT" -eq "$TOTAL" ]; then
+  TYPE="style"
+elif [ "$CMD_COUNT" -gt 0 ]; then
+  TYPE="feat"
+  SCOPE="commands"
+elif [ "$LISTENER_COUNT" -gt 0 ]; then
+  TYPE="feat"
+  SCOPE="listeners"
+elif [ "$COMPONENT_COUNT" -gt 0 ]; then
+  TYPE="feat"
+  SCOPE="components"
+elif [ "$SRC_COUNT" -gt 0 ]; then
+  TYPE="feat"
+elif [ "$PKG_COUNT" -gt 0 ] && [ "$PKG_COUNT" -eq "$TOTAL" ]; then
+  TYPE="chore"
+  SCOPE="deps"
+fi
+
+# Build prefix
+if [ -n "$SCOPE" ]; then
+  PREFIX="${TYPE}(${SCOPE}): "
+else
+  PREFIX="${TYPE}: "
+fi
+
+# Write suggestion + staged files as comments for reference
+{
+  echo "$PREFIX"
+  echo ""
+  echo "# Staged files:"
+  echo "$STAGED" | sed 's/^/#   /'
+  echo "#"
+  echo "# Format: type(scope): description"
+  echo "# Types: feat | fix | docs | style | refactor | test | chore | perf | ci"
+} > "$COMMIT_MSG_FILE"

@@ -1,0 +1,117 @@
+---
+title: Albion Online Objective Types - Nodes, Cores, and Vortexes
+description: Complete reference of Albion Online Black Zone objective types supported by Albion Online Objectives — resource nodes (Fiber, Hide, Ore, Wood), energy cores, and vortexes with all rarities.
+navIcon: ⚔️
+---
+
+import ObjectiveCard from '@/components/docs/ObjectiveCard.astro';
+import Badge from '@/components/ui/Badge.astro';
+import Screenshot from '@/components/docs/Screenshot.astro';
+import ScrollReveal from '@/components/docs/ScrollReveal.astro';
+
+Black Zone objectives in Albion Online are timed open-world events that spawn valuable resources. Albion Online Objectives (AOO) tracks three categories: **resource nodes**, **energy cores**, and **vortexes**.
+
+This page lists every type and rarity supported by the [`/add`](/docs/commands/add/) command.
+
+## Resource Nodes
+
+Resource nodes spawn gatherable materials in the Black Zone. Each node type corresponds to a crafting resource. Nodes use **tier-based rarities** from <Badge variant="tier">4.4</Badge> to <Badge variant="tier">8.4</Badge> — higher tiers yield rarer materials.
+
+<ScrollReveal animation="fade-up" stagger>
+<div class="grid gap-4 sm:grid-cols-2">
+  <ObjectiveCard
+    name="Fiber"
+    category="Node"
+    rarities={["4.4", "5.4", "6.4", "7.4", "8.4"]}
+    description="Produces fiber for cloth crafting."
+    image="/T8_FIBER_LEVEL4.png"
+    imageAlt="Fiber node T8.4"
+  />
+  <ObjectiveCard
+    name="Hide"
+    category="Node"
+    rarities={["4.4", "5.4", "6.4", "7.4", "8.4"]}
+    description="Produces hide for leather crafting."
+    image="/T8_HIDE_LEVEL4.png"
+    imageAlt="Hide node T8.4"
+  />
+  <ObjectiveCard
+    name="Ore"
+    category="Node"
+    rarities={["4.4", "5.4", "6.4", "7.4", "8.4"]}
+    description="Produces ore for metal crafting."
+    image="/T8_ORE_LEVEL4.png"
+    imageAlt="Ore node T8.4"
+  />
+  <ObjectiveCard
+    name="Wood"
+    category="Node"
+    rarities={["4.4", "5.4", "6.4", "7.4", "8.4"]}
+    description="Produces wood for plank crafting."
+    image="/T8_WOOD_LEVEL4.png"
+    imageAlt="Wood node T8.4"
+  />
+</div>
+</ScrollReveal>
+
+### Node Rarities
+
+| Rarity | Description |
+|--------|-------------|
+| **4.4** | Tier 4 enchantment 4 — uncommon |
+| **5.4** | Tier 5 enchantment 4 — rare |
+| **6.4** | Tier 6 enchantment 4 — very rare |
+| **7.4** | Tier 7 enchantment 4 — extremely rare |
+| **8.4** | Tier 8 enchantment 4 — legendary |
+
+<ScrollReveal animation="fade-in">
+  <Screenshot src="/screenshots/node-tracked.png" alt="Tracked resource node in /list output" mode="discord" caption="A tracked resource node in the bot's /list output" />
+</ScrollReveal>
+
+## Energy Cores
+
+Energy cores are powerful objectives that provide Fame and Silver rewards. They use **color-based rarities**: <Badge variant="green">Green</Badge> <Badge variant="blue">Blue</Badge> <Badge variant="purple">Purple</Badge> <Badge variant="gold">Gold</Badge>.
+
+<ObjectiveCard
+  name="Core"
+  category="Core"
+  rarities={["Green", "Blue", "Purple", "Gold"]}
+  description="Powerful objectives that provide Fame and Silver rewards."
+/>
+
+<ScrollReveal animation="fade-in">
+  <Screenshot src="/screenshots/core-tracked.png" alt="Tracked energy core in /list output" mode="discord" caption="A tracked core in the bot's /list output" />
+</ScrollReveal>
+
+## Vortexes
+
+Vortexes are open-world objectives that offer rewards similar to cores, with their own spawn patterns. They use the same **color-based rarities**: <Badge variant="green">Green</Badge> <Badge variant="blue">Blue</Badge> <Badge variant="purple">Purple</Badge> <Badge variant="gold">Gold</Badge>.
+
+<ObjectiveCard
+  name="Vortex"
+  category="Vortex"
+  rarities={["Green", "Blue", "Purple", "Gold"]}
+  description="Open-world objectives with unique spawn patterns and valuable rewards."
+/>
+
+<ScrollReveal animation="fade-in">
+  <Screenshot src="/screenshots/vortex-tracked.png" alt="Tracked vortex in /list output" mode="discord" caption="A tracked vortex in the bot's /list output" />
+</ScrollReveal>
+
+## Quick Reference Table
+
+| Type | Category | Rarities | Example `/add` |
+|------|----------|----------|----------------|
+| Fiber node | Node | 4.4, 5.4, 6.4, 7.4, 8.4 | `/add type:Fiber node rarity:6.4 map:... time:...` |
+| Hide node | Node | 4.4, 5.4, 6.4, 7.4, 8.4 | `/add type:Hide node rarity:7.4 map:... time:...` |
+| Ore node | Node | 4.4, 5.4, 6.4, 7.4, 8.4 | `/add type:Ore node rarity:8.4 map:... time:...` |
+| Wood node | Node | 4.4, 5.4, 6.4, 7.4, 8.4 | `/add type:Wood node rarity:5.4 map:... time:...` |
+| Core | Core | Green, Blue, Purple, Gold | `/add type:Core rarity:Gold map:... time:...` |
+| Vortex | Vortex | Green, Blue, Purple, Gold | `/add type:Vortex rarity:Purple map:... time:...` |
+
+**Total combinations:** 6 types × their respective rarities = **28 unique objective variants**.
+
+## Related
+
+- [`/add` command reference](/docs/commands/add/) — how to report objectives
+- [Black Zone maps list](/docs/guides/black-zone-maps/) — all 276 supported maps

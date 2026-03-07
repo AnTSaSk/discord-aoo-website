@@ -1,0 +1,90 @@
+---
+title: Resource Nodes en Black Zones
+description: Guide des nodes de ressources en Black Zones d'Albion Online — nodes de Fibre, Peau, Minerai et Bois avec les raretés par tier de 4.4 à 8.4, et comment les suivre.
+navLabel: Resource Nodes
+navIcon: ⛏️
+---
+
+import Screenshot from '@/components/docs/Screenshot.astro';
+import ScrollReveal from '@/components/docs/ScrollReveal.astro';
+
+Les nodes de ressources enchantés sont des objectifs de récolte chronométrés qui apparaissent à travers les Black Zones d'Albion Online. Ils contiennent des matériaux de haut tier nettement plus précieux que les ressources standards du monde ouvert — et ils attirent aussi bien les récolteurs que les gankers.
+
+Albion Online Objectives (AOO) suit les quatre types de nodes sur cinq tiers d'enchantement, offrant à votre guilde un préavis précis sur le moment et l'endroit où ces nodes deviennent disponibles.
+
+## Les quatre types de nodes
+
+Chaque type de node produit une ressource d'artisanat spécifique. Le matériau que vous récoltez alimente directement l'économie d'Albion Online, entièrement gérée par les joueurs.
+
+| Type de node | Valeur bot | Ressource | Utilisation |
+|--------------|------------|-----------|-------------|
+| **Fiber Node** | `Fiber node` | Fibre | Artisanat de tissu — robes, capuches, sandales |
+| **Hide Node** | `Hide node` | Peau | Artisanat de cuir — vestes, capuchons, chaussures |
+| **Ore Node** | `Ore node` | Minerai | Artisanat de métal — armures de plaques, casques, bottes |
+| **Wood Node** | `Wood node` | Bois | Artisanat de planches — arcs, bâtons, boucliers |
+
+Les quatre types de nodes suivent le même système de tiers d'enchantement et se comportent de manière identique en termes de mécanique d'apparition. La seule différence réside dans le matériau qu'ils produisent.
+
+## Système de tiers (4.4 -- 8.4)
+
+Les nodes de ressources en Black Zone utilisent des tiers basés sur l'enchantement. Le premier chiffre représente le tier de base et le second (toujours `.4`) représente le niveau d'enchantement. Les tiers supérieurs produisent des matériaux plus rares avec une valeur marchande nettement plus élevée.
+
+| Tier | Niveau de rareté | Valeur marchande | Concurrence |
+|------|-----------------|------------------|-------------|
+| **4.4** | Peu commun | Matériaux enchantés d'entrée de gamme | Faible |
+| **5.4** | Rare | Valeur modérée, demande stable | Faible à modérée |
+| **6.4** | Très rare | Forte valeur, tier d'artisanat populaire | Modérée |
+| **7.4** | Extrêmement rare | Haute valeur, recherché par les artisans | Élevée |
+| **8.4** | Légendaire | Valeur maximale, matériaux de tier supérieur | Très élevée |
+
+La différence de prix entre les tiers n'est pas linéaire. Une ressource 8.4 peut valoir plusieurs fois plus qu'une 6.4 du même type. Cela rend les nodes de haut tier dignes du risque de s'aventurer profondément dans les cartes hostiles des Black Zones.
+
+## Suivi des nodes avec Albion Online Objectives
+
+Lorsqu'un éclaireur ou un récolteur repère un node de ressource, il le signale avec la commande [`/add`](/docs/commands/add/). Le système d'autocomplétion du bot est contextuel — sélectionner une rareté basée sur les tiers (4.4 à 8.4) filtre automatiquement la liste des types pour n'afficher que les nodes, et inversement.
+
+### Exemples de commandes
+
+```
+/add type:Ore node rarity:8.4 map:Murdergulch Ravine time:02:30
+/add type:Fiber node rarity:7.4 map:Drownfield Wetland time:01:45
+/add type:Hide node rarity:6.4 map:Deepwood Gorge time:03:15
+/add type:Wood node rarity:5.4 map:Giantweald Copse time:04:00
+```
+
+Après l'ajout, le node apparaît dans la sortie de [`/list`](/docs/commands/list/) avec un compte à rebours en temps réel jusqu'à son heure d'apparition. Toute votre guilde peut planifier ses sessions de récolte autour de ces minuteurs.
+
+<ScrollReveal animation="fade-in">
+  <Screenshot src="/screenshots/node-tracked.png" alt="Node de ressource suivi dans la sortie de /list" mode="discord" />
+</ScrollReveal>
+
+### Prévention des doublons
+
+Si deux éclaireurs signalent le même node (même type, rareté et carte) dans une fenêtre de 8 minutes, le bot rejette automatiquement le doublon. Cela permet à plusieurs éclaireurs de couvrir les mêmes zones sans encombrer la liste des objectifs.
+
+## Conseils de récolte
+
+### Équipement
+
+- **Portez un équipement de récolte** adapté au type de ressource. Un équipement de récolteur de fibre pour les nodes de Fibre, un équipement de carrier pour le Minerai, etc. Le bonus de vitesse de récolte est considérable.
+- **Emportez un outil d'évasion.** Les Black Zones sont des zones PvP en loot intégral. Un Bloodletter, des Miner Workboots ou une option de mobilité similaire peuvent sauver votre inventaire.
+- **Envisagez une monture avec des bonus de poids** pour transporter de grandes quantités de matériaux enchantés jusqu'au Hideout ou portail le plus proche.
+
+### Sécurité en Black Zone
+
+- **Vérifiez la carte pour repérer une activité hostile** avant de vous engager sur un node. Si des gankers sont actifs dans la zone, attendez ou venez avec une escorte.
+- **Récoltez en groupe quand c'est possible.** Un récolteur avec deux escortes est bien plus difficile à gank qu'un joueur seul. Utilisez le [workflow de guilde](/docs/guides/guild-workflow/) pour coordonner la protection.
+- **Signalez chaque node que vous voyez**, même ceux que vous ne pouvez pas récolter vous-même. Un autre membre de la guilde avec les bons outils pourrait l'atteindre à temps.
+
+### Timing
+
+- **Les nodes de haut tier apparaissent sur des minuteurs.** Plus votre guilde en est informée tôt, plus vous avez de temps pour positionner vos récolteurs. Encouragez les éclaireurs à utiliser `/add` dès qu'ils repèrent un minuteur.
+- **Surveillez le drapeau de maintenance.** Les nodes dont l'heure d'apparition chevauche la maintenance serveur de 10h00 UTC peuvent ne pas survivre au reset quotidien. Albion Online Objectives les signale automatiquement.
+- **Priorisez les nodes 8.4 et 7.4.** La différence de valeur justifie de dédier vos meilleurs récolteurs et escortes aux apparitions de tier le plus élevé.
+
+## Pages associées
+
+- [Référence des types d'objectifs](/docs/guides/objective-types/) — tous les types et raretés en un coup d'œil
+- [Commande `/add`](/docs/commands/add/) — référence complète des paramètres
+- [Power Cores et Energy Vortex](/docs/guides/cores-and-vortexes/) — l'autre grande catégorie d'objectifs en Black Zone
+- [Workflow de coordination de guilde](/docs/guides/guild-workflow/) — approche structurée pour les sessions d'objectifs

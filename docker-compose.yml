@@ -1,0 +1,73 @@
+services:
+  website:
+    image: ghcr.io/${GITHUB_REPOSITORY}:${IMAGE_TAG:-latest}
+    networks:
+      - traefik-public
+    deploy:
+      replicas: 1
+      placement:
+        constraints:
+          - node.role == manager
+      update_config:
+        parallelism: 1
+        delay: 10s
+        failure_action: rollback
+        order: start-first
+      rollback_config:
+        parallelism: 1
+        delay: 10s
+      restart_policy:
+        condition: on-failure
+        delay: 5s
+        max_attempts: 3
+        window: 120s
+      resources:
+        limits:
+          memory: 64M
+          cpus: "0.15"
+        reservations:
+          memory: 32M
+          cpus: "0.05"
+      labels:
+        - "traefik.enable=true"
+        - "traefik.http.routers.aoo-website.rule=Host(`${APP_DOMAIN:-albion-online-objectives.com}`)"
+        - "traefik.http.routers.aoo-website.entrypoints=websecure"
+        - "traefik.http.routers.aoo-website.tls.certresolver=letsencrypt"
+        - "traefik.http.services.aoo-website.loadbalancer.server.port=8080"
+        - "traefik.http.routers.aoo-website.middlewares=aoo-ratelimit"
+        - "traefik.http.middlewares.aoo-ratelimit.ratelimit.average=100"
+        - "traefik.http.middlewares.aoo-ratelimit.ratelimit.burst=50"
+        - "traefik.http.middlewares.aoo-ratelimit.ratelimit.period=1s"
+    # NOTE: security_opt is not supported by 'docker stack deploy' in Swarm mode —
+    # no-new-privileges is enforced at Docker daemon level (daemon.json).
+    cap_drop:
+      - ALL
+    cap_add:
+      - CHOWN
+      - SETGID
+      - SETUID
+      - NET_BIND_SERVICE
+    read_only: true
+    volumes:
+      - type: tmpfs
+        target: /var/cache/nginx
+        tmpfs:
+          size: 16777216    # 16MB
+      - type: tmpfs
+        target: /var/run
+        tmpfs:
+          size: 1048576     # 1MB
+      - type: tmpfs
+        target: /var/log/nginx
+        tmpfs:
+          size: 8388608     # 8MB
+    healthcheck:
+      test: ["CMD", "wget", "--no-verbose", "--tries=1", "--spider", "http://127.0.0.1:8080/"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 10s
+
+networks:
+  traefik-public:
+    external: true

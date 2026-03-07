@@ -1,0 +1,302 @@
+---
+import { Icon } from "astro-icon/components";
+
+import { Button } from "@/components/ui/button";
+import Badge from "@/components/ui/Badge.astro";
+import StatCard from "@/components/docs/StatCard.astro";
+import FeatureCard from "@/components/docs/FeatureCard.astro";
+import CommandPreview from "@/components/docs/CommandPreview";
+import ScrollReveal from "@/components/docs/ScrollReveal.astro";
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import { type Lang, useTranslations, useTranslatedPath } from "@/i18n";
+import { BOT } from "@data/config";
+
+interface Props {
+    lang: Lang;
+}
+
+const { lang } = Astro.props;
+const t = useTranslations(lang);
+const tp = useTranslatedPath(lang);
+---
+
+<BaseLayout
+    fullWidth
+    lang={lang}
+    title={`${t("home.hero.title")} — Discord Bot for Guilds`}
+    description={t("home.hero.subtitle")}
+    image="/og-image.png"
+    imageAlt="AOO — Albion Online Objectives"
+>
+    <!-- Hero Section -->
+    <section class="mx-auto max-w-6xl px-5 py-12 sm:py-20">
+        <div class="hero-animate space-y-8">
+            <div class="space-y-4">
+                <img src="/LogoAOO.svg" alt="AOO Logo" class="mx-auto w-40 sm:w-56" />
+                <h1
+                    class="font-display text-foreground text-5xl leading-tight font-bold tracking-tight sm:text-6xl lg:text-7xl"
+                >
+                    {t("home.hero.title")}
+                </h1>
+                <p class="text-muted-foreground mx-auto max-w-2xl text-center text-xl">
+                    {t("home.hero.subtitle")}
+                </p>
+            </div>
+
+            <div class="flex flex-col items-center justify-center gap-3 sm:flex-row">
+                <Button size="lg">
+                    <a
+                        href={`https://discord.com/oauth2/authorize?client_id=${BOT.clientId}`}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        class="flex flex-row items-center gap-3"
+                    >
+                        <Icon name="discord" class="size-5" />
+                        {t("home.cta.addToDiscord")}
+                    </a>
+                </Button>
+                <Button size="lg" variant="secondary">
+                    <a href={tp("/docs/getting-started/installation")}>{t("home.cta.getStarted")}</a>
+                </Button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Stats Band -->
+    <div class="bg-section-alt">
+        <section class="mx-auto max-w-6xl px-5 py-6 sm:py-8">
+            <ScrollReveal animation="fade-up" stagger>
+                <div class="grid grid-cols-2 gap-4 sm:grid-cols-4">
+                    <StatCard value="276" label={t("home.stats.maps.label")} sublabel={t("home.stats.maps.sublabel")} />
+                    <StatCard value="6" label={t("home.stats.objectiveTypes.label")} sublabel={t("home.stats.objectiveTypes.sublabel")} />
+                    <StatCard value="28" label={t("home.stats.variants.label")} sublabel={t("home.stats.variants.sublabel")} />
+                    <StatCard value="3" label={t("home.stats.commands.label")} sublabel={t("home.stats.commands.sublabel")} />
+                </div>
+            </ScrollReveal>
+        </section>
+    </div>
+
+    <!-- Features Section -->
+    <section class="mx-auto max-w-6xl px-5 py-12 sm:py-20">
+        <ScrollReveal animation="fade-up">
+            <div class="mb-12 text-center space-y-3">
+                <h2 class="font-display text-foreground text-3xl font-bold sm:text-4xl">{t("home.features.heading")}</h2>
+            </div>
+        </ScrollReveal>
+
+        <ScrollReveal animation="fade-up" stagger>
+        <div class="grid gap-6 sm:grid-cols-3">
+            <FeatureCard
+                icon="⚡"
+                title={t("home.features.report.title")}
+                description={t("home.features.report.description")}
+                href={tp("/docs/commands/add")}
+                cta={t("home.features.report.cta")}
+            />
+            <FeatureCard
+                icon="📋"
+                title={t("home.features.tracking.title")}
+                description={t("home.features.tracking.description")}
+                href={tp("/docs/commands/list")}
+                cta={t("home.features.tracking.cta")}
+            />
+            <FeatureCard
+                icon="🏰"
+                title={t("home.features.coordinate.title")}
+                description={t("home.features.coordinate.description")}
+                href={tp("/docs/guides/guild-workflow")}
+                cta={t("home.features.coordinate.cta")}
+            />
+        </div>
+        </ScrollReveal>
+    </section>
+
+    <!-- See It In Action -->
+    <div class="bg-section-alt">
+        <section class="mx-auto max-w-6xl px-5 py-12 sm:py-20">
+            <div class="mb-12 text-center space-y-3">
+                <h2 class="font-display text-foreground text-3xl font-bold sm:text-4xl">{t("home.demo.heading")}</h2>
+                <p class="text-muted-foreground text-lg">
+                    {t("home.demo.subtitle")}
+                </p>
+            </div>
+
+            <ScrollReveal animation="fade-up">
+            <div class="mx-auto max-w-2xl">
+                <CommandPreview
+                    client:load
+                    command="/add"
+                    syntax="/add type:<type> rarity:<rarity> map:<map> time:<HH:MM>"
+                    ephemeral
+                    example={{
+                        input: "/add type:Ore rarity:8.4 map:Avalanche Ravine time:00:25",
+                        output: "Your objective (Ore node) has been successfully added!\nIt will be available at 14:35 UTC (<t:1709725500:R>) on the map Avalanche Ravine",
+                        listOutput: "## Node ##\n- #1 — **8.4 Ore node** —— **14:35** UTC (<t:1709725500:R>) —— **Avalanche Ravine**\n-# Maintenance added: :white_check_mark: —— Objective added by Player",
+                    }}
+                    parameters={[
+                        {
+                            name: "type",
+                            type: "choice",
+                            description: "Objective category (Fiber, Hide, Ore, Wood, Core, Vortex)",
+                            required: true,
+                        },
+                        {
+                            name: "rarity",
+                            type: "choice",
+                            description: "Tier (4.4–8.4) or color (Green, Blue, Purple, Gold)",
+                            required: true,
+                        },
+                        {
+                            name: "map",
+                            type: "string",
+                            description: "Black Zone map name (autocomplete)",
+                            required: true,
+                        },
+                        {
+                            name: "time",
+                            type: "string",
+                            description: "Time remaining until spawn (HH:MM format)",
+                            required: true,
+                        },
+                    ]}
+                />
+            </div>
+            </ScrollReveal>
+        </section>
+    </div>
+
+    <!-- How It Works -->
+    <section class="mx-auto max-w-6xl px-5 py-12 sm:py-20">
+        <div class="mb-12 text-center space-y-3">
+            <h2 class="font-display text-foreground text-3xl font-bold sm:text-4xl">
+                {t("home.howItWorks.heading")}
+            </h2>
+        </div>
+
+        <ScrollReveal animation="fade-up" stagger>
+        <div class="grid gap-8 sm:grid-cols-3">
+            <a
+                href={tp("/docs/getting-started/installation")}
+                class="group space-y-4 text-center"
+            >
+                <div
+                    class="bg-primary text-primary-foreground mx-auto flex h-10 w-10 items-center justify-center rounded-full text-lg font-bold"
+                >
+                    1
+                </div>
+                <h3 class="text-foreground text-lg font-semibold group-hover:underline">
+                    {t("home.howItWorks.step1.title")}
+                </h3>
+                <p class="text-muted-foreground text-sm">
+                    {t("home.howItWorks.step1.description")}
+                </p>
+            </a>
+
+            <a href={tp("/docs/commands/add")} class="group space-y-4 text-center">
+                <div
+                    class="bg-primary text-primary-foreground mx-auto flex h-10 w-10 items-center justify-center rounded-full text-lg font-bold"
+                >
+                    2
+                </div>
+                <h3 class="text-foreground text-lg font-semibold group-hover:underline">
+                    {t("home.howItWorks.step2.title")}
+                </h3>
+                <p class="text-muted-foreground text-sm" set:html={t("home.howItWorks.step2.description")} />
+            </a>
+
+            <a href={tp("/docs/commands/list")} class="group space-y-4 text-center">
+                <div
+                    class="bg-primary text-primary-foreground mx-auto flex h-10 w-10 items-center justify-center rounded-full text-lg font-bold"
+                >
+                    3
+                </div>
+                <h3 class="text-foreground text-lg font-semibold group-hover:underline">
+                    {t("home.howItWorks.step3.title")}
+                </h3>
+                <p class="text-muted-foreground text-sm" set:html={t("home.howItWorks.step3.description")} />
+            </a>
+        </div>
+        </ScrollReveal>
+    </section>
+
+    <!-- Community & Trust -->
+    <div class="bg-section-alt">
+        <section class="mx-auto max-w-6xl px-5 py-12 sm:py-20">
+            <ScrollReveal animation="fade-up">
+            <div class="text-center space-y-6">
+                <h2 class="font-display text-foreground text-3xl font-bold sm:text-4xl">
+                    {t("home.community.heading")}
+                </h2>
+                <p class="text-muted-foreground mx-auto max-w-xl text-lg">
+                    {t("home.community.description")}
+                </p>
+                <div class="flex flex-wrap items-center justify-center gap-3">
+                    <Badge variant="outline">{t("home.community.badges.openSource")}</Badge>
+                    <Badge variant="outline">{t("home.community.badges.license")}</Badge>
+                    <Badge variant="outline">{t("home.community.badges.freeToUse")}</Badge>
+                    <Badge variant="outline">{t("home.community.badges.noApi")}</Badge>
+                </div>
+                <div class="flex flex-col items-center justify-center gap-3 sm:flex-row pt-2">
+                    <Button size="lg" variant="secondary">
+                        <a
+                            href={BOT.repo}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            class="flex flex-row items-center gap-3"
+                        >
+                            {t("home.community.cta.github")}
+                        </a>
+                    </Button>
+                    <Button size="lg" variant="secondary">
+                        <a
+                            href={BOT.discordInvite}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            class="flex flex-row items-center gap-3"
+                        >
+                            {t("home.community.cta.discord")}
+                        </a>
+                    </Button>
+                </div>
+            </div>
+            </ScrollReveal>
+        </section>
+    </div>
+
+    <!-- CTA Documentation -->
+    <section class="mx-auto w-full max-w-6xl px-5 py-12 sm:py-20">
+        <ScrollReveal animation="fade-up">
+        <div class="mb-6 text-center space-y-3">
+            <h2 class="font-display text-foreground text-3xl font-bold sm:text-4xl">
+                {t("home.docsCta.heading")}
+            </h2>
+            <p class="text-muted-foreground text-lg">
+                {t("home.docsCta.subtitle")}
+            </p>
+        </div>
+        <div class="flex flex-col items-center justify-center gap-3 sm:flex-row">
+            <Button size="lg" variant="secondary">
+                <a href={tp("/docs/commands")} class="flex flex-row items-center gap-3">
+                    {t("home.docsCta.browseCommands")}
+                    <Icon name="right" />
+                </a>
+            </Button>
+            <Button size="lg" variant="secondary">
+                <a
+                    href={tp("/docs/guides/objective-types")}
+                    class="flex flex-row items-center gap-3"
+                >
+                    {t("home.docsCta.exploreGuides")}
+                    <Icon name="right" />
+                </a>
+            </Button>
+            <Button size="lg" variant="secondary">
+                <a href={tp("/docs/faq")} class="flex flex-row items-center gap-3">
+                    {t("home.docsCta.readFaq")}
+                    <Icon name="right" />
+                </a>
+            </Button>
+        </div>
+        </ScrollReveal>
+    </section>
+</BaseLayout>

@@ -1,0 +1,136 @@
+---
+title: Réponses du bot et messages d'erreur
+description: Référence complète de toutes les réponses d'Albion Online Objectives — confirmations de succès, messages d'erreur et leur signification.
+navLabel: Réponses du bot
+navIcon: 💬
+---
+
+import Screenshot from '@/components/docs/Screenshot.astro';
+import ScrollReveal from '@/components/docs/ScrollReveal.astro';
+
+Albion Online Objectives (AOO) communique par des messages éphémères — des réponses visibles uniquement par l'utilisateur qui a lancé la commande. Cette page documente chaque réponse que vous pouvez rencontrer, sa cause et comment résoudre les erreurs.
+
+## Messages de succès
+
+### Confirmation de /add
+
+Lorsque vous signalez un objectif avec succès via [`/add`](/docs/commands/add/), le bot répond :
+
+> Your objective (Core) has been successfully added!
+> It will be available at 14:30 UTC (\<relative countdown\>) on the map Murdergulch Ravine
+
+Le message confirme le type d'objectif, l'heure d'apparition calculée en UTC avec un horodatage Discord en temps réel, ainsi que le nom de la carte. L'objectif apparaît immédiatement dans le résultat de [`/list`](/docs/commands/list/) pour tous les membres du serveur.
+
+<ScrollReveal animation="fade-in">
+  <Screenshot src="/screenshots/add-success.png" alt="Message de confirmation de succès de /add" mode="discord" />
+</ScrollReveal>
+
+### Confirmation de /remove
+
+Lorsque vous supprimez un objectif avec succès via [`/remove`](/docs/commands/remove/), le bot répond :
+
+> The objective has been removed successfully
+
+L'objectif est supprimé de la base de données et disparaît de `/list` immédiatement.
+
+<ScrollReveal animation="fade-in">
+  <Screenshot src="/screenshots/remove-success.png" alt="Message de confirmation de succès de /remove" mode="discord" />
+</ScrollReveal>
+
+### Affichage de /list
+
+La commande [`/list`](/docs/commands/list/) affiche tous les objectifs actifs de votre serveur, regroupés par catégorie (Nodes, Cores, Vortexes). Chaque entrée inclut la rareté, l'heure d'apparition avec un compte à rebours en temps réel et le nom de la carte. S'il n'y a aucun objectif, le bot répond :
+
+> No objectives to display
+
+<ScrollReveal animation="fade-in">
+  <Screenshot src="/screenshots/list-output.png" alt="Affichage complet de /list avec les objectifs regroupés par catégorie" mode="discord" />
+</ScrollReveal>
+
+## Messages d'erreur
+
+### Doublon détecté
+
+**Message :**
+> It appears that the objective you are trying to add already exists
+
+**Cause :** Quelqu'un a déjà rapporté un objectif avec le même type, la même rareté et la même carte dans une fenêtre de 8 minutes (plus ou moins 4 minutes par rapport à l'heure que vous avez indiquée). C'est intentionnel — Albion Online Objectives empêche le même objectif d'apparaître deux fois lorsque plusieurs éclaireurs le repèrent.
+
+**Résolution :** Aucune action nécessaire. L'objectif est déjà suivi. Lancez `/list` pour vérifier qu'il apparaît dans la liste.
+
+<ScrollReveal animation="fade-in">
+  <Screenshot src="/screenshots/add-error.png" alt="Message d'erreur de détection de doublon" mode="discord" />
+</ScrollReveal>
+
+### Valeurs invalides
+
+**Message :**
+> One or multiple value(s) are incorrect, please try again.
+> If the problem persist, please contact the Bot Developer.
+
+**Cause :** Un ou plusieurs paramètres de `/add` n'ont pas passé la validation. Causes fréquentes :
+
+- **Type** saisi manuellement au lieu d'être sélectionné via l'autocomplétion, ce qui produit une valeur absente de la liste supportée
+- **Rarity** ne correspond pas au type sélectionné (par exemple, `7.4` pour un Core, ou `Gold` pour un node)
+- **Map** mal orthographiée ou absente des [276 cartes supportées](/docs/guides/black-zone-maps/)
+- **Time** ne respecte pas le format 24 heures `HH:MM` (par exemple, `2:30` au lieu de `02:30`, ou `14:60` avec des minutes invalides)
+
+**Résolution :** Relancez `/add` et utilisez les suggestions d'autocomplétion pour `type`, `rarity` et `map`. Pour l'heure, utilisez deux chiffres pour les heures et les minutes : `01:30`, `04:00`, `12:45`.
+
+### Valeurs manquantes
+
+**Message :**
+> Something went wrong, please try again.
+> If the problem persist, please contact the Bot Developer.
+
+**Cause :** Un paramètre requis était absent de la commande. Cela se produit généralement à cause d'un bug du client Discord plutôt que d'une erreur utilisateur, car Discord impose les champs obligatoires.
+
+**Résolution :** Réessayez la commande. Si l'erreur persiste après plusieurs tentatives, redémarrez votre client Discord.
+
+### Objectif introuvable
+
+**Message :**
+> We cannot find the objective you want to remove
+
+**Cause :** Le numéro d'index que vous avez fourni à [`/remove`](/docs/commands/remove/) ne correspond à aucun objectif actif. Soit l'objectif a déjà été supprimé par un autre utilisateur, soit il a expiré et a été nettoyé, soit le numéro d'index est incorrect.
+
+**Résolution :** Lancez `/list` pour voir les objectifs en cours et leurs numéros d'index (affichés sous la forme `#1`, `#2`, etc.), puis utilisez le bon index avec `/remove`.
+
+### Permission refusée
+
+**Message :**
+> You don't have permission to remove this objective!
+
+**Cause :** Vous avez tenté d'utiliser `/remove` sur un objectif rapporté par un autre utilisateur et vous ne disposez pas des permissions Discord requises.
+
+**Qui peut supprimer un objectif :**
+
+| Rôle | Peut supprimer |
+|------|---------------|
+| Auteur du rapport | Ses propres objectifs uniquement |
+| Utilisateurs avec la permission **Gérer les messages** | N'importe quel objectif |
+| Utilisateurs avec la permission **Administrateur** | N'importe quel objectif |
+
+**Résolution :** Demandez à l'auteur du rapport de le supprimer, ou faites appel à un modérateur ou administrateur pour effectuer la suppression.
+
+### Cooldown actif
+
+Si vous utilisez une commande trop rapidement après la précédente, Discord affiche un avis de cooldown. Le bot applique les délais suivants :
+
+| Commande | Cooldown |
+|----------|----------|
+| `/add` | 2 secondes |
+| `/remove` | 2 secondes |
+| `/list` | 5 secondes |
+
+**Résolution :** Attendez la fin du cooldown puis réessayez.
+
+## Indicateur de maintenance
+
+Lorsque l'heure d'apparition calculée d'un objectif chevauche la fenêtre de **maintenance quotidienne à 10:00 UTC**, Albion Online Objectives l'indique dans l'affichage de `/list`. Cela indique à votre guilde que l'objectif pourrait ne pas survivre au redémarrage des serveurs.
+
+- Un objectif marqué par l'indicateur de maintenance indique que les serveurs de jeu redémarreront avant ou autour de son heure d'apparition
+- Le reset quotidien a lieu à **10:00 UTC** chaque jour
+- Les objectifs qui apparaissent bien avant ou bien après la maintenance ne sont pas concernés
+
+Utilisez cet indicateur pour éviter d'engager des ressources sur un objectif qui risque de disparaître lors du redémarrage des serveurs.

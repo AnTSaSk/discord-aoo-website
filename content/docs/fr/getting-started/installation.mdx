@@ -1,0 +1,60 @@
+---
+title: Installer Albion Online Objectives sur votre serveur Discord
+description: Ajoutez Albion Online Objectives à votre serveur Discord en moins d'une minute. Aucune configuration requise — invitez le bot, accordez les permissions et commencez à suivre les objectifs d'Albion Online.
+navLabel: Installation
+---
+
+<script type="application/ld+json">{JSON.stringify({
+  "@context": "https://schema.org",
+  "@type": "SoftwareApplication",
+  "name": "Albion Online Objectives",
+  "applicationCategory": "GameApplication",
+  "operatingSystem": "Web (Discord)",
+  "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" }
+})}</script>
+
+import { BOT } from '@data/config';
+import InviteTimeline from '@/components/docs/InviteTimeline';
+import Screenshot from '@/components/docs/Screenshot.astro';
+import DiscordInviteButton from '@/components/docs/DiscordInviteButton.astro';
+import ScrollReveal from '@/components/docs/ScrollReveal.astro';
+import Callout from '@/components/docs/Callout.astro';
+
+## Inviter le bot
+
+<InviteTimeline client:visible steps={[
+  { label: "Cliquez sur Ajouter à Discord" },
+  { label: "Sélectionnez votre serveur" },
+  { label: "Vérifiez les permissions" },
+  { label: "Cliquez sur Autoriser" }
+]} />
+
+<DiscordInviteButton />
+
+<ScrollReveal animation="fade-in">
+  <Screenshot src="/screenshots/bot-invite.png" alt="Écran d'autorisation Discord OAuth2 pour Albion Online Objectives" mode="frame" maxWidth="max-w-sm" caption="Sélectionnez votre serveur et cliquez sur Continuer" />
+</ScrollReveal>
+
+<Callout variant="info">Vous devez disposer de la permission **Gérer le serveur** sur le serveur Discord cible pour inviter un bot.</Callout>
+
+## Permissions requises
+
+Albion Online Objectives (AOO) a besoin des permissions suivantes pour fonctionner correctement :
+
+| Permission | Raison |
+|-----------|--------|
+| **Voir les salons** | Accéder aux salons où les commandes sont utilisées |
+| **Envoyer des messages** | Publier les listes d'objectifs et les réponses |
+| **Voir les anciens messages** | Retrouver les anciens messages du bot pour les mettre à jour |
+| **Gérer les messages** | Supprimer les messages d'objectifs obsolètes lors du rafraîchissement |
+| **Utiliser les commandes slash** | Enregistrer et répondre aux commandes `/add`, `/list`, `/remove` |
+
+## Aucune configuration nécessaire
+
+Albion Online Objectives fonctionne immédiatement après l'installation — il n'y a aucune commande de configuration. N'importe quel membre de votre serveur peut commencer à rapporter des objectifs avec la commande `/add`.
+
+## Étapes suivantes
+
+Rendez-vous sur [Rapporter votre premier objectif](/docs/getting-started/first-objective/) pour apprendre à utiliser le bot.
+
+<Callout variant="info">Besoin d'aide ? Rejoignez notre <a href={BOT.discordInvite}>serveur Discord</a>.</Callout>

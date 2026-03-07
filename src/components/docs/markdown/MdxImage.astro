@@ -1,0 +1,12 @@
+---
+import { ImagePreview } from "./ImagePreview";
+
+import type { MdxImageProps } from "@/lib/docs/types";
+
+const { src, alt = "", class: className } = Astro.props as MdxImageProps;
+
+// Handle both string paths (from markdown) and ImageMetadata (from imports)
+const imageSrc = typeof src === "string" ? src : src.src;
+---
+
+<ImagePreview client:visible src={imageSrc} alt={alt} className={className} />

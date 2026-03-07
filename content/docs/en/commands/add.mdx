@@ -1,0 +1,111 @@
+---
+title: /add Command - Report an Objective
+description: Full reference for the /add slash command. Report Albion Online Black Zone objectives — resource nodes, energy cores, and vortexes — with type, rarity, map, and time.
+navLabel: /add
+---
+
+import CommandPreview from '@/components/docs/CommandPreview';
+import Screenshot from '@/components/docs/Screenshot.astro';
+import ScrollReveal from '@/components/docs/ScrollReveal.astro';
+import Callout from '@/components/docs/Callout.astro';
+
+The `/add` command reports a new Black Zone objective to your server's tracking list. All server members can use this command.
+
+<CommandPreview
+  client:load
+  command="/add"
+  syntax="/add type:<type> rarity:<rarity> map:<map> time:<HH:MM>"
+  ephemeral
+  example={{
+    input: "/add type:Core rarity:Purple map:Avalanche Ravine time:00:45",
+    output: "Your objective (Core) has been successfully added!\nIt will be available at 15:20 UTC (<t:1709730000:R>) on the map Avalanche Ravine"
+  }}
+  parameters={[
+    { name: "type", type: "choice", description: "The objective type (node, core, or vortex)", required: true },
+    { name: "rarity", type: "choice", description: "Tier for nodes or color for cores/vortexes", required: true },
+    { name: "map", type: "string", description: "Black Zone map name", required: true },
+    { name: "time", type: "string", description: "Time remaining until spawn (HH:MM format)", required: true }
+  ]}
+/>
+
+## Syntax
+
+```
+/add type:<type> rarity:<rarity> map:<map> time:<HH:MM>
+```
+
+## Parameters
+
+All four parameters are **required**.
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `type` | Autocomplete | The objective type — one of 6 values (see [objective types](/docs/guides/objective-types/)) |
+| `rarity` | Autocomplete | Tier for nodes (`4.4`–`8.4`) or color for cores/vortexes (`Green`, `Blue`, `Purple`, `Gold`) |
+| `map` | Autocomplete | Black Zone map name — 276 maps supported (see [maps list](/docs/guides/black-zone-maps/)) |
+| `time` | Text | Time remaining until the objective spawns, format `HH:MM` (24-hour). Example: `02:30` (2 hours 30 minutes from now) |
+
+### Type Values
+
+| Type | Category |
+|------|----------|
+| `Fiber node` | Node |
+| `Hide node` | Node |
+| `Ore node` | Node |
+| `Wood node` | Node |
+| `Core` | Core |
+| `Vortex` | Vortex |
+
+### Rarity Values
+
+**For nodes:** `4.4`, `5.4`, `6.4`, `7.4`, `8.4`
+
+**For cores and vortexes:** `Green`, `Blue`, `Purple`, `Gold`
+
+## Autocomplete
+
+The `type`, `rarity`, and `map` parameters all support Discord's autocomplete feature. Start typing and matching options will appear. For maps, the search matches anywhere in the name — beginning, middle, or end.
+
+Additionally, the `type` and `rarity` fields are context-aware: selecting a node rarity (4.4–8.4) filters the type list to nodes only, and selecting a core or vortex type filters rarities to colors only.
+
+<ScrollReveal animation="fade-in">
+  <Screenshot src="/screenshots/add-autocomplete.png" alt="Discord autocomplete dropdown for /add command" mode="discord" />
+</ScrollReveal>
+
+## Examples
+
+```
+/add type:Ore node rarity:7.4 map:Murdergulch Ravine time:02:30
+/add type:Core rarity:Gold map:Hightree Enclave time:01:15
+/add type:Vortex rarity:Purple map:Deepwood Gorge time:04:00
+```
+
+## Behavior
+
+### Duplicate Prevention
+
+<Callout variant="info">Albion Online Objectives prevents duplicates automatically. If the same objective type, rarity, and map is reported within 8 minutes, the bot rejects it.</Callout>
+
+If an objective with the same type, rarity, and map already exists within an **8-minute window** (±4 minutes of the reported time), the bot rejects the new report and notifies you. This prevents accidental duplicates when multiple guild members spot the same objective.
+
+<ScrollReveal animation="fade-in">
+  <Screenshot src="/screenshots/add-error.png" alt="Error message when a duplicate objective is detected" mode="discord" />
+</ScrollReveal>
+
+### Maintenance Detection
+
+<Callout variant="warning">When the calculated spawn time crosses the daily 10:00 UTC maintenance window, the bot flags the objective with a warning.</Callout>
+
+Albion Online's daily server maintenance occurs at **10:00 UTC**. If the calculated spawn time crosses the **10:00 UTC** daily maintenance window, the bot automatically flags it. This tells your guildmates that the objective may not survive the server reset.
+
+### Cooldown
+
+This command has a **2-second cooldown** per user.
+
+### Time Validation
+
+The `time` parameter must match the `HH:MM` 24-hour format (e.g., `01:30`, `04:00`, `12:45`). Invalid formats are rejected.
+
+## After Reporting
+
+Once added, the objective appears in the [`/list`](/docs/commands/list/) output. To remove an incorrect entry, use [`/remove`](/docs/commands/remove/).

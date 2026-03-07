@@ -1,0 +1,80 @@
+---
+title: Workflow de coordination de guilde
+description: Comment utiliser Albion Online Objectives pour coordonner les objectifs en Black Zones lors des opérations de guilde — du repérage à la capture.
+navLabel: Workflow de guilde
+navIcon: 🏰
+---
+
+Le suivi des objectifs en Black Zones est un travail d'équipe. Sans système partagé, les éclaireurs repèrent des ressources qui ne sont jamais rapportées, les groupes arrivent en retard et les cores de grande valeur échappent à votre guilde au profit de rivaux.
+
+Albion Online Objectives (AOO) offre à votre guilde une source de vérité unique — chaque objectif rapporté est visible par tous les membres, trié par heure et automatiquement nettoyé à son expiration.
+
+Ce guide présente un workflow éprouvé que les guildes utilisent pour transformer un repérage dispersé en une stratégie d'objectifs organisée.
+
+## Avant la session
+
+La préparation fait la différence entre une sortie productive et une soirée gâchée.
+
+1. **Désignez un canal de suivi** — Choisissez un seul canal texte où le bot opère. Épinglez un message `/list` ou indiquez aux membres de lancer [`/list`](/docs/commands/list/) dans ce canal avant de partir.
+2. **Briefez vos membres** — Assurez-vous que les éclaireurs savent utiliser [`/add`](/docs/commands/add/). Le système d'autocomplétion rend la saisie rapide, mais les débutants devraient s'exercer une fois avant une session réelle.
+3. **Vérifiez les données obsolètes** — Lancez `/list` pour voir s'il reste des objectifs. Les entrées expirées sont nettoyées automatiquement toutes les 30 minutes, mais une vérification rapide évite toute confusion.
+
+## Phase 1 : Repérage
+
+Les éclaireurs sont vos yeux en Black Zones. Leur mission est de rapporter chaque objectif qu'ils trouvent, le plus vite possible.
+
+- **Utilisez `/add` immédiatement** lorsque vous repérez un objectif. Sélectionnez le `type`, la `rarity` et la `map` via l'autocomplétion, puis saisissez le temps restant au format `HH:MM`.
+- **Tapez n'importe quelle partie du nom de la carte** — l'autocomplétion fonctionne sur le début, le milieu ou la fin. Taper "murder" fera apparaître `Murdergulch Ravine`, `Murdergulch Cross` et les autres cartes correspondantes.
+- **Ne vous inquiétez pas des doublons** — si deux éclaireurs rapportent le même objectif dans une fenêtre de 8 minutes (même type, rareté et carte), le bot rejette automatiquement le second rapport. Aucune déduplication manuelle n'est nécessaire.
+
+> **Astuce :** Les éclaireurs couvrant différentes zones devraient communiquer sur les secteurs qu'ils explorent pour éviter les chevauchements. Albion Online Objectives gère la prévention des doublons, mais répartir les zones permet une couverture plus rapide.
+
+## Phase 2 : Priorisation
+
+Une fois que les éclaireurs ont rapporté les objectifs, le chef de guilde (ou le shot caller) examine la liste et décide quoi viser en priorité.
+
+Lancez [`/list`](/docs/commands/list/) pour voir tous les objectifs actifs. Utilisez la rareté comme critère principal :
+
+**Pour les Cores et Vortexes :**
+
+| Priorité | Rareté | Pourquoi |
+|----------|--------|----------|
+| 1 | Gold | Récompenses maximales, apparition la plus rare |
+| 2 | Purple | Bonnes récompenses, vaut la peine d'être contesté |
+| 3 | Blue | Récompenses modérées, moins de compétition |
+| 4 | Green | Récompenses de base, adapté aux petits groupes |
+
+**Pour les Resource Nodes :**
+
+| Priorité | Tier | Pourquoi |
+|----------|------|----------|
+| 1 | 8.4 | Enchantement maximal, valeur marchande la plus élevée |
+| 2 | 7.4 | Excellent retour sur le temps de récolte |
+| 3 | 6.4 | Bonne valeur pour les récolteurs de niveau intermédiaire |
+| 4 | 5.4 / 4.4 | Faible valeur, à ignorer sauf si à proximité |
+
+Vérifiez les heures d'apparition. Un node 8.4 qui apparaît dans 30 minutes vaut mieux qu'un Core Gold dans 4 heures — prenez en compte le temps de trajet et la compétition.
+
+## Phase 3 : Exécution
+
+Les priorités étant définies, assignez les groupes et lancez-vous.
+
+1. **Divisez en escouades** selon le type d'objectif. Les Cores et Vortexes nécessitent un groupe de combat. Les Nodes nécessitent des récolteurs avec escorte.
+2. **Annoncez les départs** — informez le canal de l'objectif vers lequel chaque escouade se dirige.
+3. **Supprimez les objectifs terminés** — après avoir capturé ou récolté un objectif, utilisez [`/remove`](/docs/commands/remove/) pour le retirer de la liste. Cela permet de garder `/list` à jour pour le reste de la guilde.
+
+## Après la session
+
+Albion Online Objectives gère le nettoyage automatiquement :
+
+- **Les objectifs expirés** sont purgés toutes les 30 minutes par la tâche planifiée du bot.
+- **Aucun reset manuel** n'est nécessaire entre les sessions. La prochaine fois que les éclaireurs commenceront à rapporter, le système sera prêt.
+- **Les objectifs rapportés pendant la maintenance** (ceux qui chevauchent le reset serveur de 10:00 UTC) sont marqués afin que votre guilde sache qu'ils pourraient ne pas survivre à la maintenance quotidienne.
+
+## Conseils pour les chefs de guilde
+
+- **Épinglez un rappel** dans votre canal de suivi expliquant comment utiliser `/add` — les nouveaux membres vous remercieront.
+- **Encouragez tout le monde à rapporter**, pas seulement les éclaireurs désignés. Un récolteur de passage dans une zone peut rapporter un core tout aussi efficacement.
+- **Rareté égale priorité** — ancrez ce principe dans votre guilde. Un Core Gold devrait interrompre presque toute autre activité.
+- **Consultez les [types d'objectifs](/docs/guides/objective-types/)** pour comprendre chaque type et rareté supportés par le bot.
+- **Utilisez l'affichage de [`/list`](/docs/commands/list/)** comme carte tactique pendant les appels vocaux — lisez les objectifs prioritaires et assignez les escouades en temps réel.

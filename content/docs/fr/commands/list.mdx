@@ -1,0 +1,94 @@
+---
+title: Commande /list - Voir les objectifs actifs
+description: Référence de la commande /list. Consultez tous les objectifs de Black Zone actifs rapportés par votre guilde, regroupés par catégorie avec des compteurs en temps réel.
+navLabel: /list
+---
+
+import CommandPreview from '@/components/docs/CommandPreview';
+import Screenshot from '@/components/docs/Screenshot.astro';
+import ScrollReveal from '@/components/docs/ScrollReveal.astro';
+import Callout from '@/components/docs/Callout.astro';
+
+La commande `/list` affiche tous les objectifs actifs rapportés pour votre serveur Discord. Tous les membres du serveur peuvent utiliser cette commande.
+
+<CommandPreview
+  client:load
+  command="/list"
+  syntax="/list"
+  example={{
+    input: "/list",
+    output: "## Node ##\n- #1 — **8.4 Fiber node** —— **12:26** UTC (<t:1709726760:R>) —— **Avalanche Incline**\n-# Maintenance added: :white_check_mark: —— Objective added by AnTSaSk\n---\n## Core ##\n- #2 — **:purple_circle: Purple** —— **12:26** UTC (<t:1709726760:R>) —— **Avalanche Incline**\n-# Maintenance added: :white_check_mark: —— Objective added by AnTSaSk\n---\n## Vortex ##\n- #3 — **:orange_circle: Gold** —— **12:26** UTC (<t:1709726760:R>) —— **Avalanche Incline**\n-# Maintenance added: :white_check_mark: —— Objective added by AnTSaSk"
+  }}
+/>
+
+## Syntaxe
+
+```
+/list
+```
+
+Cette commande ne prend **aucun paramètre**.
+
+## Résultat
+
+Le bot répond avec un message listant tous les objectifs actifs (non expirés), regroupés en trois catégories :
+
+### Catégories
+
+| Catégorie | Contenu |
+|----------|----------|
+| **Node** | Fiber node, Hide node, Ore node, Wood node |
+| **Core** | Core |
+| **Vortex** | Vortex |
+
+### Format des entrées
+
+Chaque entrée d'objectif affiche :
+
+- **Numéro d'index** — utilisé avec [`/remove`](/docs/commands/remove/) pour supprimer des entrées
+- **Rareté et type** — pour les nodes, le tier et le nom du type (ex. : `7.4 Ore node`) ; pour les cores et vortex, un emoji et le nom de la couleur (ex. : `🟠 Gold`)
+- **Heure** — l'heure d'apparition calculée en UTC et sous forme de timestamp relatif Discord (ex. : « dans 2 heures »)
+- **Nom de la carte**
+- **Indicateur de maintenance** — `✅` signifie qu'aucune maintenance n'intervient entre maintenant et l'apparition (sans risque) ; `❌` signifie que la maintenance de 10:00 UTC tombe entre les deux (l'objectif pourrait être réinitialisé)
+- **Auteur du rapport** — le nom d'affichage de l'utilisateur Discord qui a ajouté l'objectif
+
+### Exemple de résultat
+
+```
+## Node ##
+- #1 — 7.4 Ore node —— 14:30 UTC (<t:...:R>) —— Murdergulch Ravine
+-# Maintenance added: ✅ —— Objective added by PlayerName
+
+## Core ##
+- #2 — 🟠 Gold —— 09:15 UTC (<t:...:R>) —— Hightree Enclave
+-# Maintenance added: ❌ —— Objective added by PlayerName
+```
+
+Les timestamps `<t:...:R>` sont rendus par Discord sous forme de compteurs à rebours en temps réel (ex. : « dans 2 heures »). Les lignes `-#` apparaissent en petit texte dans Discord.
+
+<ScrollReveal animation="fade-in">
+  <Screenshot src="/screenshots/list-output.png" alt="Résultat complet de /list montrant les objectifs regroupés par Node, Core et Vortex" mode="discord" caption="Résultat de /list en direct dans Discord" />
+</ScrollReveal>
+
+## Comportement
+
+### Nettoyage automatique
+
+<Callout variant="info">Les objectifs expirés sont automatiquement filtrés lorsque vous exécutez /list.</Callout>
+
+Lorsque vous exécutez `/list`, le bot filtre tous les objectifs dont l'heure d'apparition est déjà passée. Les objectifs expirés ne sont pas affichés.
+
+De plus, une tâche en arrière-plan s'exécute **toutes les 30 minutes** pour nettoyer les objectifs expirés de la base de données et rafraîchir le message affiché.
+
+### Rafraîchissement du message
+
+À chaque appel de `/list` ou exécution de la tâche planifiée, le bot met à jour le message existant au lieu d'en publier un nouveau, ce qui garde le salon propre.
+
+### Temps de recharge
+
+Cette commande a un **temps de recharge de 5 secondes** par utilisateur — plus long que les autres commandes car elle interroge la base de données et met à jour un message.
+
+## Commandes associées
+
+- [`/add`](/docs/commands/add/) — Rapporter un nouvel objectif
+- [`/remove`](/docs/commands/remove/) — Supprimer un objectif par son numéro d'index

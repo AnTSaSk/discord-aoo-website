@@ -1,0 +1,69 @@
+---
+import { cn } from "@/lib/utils";
+
+type Variant = "default" | "info" | "warning" | "destructive";
+
+interface Props {
+    variant?: Variant;
+    title?: string;
+    class?: string;
+}
+
+const { variant = "default", title, class: className } = Astro.props;
+
+const variantClasses: Record<Variant, string> = {
+    default: "border-l-border",
+    info: "border-l-blue bg-blue/5",
+    warning: "border-l-yellow bg-yellow/5",
+    destructive: "border-l-destructive bg-destructive/5",
+};
+
+const iconPaths: Record<Variant, string> = {
+    default:
+        "M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z",
+    info: "M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z",
+    warning:
+        "M1 21h22L12 2 1 21zm12-3h-2v-2h2v2zm0-4h-2v-4h2v4z",
+    destructive:
+        "M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z",
+};
+
+const iconColors: Record<Variant, string> = {
+    default: "text-muted-foreground",
+    info: "text-blue",
+    warning: "text-yellow",
+    destructive: "text-destructive",
+};
+---
+
+<div
+    class={cn(
+        "my-6 rounded-r-lg border-l-4 bg-popover p-5",
+        variantClasses[variant],
+        className,
+    )}
+    role="alert"
+>
+    <div class="flex gap-3">
+        <svg
+            class={cn("mt-0.5 size-5 shrink-0", iconColors[variant])}
+            viewBox="0 0 24 24"
+            fill="currentColor"
+            aria-hidden="true"
+        >
+            <path d={iconPaths[variant]} />
+        </svg>
+        <div class="min-w-0">
+            {
+                title && (
+                    <h5 class="mb-1 text-sm font-semibold text-foreground">
+                        {title}
+                    </h5>
+                )
+            }
+            <div class="text-sm text-muted-foreground">
+                <slot />
+            </div>
+        </div>
+    </div>
+</div>

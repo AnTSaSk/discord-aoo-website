@@ -1,0 +1,103 @@
+---
+title: Commande /remove - Supprimer un objectif
+description: Référence de la commande /remove. Supprimez un objectif rapporté de la liste active en utilisant son numéro d'index.
+navLabel: /remove
+---
+
+import CommandPreview from '@/components/docs/CommandPreview';
+import Screenshot from '@/components/docs/Screenshot.astro';
+import ScrollReveal from '@/components/docs/ScrollReveal.astro';
+
+La commande `/remove` supprime un objectif rapporté de la liste active de votre serveur.
+
+<CommandPreview
+  client:load
+  command="/remove"
+  syntax="/remove index:<number>"
+  ephemeral
+  example={{
+    input: "/remove index:1",
+    output: "The objective has been removed successfully"
+  }}
+  parameters={[
+    { name: "index", type: "number", description: "Index number from /list output (#1, #2...)", required: true }
+  ]}
+/>
+
+## Syntaxe
+
+```
+/remove index:<number>
+```
+
+## Paramètres
+
+| Paramètre | Type | Obligatoire | Description |
+|-----------|------|----------|-------------|
+| `index` | Nombre | Oui | Le numéro d'index de l'objectif à supprimer (affiché dans le résultat de [`/list`](/docs/commands/list/)) |
+
+## Permissions
+
+Vous pouvez supprimer un objectif si vous remplissez **l'une** de ces conditions :
+
+| Qui | Condition |
+|-----|-----------|
+| **Auteur du rapport** | Vous avez ajouté l'objectif avec `/add` |
+| **Gérer les messages** | Vous disposez de la permission Gérer les messages |
+| **Administrateur** | Vous disposez de la permission Administrateur |
+
+Si vous n'avez pas la permission requise, le bot répond avec un message d'erreur (visible uniquement par vous).
+
+## Comment trouver l'index
+
+1. Exécutez [`/list`](/docs/commands/list/) pour voir tous les objectifs actifs
+2. Chaque entrée commence par `#N` — c'est le numéro d'index
+3. Utilisez ce numéro avec `/remove`
+
+<ScrollReveal animation="fade-in">
+  <Screenshot src="/screenshots/remove-autocomplete.png" alt="Autocomplétion Discord pour les paramètres de la commande /remove" mode="discord" />
+</ScrollReveal>
+
+### Exemple
+
+```
+/list
+```
+
+Résultat :
+```
+## Node ##
+- #1 — 7.4 Ore node —— 14:30 UTC (<t:...:R>) —— Murdergulch Ravine
+-# Maintenance added: ✅ —— Objective added by PlayerName
+- #2 — 5.4 Hide node —— 16:00 UTC (<t:...:R>) —— Hightree Dale
+-# Maintenance added: ✅ —— Objective added by PlayerName
+
+## Core ##
+- #3 — 🟠 Gold —— 09:15 UTC (<t:...:R>) —— Deepwood Gorge
+-# Maintenance added: ❌ —— Objective added by PlayerName
+```
+
+Pour supprimer le node de minerai sur Murdergulch Ravine :
+
+```
+/remove index:1
+```
+
+<ScrollReveal animation="fade-in">
+  <Screenshot src="/screenshots/remove-success.png" alt="Message de succès après la suppression d'un objectif" mode="discord" />
+</ScrollReveal>
+
+## Comportement
+
+### Rafraîchissement du message
+
+Après une suppression réussie, le bot rafraîchit automatiquement le message de la liste des objectifs pour refléter le changement. Les numéros d'index sont recalculés.
+
+### Temps de recharge
+
+Cette commande a un **temps de recharge de 2 secondes** par utilisateur.
+
+## Commandes associées
+
+- [`/list`](/docs/commands/list/) — Voir les objectifs actifs et leurs numéros d'index
+- [`/add`](/docs/commands/add/) — Rapporter un nouvel objectif

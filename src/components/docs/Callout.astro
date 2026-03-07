@@ -1,0 +1,77 @@
+---
+import { cn } from "@/lib/utils";
+import { getLangFromUrl, useTranslations, type Lang } from "@/i18n";
+
+interface Props {
+  variant?: "tip" | "warning" | "danger" | "info" | "note";
+  title?: string;
+  lang?: Lang;
+  class?: string;
+}
+
+const { variant = "note", title, class: className } = Astro.props;
+const lang = Astro.props.lang ?? getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
+
+const translationKeys = {
+  tip: "callout.tip",
+  warning: "callout.warning",
+  danger: "callout.danger",
+  info: "callout.info",
+  note: "callout.note",
+} as const;
+
+const config = {
+  tip: {
+    icon: "💡",
+    border: "border-l-green",
+    bg: "bg-green/5",
+    titleColor: "text-green",
+  },
+  warning: {
+    icon: "⚠️",
+    border: "border-l-yellow",
+    bg: "bg-yellow/5",
+    titleColor: "text-yellow",
+  },
+  danger: {
+    icon: "🚨",
+    border: "border-l-red",
+    bg: "bg-red/5",
+    titleColor: "text-red",
+  },
+  info: {
+    icon: "ℹ️",
+    border: "border-l-blue",
+    bg: "bg-blue/5",
+    titleColor: "text-blue",
+  },
+  note: {
+    icon: "📝",
+    border: "border-l-primary",
+    bg: "bg-primary/5",
+    titleColor: "text-primary",
+  },
+} as const;
+
+const c = config[variant];
+const displayTitle = title ?? t(translationKeys[variant]);
+---
+
+<aside
+  class={cn(
+    "my-6 rounded-r-lg border-l-4 p-5",
+    c.border,
+    c.bg,
+    className,
+  )}
+  role="note"
+>
+  <p class={cn("mb-2 flex items-center gap-2 text-sm font-semibold", c.titleColor)}>
+    <span aria-hidden="true">{c.icon}</span>
+    {displayTitle}
+  </p>
+  <div class="text-sm text-foreground [&>p]:my-2 [&>p:first-child]:mt-0 [&>p:last-child]:mb-0">
+    <slot />
+  </div>
+</aside>

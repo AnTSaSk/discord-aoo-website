@@ -1,0 +1,71 @@
+---
+import Badge from "@/components/ui/Badge.astro";
+import { cn } from "@/lib/utils";
+
+type Category = "Node" | "Core" | "Vortex";
+
+interface Props {
+    name: string;
+    category: Category;
+    rarities: string[];
+    description: string;
+    image?: string;
+    imageAlt?: string;
+    class?: string;
+}
+
+const { name, category, rarities, description, image, imageAlt, class: className } = Astro.props;
+
+const categoryConfig: Record<Category, { border: string; badge: string; variant: "blue" | "purple" | "gold" }> = {
+    Node: { border: "border-l-blue", badge: "Node", variant: "blue" },
+    Core: { border: "border-l-purple", badge: "Core", variant: "purple" },
+    Vortex: { border: "border-l-yellow", badge: "Vortex", variant: "gold" },
+};
+
+const config = categoryConfig[category];
+
+const rarityVariant: Record<string, "green" | "blue" | "purple" | "gold" | "tier"> = {
+    Common: "green",
+    Uncommon: "blue",
+    Rare: "purple",
+    Legendary: "gold",
+};
+---
+
+<div
+    class={cn(
+        "rounded-lg border border-l-4 bg-popover p-5",
+        image ? "flex gap-4" : "space-y-3",
+        config.border,
+        className,
+    )}
+>
+    {image && (
+        <img
+            src={image}
+            alt={imageAlt ?? name}
+            width="96"
+            height="96"
+            loading="lazy"
+            class="size-24 shrink-0 rounded-md object-cover"
+        />
+    )}
+    <div class="space-y-3">
+        <div class="flex flex-wrap items-center gap-2">
+            {!image && <Badge variant={config.variant}>{config.badge}</Badge>}
+            <h3 class="text-base font-semibold text-foreground">{name}</h3>
+        </div>
+        <p class="text-sm text-muted-foreground">{description}</p>
+        {
+            rarities.length > 0 && (
+                <div class="flex flex-wrap gap-1.5">
+                    {rarities.map((rarity) => (
+                        <Badge variant={rarityVariant[rarity] ?? "tier"}>
+                            {rarity}
+                        </Badge>
+                    ))}
+                </div>
+            )
+        }
+    </div>
+</div>

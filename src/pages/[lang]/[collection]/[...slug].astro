@@ -1,0 +1,91 @@
+---
+import { CONTENT, SIDEBAR_NAVIGATION } from "@data/config";
+import { getCollection, render } from "astro:content";
+import type { CollectionKey } from "astro:content";
+
+import MdxImage from "@/components/docs/markdown/MdxImage.astro";
+import MdxLink from "@/components/docs/markdown/MdxLink.astro";
+import { languages, defaultLang, type Lang } from "@/i18n";
+import DocsLayout from "@/layouts/DocsLayout.astro";
+import { buildNavigation } from "@/lib/navigation";
+
+export async function getStaticPaths() {
+    const paths: {
+        params: { lang: string; collection: string; slug: string };
+        props: {
+            doc: Awaited<ReturnType<typeof getCollection>>[number];
+            collection: CollectionKey;
+            nav: Awaited<ReturnType<typeof buildNavigation>>;
+            lang: Lang;
+        };
+    }[] = [];
+
+    const nonDefaultLangs = Object.keys(languages).filter(
+        (l) => l !== defaultLang,
+    ) as Lang[];
+
+    for (const lang of nonDefaultLangs) {
+        for (const sys of CONTENT.systems) {
+            const nav = await buildNavigation(SIDEBAR_NAVIGATION, sys.id, lang);
+
+            const allEntries = await getCollection(sys.id as CollectionKey);
+            const langEntries = allEntries.filter((e) =>
+                e.id.startsWith(`${lang}/`),
+            );
+            const enEntries = allEntries.filter((e) => e.id.startsWith("en/"));
+
+            for (const enDoc of enEntries) {
+                const canonicalSlug = enDoc.id.replace(/^en\//, "");
+                const langDoc = langEntries.find(
+                    (e) => e.id === `${lang}/${canonicalSlug}`,
+                );
+                const doc = langDoc ?? enDoc;
+
+                paths.push({
+                    params: {
+                        lang,
+                        collection: sys.id,
+                        slug: canonicalSlug,
+                    },
+                    props: {
+                        doc,
+                        collection: sys.id as CollectionKey,
+                        nav,
+                        lang,
+                    },
+                });
+            }
+        }
+    }
+
+    return paths;
+}
+
+const { doc, collection, nav, lang } = Astro.props as {
+    doc: Awaited<ReturnType<typeof getCollection>>[number];
+    collection: CollectionKey;
+    nav: Awaited<ReturnType<typeof buildNavigation>>;
+    lang: Lang;
+};
+const { Content, headings } = await render(doc);
+
+const canonicalSlug = doc.id.replace(/^(en|fr)\//, "");
+const ogImage = `/${lang}/og/${collection}/${canonicalSlug}.png`;
+
+const components = {
+    img: MdxImage,
+    a: MdxLink,
+};
+---
+
+<DocsLayout
+    frontmatter={{ ...doc, id: canonicalSlug }}
+    headings={headings}
+    collection={collection}
+    nav={nav}
+    lang={lang}
+    image={ogImage}
+    imageAlt={doc.data.title}
+>
+    <Content components={components} />
+</DocsLayout>

@@ -1,0 +1,94 @@
+---
+title: /list Command - View Active Objectives
+description: Reference for the /list slash command. View all active Black Zone objectives reported by your guild, grouped by category with live countdown timers.
+navLabel: /list
+---
+
+import CommandPreview from '@/components/docs/CommandPreview';
+import Screenshot from '@/components/docs/Screenshot.astro';
+import ScrollReveal from '@/components/docs/ScrollReveal.astro';
+import Callout from '@/components/docs/Callout.astro';
+
+The `/list` command displays all active objectives reported for your Discord server. All server members can use this command.
+
+<CommandPreview
+  client:load
+  command="/list"
+  syntax="/list"
+  example={{
+    input: "/list",
+    output: "## Node ##\n- #1 — **8.4 Fiber node** —— **12:26** UTC (<t:1709726760:R>) —— **Avalanche Incline**\n-# Maintenance added: :white_check_mark: —— Objective added by AnTSaSk\n---\n## Core ##\n- #2 — **:purple_circle: Purple** —— **12:26** UTC (<t:1709726760:R>) —— **Avalanche Incline**\n-# Maintenance added: :white_check_mark: —— Objective added by AnTSaSk\n---\n## Vortex ##\n- #3 — **:orange_circle: Gold** —— **12:26** UTC (<t:1709726760:R>) —— **Avalanche Incline**\n-# Maintenance added: :white_check_mark: —— Objective added by AnTSaSk"
+  }}
+/>
+
+## Syntax
+
+```
+/list
+```
+
+This command takes **no parameters**.
+
+## Output
+
+The bot responds with a message listing all active (non-expired) objectives, grouped into three categories:
+
+### Categories
+
+| Category | Includes |
+|----------|----------|
+| **Node** | Fiber node, Hide node, Ore node, Wood node |
+| **Core** | Core |
+| **Vortex** | Vortex |
+
+### Entry Format
+
+Each objective entry displays:
+
+- **Index number** — used with [`/remove`](/docs/commands/remove/) to delete entries
+- **Rarity and type** — for nodes, the tier and type name (e.g., `7.4 Ore node`); for cores and vortexes, an emoji and color name (e.g., `🟠 Gold`)
+- **Time** — the calculated spawn time in UTC and as a Discord relative timestamp (e.g., "in 2 hours")
+- **Map name**
+- **Maintenance flag** — `✅` means no maintenance between now and spawn time (safe); `❌` means the 10:00 UTC maintenance falls in between (objective may be reset)
+- **Reporter** — the display name of the Discord user who added the objective
+
+### Example Output
+
+```
+## Node ##
+- #1 — 7.4 Ore node —— 14:30 UTC (<t:...:R>) —— Murdergulch Ravine
+-# Maintenance added: ✅ —— Objective added by PlayerName
+
+## Core ##
+- #2 — 🟠 Gold —— 09:15 UTC (<t:...:R>) —— Hightree Enclave
+-# Maintenance added: ❌ —— Objective added by PlayerName
+```
+
+The `<t:...:R>` timestamps are rendered by Discord as live relative countdowns (e.g., "in 2 hours"). The `-#` lines appear as small subtext in Discord.
+
+<ScrollReveal animation="fade-in">
+  <Screenshot src="/screenshots/list-output.png" alt="Full /list output showing objectives grouped by Node, Core, and Vortex" mode="discord" caption="Live /list output in Discord" />
+</ScrollReveal>
+
+## Behavior
+
+### Auto-Cleanup
+
+<Callout variant="info">Expired objectives are automatically filtered out when you run /list.</Callout>
+
+When you run `/list`, the bot filters out any objectives whose spawn time has already passed. Expired objectives are not displayed.
+
+Additionally, a background task runs **every 30 minutes** to clean up expired objectives from the database and refresh the displayed message.
+
+### Message Refresh
+
+Each time `/list` is called or the cron task runs, the bot updates the existing message rather than posting a new one, keeping the channel clean.
+
+### Cooldown
+
+This command has a **5-second cooldown** per user — longer than other commands because it queries the database and updates a message.
+
+## Related Commands
+
+- [`/add`](/docs/commands/add/) — Report a new objective
+- [`/remove`](/docs/commands/remove/) — Delete an objective by its index number

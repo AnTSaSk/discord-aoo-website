@@ -1,0 +1,86 @@
+---
+title: Power Cores & Energy Vortexes
+description: Everything about Power Cores and Energy Vortexes in Albion Online Black Zones — rarities, rewards, differences, and how to track them.
+navIcon: 🌀
+---
+
+import Screenshot from '@/components/docs/Screenshot.astro';
+import ScrollReveal from '@/components/docs/ScrollReveal.astro';
+
+Power Cores and Energy Vortexes are the highest-stakes open-world objectives in Albion Online's Black Zones. They attract PvP-focused guilds competing for Fame, Silver, and loot — making them both the most rewarding and the most dangerous content on the map.
+
+Albion Online Objectives (AOO) tracks both objective types with full rarity support, so your guild always knows what is spawning, where, and when.
+
+## What Are Power Cores?
+
+Power Cores (referred to as "Core" in the bot) are group PvP objectives that spawn in Black Zone maps. Activating a core triggers a channeling phase that enemy players can contest. Successfully completing a core yields substantial Fame and Silver rewards that scale with rarity.
+
+Cores are designed for organized groups. A solo player cannot realistically complete one — you need a combat-ready party to defend the objective while it channels.
+
+## What Are Energy Vortexes?
+
+Energy Vortexes (referred to as "Vortex" in the bot) are open-world objectives similar to cores but with distinct spawn mechanics and reward structures. Like cores, they require a group to capture and are fully contestable by rival guilds.
+
+Vortexes follow the same rarity system as cores and offer competitive rewards, making them a prime target during guild operations.
+
+## Rarity System
+
+Both cores and vortexes use a four-tier color-based rarity system. Higher rarity means greater rewards — and more competition.
+
+| Rarity | Color | Power Level | Relative Value |
+|--------|-------|-------------|----------------|
+| **Green** | 🟢 | Common | Baseline rewards, lower competition |
+| **Blue** | 🔵 | Rare | Moderate rewards, some contention |
+| **Purple** | 🟣 | Epic | High rewards, expect PvP encounters |
+| **Gold** | 🟠 | Legendary | Maximum rewards, heavily contested |
+
+The jump in value between tiers is significant. A Gold core is worth substantially more than a Green one — both in raw Silver and in the quality of loot dropped.
+
+## Cores vs Vortexes
+
+| Aspect | Cores | Vortexes |
+|--------|-------|----------|
+| Bot type value | `Core` | `Vortex` |
+| Rarity system | Green, Blue, Purple, Gold | Green, Blue, Purple, Gold |
+| Group content | Yes — requires a party | Yes — requires a party |
+| Contestable | Yes — other players can interrupt | Yes — other players can interrupt |
+| Spawn locations | Black Zone maps | Black Zone maps |
+
+Both objective types share the same rarity progression and are tracked identically by Albion Online Objectives. The primary differences lie in their in-game mechanics, spawn patterns, and reward distributions.
+
+## Tracking with Albion Online Objectives
+
+Use the [`/add`](/docs/commands/add/) command to report cores and vortexes as soon as a scout spots one. The bot's autocomplete filters type and rarity automatically — selecting `Core` or `Vortex` as the type restricts rarity choices to the color-based system (Green, Blue, Purple, Gold).
+
+### Example Commands
+
+```
+/add type:Core rarity:Gold map:Hightree Enclave time:01:15
+/add type:Core rarity:Purple map:Murdergulch Ravine time:02:45
+/add type:Vortex rarity:Blue map:Deepwood Gorge time:03:00
+/add type:Vortex rarity:Gold map:Everwinter Peak time:00:50
+```
+
+After reporting, the objective appears in [`/list`](/docs/commands/list/) with a live countdown. All server members can see it and plan accordingly.
+
+<ScrollReveal animation="fade-in">
+  <Screenshot src="/screenshots/core-tracked.png" alt="Tracked core objective in /list output" mode="discord" caption="A tracked core in the bot's /list output" />
+</ScrollReveal>
+
+<ScrollReveal animation="fade-in">
+  <Screenshot src="/screenshots/vortex-tracked.png" alt="Tracked vortex objective in /list output" mode="discord" caption="A tracked vortex in the bot's /list output" />
+</ScrollReveal>
+
+## Strategy Tips
+
+- **Gold cores and vortexes take absolute priority.** If a scout reports one, redirect your best PvP group immediately. The rewards justify the risk.
+- **Time your arrival carefully.** Showing up too early means idle waiting in hostile territory. Arriving late means someone else claims it. Use the bot's countdown to time your movements.
+- **Bring the right composition.** Cores and vortexes are contested content. Your group needs both DPS to complete the objective and enough survivability to fight off enemies.
+- **Report even if you cannot contest it.** Another group in your guild might be able to reach it. Always `/add` what you find — let the shot caller decide what to pursue.
+- **Coordinate using the [guild workflow](/docs/guides/guild-workflow/)** for structured objective sessions that maximize your guild's output.
+
+## Related
+
+- [Objective types reference](/docs/guides/objective-types/) — all types and rarities at a glance
+- [`/add` command](/docs/commands/add/) — full parameter reference
+- [Resource nodes guide](/docs/guides/resource-nodes/) — the other major Black Zone objective category

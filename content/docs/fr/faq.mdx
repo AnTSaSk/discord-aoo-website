@@ -1,0 +1,200 @@
+---
+title: FAQ
+description: "Questions fréquentes sur Albion Online Objectives : tarification, fonctionnalités et dépannage du traqueur d'objectifs Albion Online."
+navLabel: FAQ
+---
+
+import FaqAccordion from '@/components/docs/FaqAccordion';
+import { BOT } from '@data/config';
+
+<script type="application/ld+json">{JSON.stringify({
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "Albion Online Objectives est-il gratuit ?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Oui, Albion Online Objectives (AOO) est entièrement gratuit et open source sous licence GPL-3.0."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Albion Online Objectives utilise-t-il l'API d'Albion Online ?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Non. Albion Online Objectives ne se connecte à aucune API d'Albion Online. Les objectifs sont rapportés manuellement par les membres de guilde via la commande /add."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Quels objectifs d'Albion Online sont pris en charge ?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Albion Online Objectives prend en charge trois catégories d'objectifs de Black Zone : les Resource Nodes (Fibre, Peau, Minerai et Bois, raretés 4.4 à 8.4), les Energy Cores (Green, Blue, Purple et Gold) et les Vortex (Green, Blue, Purple et Gold)."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Combien de cartes le bot prend-il en charge ?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Albion Online Objectives prend en charge 276 cartes de Black Zone avec recherche par autocomplétion."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Le bot nécessite-t-il une configuration ?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Non. Albion Online Objectives fonctionne immédiatement après l'installation -- aucune commande de configuration n'est nécessaire. N'importe quel membre du serveur peut commencer à utiliser /add tout de suite."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Quelles régions de serveurs Albion Online sont prises en charge ?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Albion Online Objectives est indépendant de la région. Comme il repose sur des rapports manuels, il fonctionne avec n'importe quel serveur. La fenêtre de maintenance (10:00 UTC) s'applique à toutes les régions."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Plusieurs guildes peuvent-elles utiliser le bot sur le même serveur Discord ?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Oui. Albion Online Objectives fonctionne par serveur Discord. Tous les membres voient la même liste d'objectifs."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Comment les objectifs expirés sont-ils gérés ?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Une tâche de fond s'exécute toutes les 30 minutes pour supprimer automatiquement les objectifs expirés de la base de données et mettre à jour la liste affichée."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Que se passe-t-il pendant la maintenance d'Albion Online ?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "La maintenance quotidienne du serveur à 10:00 UTC réinitialise tous les objectifs. Lorsque l'heure de spawn calculée chevauche la fenêtre de maintenance, le bot l'indique pour que vos compagnons de guilde sachent que l'objectif pourrait ne pas survivre à la réinitialisation."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Un même objectif peut-il être rapporté deux fois ?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Albion Online Objectives empêche automatiquement les doublons. Si quelqu'un tente de rapporter le même type d'objectif, la même rareté et la même carte dans une fenêtre de 8 minutes après un rapport existant, le bot le rejettera et en informera l'utilisateur."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Quelle est la précision des minuteurs de spawn ?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Les minuteurs sont aussi précis que le rapport. Lorsqu'un membre de guilde utilise /add, il indique les minutes restantes avant le spawn. Le bot calcule l'heure exacte de spawn en UTC à partir de cette donnée."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Le bot ne répond pas aux commandes",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Vérifiez que le bot dispose des permissions requises. Assurez-vous que le bot est en ligne (indicateur de statut vert). Vérifiez que les commandes slash sont activées pour le salon. Essayez de retirer et de réinviter le bot."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "J'obtiens une erreur \"cooldown\"",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Les commandes ont des cooldowns pour éviter le spam -- 2 secondes pour /add et /remove, 5 secondes pour /list. Patientez un instant et réessayez."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Comment signaler un bug ?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Ouvrez une issue sur le dépôt GitHub ou rejoignez notre serveur Discord."
+      }
+    },
+  ]
+})}</script>
+
+## Général
+
+<FaqAccordion client:load idPrefix="general" items={[
+  {
+    question: "Albion Online Objectives est-il gratuit ?",
+    answer: "Oui, Albion Online Objectives (AOO) est entièrement gratuit et open source sous licence GPL-3.0."
+  },
+  {
+    question: "Albion Online Objectives utilise-t-il l'API d'Albion Online ?",
+    answer: 'Non. Albion Online Objectives ne se connecte à aucune API d\'Albion Online. Les objectifs sont rapportés manuellement par les membres de guilde via la commande <a href="/docs/commands/add/">/add</a>. Le bot est donc aussi précis que les rapports soumis par votre guilde.'
+  },
+  {
+    question: "Quels objectifs d'Albion Online sont pris en charge ?",
+    answer: 'Albion Online Objectives prend en charge trois catégories d\'objectifs de Black Zone :<ul class="mt-2 list-disc pl-6 space-y-1"><li><strong>Resource Nodes</strong> — Fibre, Peau, Minerai et Bois (raretés 4.4 à 8.4)</li><li><strong>Energy Cores</strong> — Green, Blue, Purple et Gold</li><li><strong>Vortex</strong> — Green, Blue, Purple et Gold</li></ul><p class="mt-2">Consultez la <a href="/docs/guides/objective-types/">référence des types d\'objectifs</a> pour plus de détails.</p>'
+  },
+  {
+    question: "Combien de cartes le bot prend-il en charge ?",
+    answer: 'Albion Online Objectives prend en charge 276 cartes de Black Zone avec recherche par autocomplétion. Consultez la <a href="/docs/guides/black-zone-maps/">liste des cartes de Black Zone</a> pour la liste complète.'
+  },
+  {
+    question: "Le bot nécessite-t-il une configuration ?",
+    answer: 'Non. Albion Online Objectives fonctionne immédiatement après l\'<a href="/docs/getting-started/installation/">installation</a> — aucune commande de configuration n\'est nécessaire. N\'importe quel membre du serveur peut commencer à utiliser <code>/add</code> tout de suite.'
+  },
+  {
+    question: "Quelles régions de serveurs Albion Online sont prises en charge ?",
+    answer: "Albion Online Objectives est indépendant de la région. Comme il repose sur des rapports manuels, il fonctionne avec n'importe quel serveur. La fenêtre de maintenance (10:00 UTC) s'applique à toutes les régions."
+  },
+  {
+    question: "Plusieurs guildes peuvent-elles utiliser le bot sur le même serveur Discord ?",
+    answer: "Oui. Albion Online Objectives fonctionne par serveur Discord. Tous les membres voient la même liste d'objectifs."
+  }
+]} />
+
+## Fonctionnement
+
+<FaqAccordion client:load idPrefix="how" items={[
+  {
+    question: "Comment les objectifs expirés sont-ils gérés ?",
+    answer: 'Une tâche de fond s\'exécute toutes les 30 minutes pour supprimer automatiquement les objectifs expirés de la base de données et mettre à jour la liste affichée. Les objectifs expirés sont également filtrés à chaque exécution de <a href="/docs/commands/list/">/list</a>.'
+  },
+  {
+    question: "Que se passe-t-il pendant la maintenance d'Albion Online ?",
+    answer: "La maintenance quotidienne du serveur à 10:00 UTC réinitialise tous les objectifs. Lorsque l'heure de spawn calculée de votre objectif chevauche la fenêtre de maintenance à 10:00 UTC, le bot l'indique — pour que vos compagnons de guilde sachent que l'objectif pourrait ne pas survivre à la réinitialisation."
+  },
+  {
+    question: "Un même objectif peut-il être rapporté deux fois ?",
+    answer: "Albion Online Objectives empêche automatiquement les doublons. Si quelqu'un tente de rapporter le même type d'objectif, la même rareté et la même carte dans une fenêtre de 8 minutes après un rapport existant, le bot le rejettera et en informera l'utilisateur."
+  },
+  {
+    question: "Quelle est la précision des minuteurs de spawn ?",
+    answer: "Les minuteurs sont aussi précis que le rapport. Lorsqu'un membre de guilde utilise <code>/add</code>, il indique les minutes restantes avant le spawn. Le bot calcule l'heure exacte de spawn en UTC à partir de cette donnée."
+  }
+]} />
+
+## Dépannage
+
+<FaqAccordion client:load idPrefix="trouble" items={[
+  {
+    question: "Le bot ne répond pas aux commandes",
+    answer: '<ol class="list-decimal pl-6 space-y-1"><li>Vérifiez que le bot dispose des <a href="/docs/getting-started/installation/#required-permissions">permissions</a> requises</li><li>Assurez-vous que le bot est en ligne (indicateur de statut vert)</li><li>Vérifiez que les commandes slash sont activées pour le salon</li><li>Essayez de retirer et de réinviter le bot</li></ol>'
+  },
+  {
+    question: "J'obtiens une erreur \"cooldown\"",
+    answer: "Les commandes ont des cooldowns pour éviter le spam — 2 secondes pour <code>/add</code> et <code>/remove</code>, 5 secondes pour <code>/list</code>. Patientez un instant et réessayez."
+  },
+  {
+    question: "Comment signaler un bug ?",
+    answer: `Ouvrez une issue sur le <a href="${BOT.repo}/issues">dépôt GitHub</a> ou rejoignez notre <a href="${BOT.discordInvite}">serveur Discord</a>.`
+  }
+]} />
+
+En savoir plus [à propos du bot](/docs/about/).

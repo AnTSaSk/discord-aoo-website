@@ -1,0 +1,23 @@
+---
+title: Journal des modifications
+description: "Historique des versions et notes de mise à jour d'Albion Online Objectives, le traqueur d'objectifs Albion Online pour Discord."
+navLabel: Changelog
+---
+
+import TimelineEntry from '@/components/docs/TimelineEntry.astro';
+
+<TimelineEntry version="v0.1.0" date="2025-06-01">
+  <Fragment slot="features">
+    - **Commande `/add`** -- Rapportez des objectifs de Black Zone avec le type, la rareté, la carte et le temps restant
+    - **Commande `/list`** -- Consultez tous les objectifs actifs regroupés par catégorie (Nodes, Cores, Vortex)
+    - **Commande `/remove`** -- Supprimez des objectifs avec vérification des permissions (auteur, Gérer les messages, Administrateur)
+    - **276 cartes de Black Zone** avec recherche par autocomplétion
+    - **6 types d'objectifs** -- Fiber node, Hide node, Ore node, Wood node, Core, Vortex
+    - **9 niveaux de rareté** -- 4.4-8.4 pour les nodes, Green/Blue/Purple/Gold pour les cores et vortex
+    - **Détection des doublons** -- empêche les rapports en double dans une fenêtre de 8 minutes
+    - **Détection de la maintenance** -- indique les objectifs dont le spawn chevauche la maintenance quotidienne à 10:00 UTC
+    - **Nettoyage automatique** -- une tâche planifiée supprime les objectifs expirés toutes les 30 minutes
+    - **Isolation multi-serveur** -- chaque serveur Discord dispose de sa propre liste d'objectifs indépendante
+    - **Déploiement Docker** -- build multi-stage prêt pour la production avec utilisateur non-root et système de fichiers en lecture seule
+  </Fragment>
+</TimelineEntry>

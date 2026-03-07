@@ -1,0 +1,71 @@
+---
+import { cn } from "@/lib/utils";
+
+interface Props {
+    version: string;
+    date: string;
+    title?: string;
+    class?: string;
+}
+
+const { version, date, title, class: className } = Astro.props;
+
+const hasFeatures = Astro.slots.has("features");
+const hasFixes = Astro.slots.has("fixes");
+const hasBreaking = Astro.slots.has("breaking");
+---
+
+<div class={cn("relative pl-8 pb-8 last:pb-0", className)}>
+    {/* Vertical line */}
+    <div
+        class="absolute left-[7px] top-3 bottom-0 w-px bg-border last:hidden"
+    >
+    </div>
+    {/* Dot */}
+    <div class="absolute left-0 top-1.5 size-[15px] rounded-full border-2 border-primary bg-background"></div>
+
+    {/* Header */}
+    <div class="mb-3 flex flex-wrap items-baseline gap-x-3 gap-y-1">
+        <span class="text-lg font-bold text-foreground">{version}</span>
+        <span class="text-sm text-muted-foreground">{date}</span>
+    </div>
+    {title && <h4 class="mb-3 text-base font-semibold text-foreground">{title}</h4>}
+
+    {/* Sections */}
+    {
+        hasBreaking && (
+            <div class="mb-3">
+                <span class="mb-1.5 inline-flex items-center rounded-md bg-destructive/15 px-2 py-0.5 text-xs font-medium text-destructive border border-destructive/25">
+                    Breaking
+                </span>
+                <div class="mt-1.5 space-y-1 text-sm text-muted-foreground">
+                    <slot name="breaking" />
+                </div>
+            </div>
+        )
+    }
+    {
+        hasFeatures && (
+            <div class="mb-3">
+                <span class="mb-1.5 inline-flex items-center rounded-md bg-green/15 px-2 py-0.5 text-xs font-medium text-green border border-green/25">
+                    Features
+                </span>
+                <div class="mt-1.5 space-y-1 text-sm text-muted-foreground">
+                    <slot name="features" />
+                </div>
+            </div>
+        )
+    }
+    {
+        hasFixes && (
+            <div class="mb-3">
+                <span class="mb-1.5 inline-flex items-center rounded-md bg-blue/15 px-2 py-0.5 text-xs font-medium text-blue border border-blue/25">
+                    Fixes
+                </span>
+                <div class="mt-1.5 space-y-1 text-sm text-muted-foreground">
+                    <slot name="fixes" />
+                </div>
+            </div>
+        )
+    }
+</div>

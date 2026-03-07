@@ -1,0 +1,31 @@
+#!/bin/sh
+# Enforce conventional commit format: type(optional-scope): description
+# Activated via: git config core.hooksPath .githooks
+
+commit_msg=$(head -1 "$1")
+
+# Allow merge commits
+if echo "$commit_msg" | grep -qE '^Merge '; then
+  exit 0
+fi
+
+# Allow revert commits
+if echo "$commit_msg" | grep -qE '^Revert '; then
+  exit 0
+fi
+
+# Validate conventional commit format
+if ! echo "$commit_msg" | grep -qE '^(feat|fix|docs|style|refactor|test|chore|perf|ci)(\(.+\))?: .+'; then
+  echo "ERROR: Commit message does not follow Conventional Commits format."
+  echo ""
+  echo "Expected: type(scope): description"
+  echo "Types: feat, fix, docs, style, refactor, test, chore, perf, ci"
+  echo ""
+  echo "Examples:"
+  echo "  feat: add flexible time input"
+  echo "  fix(commands): handle missing map gracefully"
+  echo "  ci: add Release Please workflow"
+  echo ""
+  echo "Your message: $commit_msg"
+  exit 1
+fi

@@ -1,0 +1,71 @@
+---
+import { cn } from "@/lib/utils";
+
+interface Props {
+  animation?: "fade-up" | "fade-in" | "slide-left" | "slide-right";
+  delay?: number;
+  stagger?: boolean;
+  class?: string;
+}
+
+const {
+  animation = "fade-up",
+  delay,
+  stagger = false,
+  class: className,
+} = Astro.props;
+---
+
+<div
+  data-reveal={animation}
+  data-stagger={stagger ? "" : undefined}
+  style={delay ? `transition-delay: ${delay}ms` : undefined}
+  class={cn(className)}
+>
+  <slot />
+</div>
+
+<script>
+  function initScrollReveal() {
+    const prefersReducedMotion = window.matchMedia(
+      "(prefers-reduced-motion: reduce)",
+    ).matches;
+
+    if (prefersReducedMotion) {
+      document
+        .querySelectorAll<HTMLElement>("[data-reveal]")
+        .forEach((el) => el.setAttribute("data-visible", ""));
+      return;
+    }
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        for (const entry of entries) {
+          if (!entry.isIntersecting) continue;
+
+          const el = entry.target as HTMLElement;
+
+          // Handle stagger: auto-delay children
+          if (el.hasAttribute("data-stagger")) {
+            const children = el.querySelectorAll<HTMLElement>(":scope > *");
+            children.forEach((child, i) => {
+              child.style.transitionDelay = `${i * 100}ms`;
+            });
+          }
+
+          el.setAttribute("data-visible", "");
+          observer.unobserve(el);
+        }
+      },
+      { threshold: 0.15, rootMargin: "0px 0px -100px 0px" },
+    );
+
+    document
+      .querySelectorAll<HTMLElement>("[data-reveal]")
+      .forEach((el) => observer.observe(el));
+  }
+
+  // Run on initial load and on Astro page transitions
+  initScrollReveal();
+  document.addEventListener("astro:page-load", initScrollReveal);
+</script>

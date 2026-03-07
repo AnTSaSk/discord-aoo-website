@@ -1,0 +1,89 @@
+---
+title: Resource Nodes in Black Zones
+description: Guide to Black Zone resource nodes in Albion Online — Fiber, Hide, Ore, and Wood nodes with tier rarities 4.4 through 8.4, and how to track them.
+navIcon: ⛏️
+---
+
+import Screenshot from '@/components/docs/Screenshot.astro';
+import ScrollReveal from '@/components/docs/ScrollReveal.astro';
+
+Enchanted resource nodes are timed gathering objectives that spawn across Albion Online's Black Zones. They contain high-tier materials that are significantly more valuable than standard open-world resources — and they attract both gatherers and gankers.
+
+Albion Online Objectives (AOO) tracks all four node types across five enchantment tiers, giving your guild advance notice of exactly when and where these nodes become available.
+
+## The Four Node Types
+
+Each node type produces a specific crafting resource. The material you gather feeds directly into Albion Online's player-driven economy.
+
+| Node Type | Bot Value | Resource | Used For |
+|-----------|-----------|----------|----------|
+| **Fiber Node** | `Fiber node` | Fiber | Cloth crafting — robes, cowls, sandals |
+| **Hide Node** | `Hide node` | Hide | Leather crafting — jackets, hoods, shoes |
+| **Ore Node** | `Ore node` | Ore | Metal crafting — plate armor, helmets, boots |
+| **Wood Node** | `Wood node` | Wood | Plank crafting — bows, staffs, shields |
+
+All four node types follow the same enchantment tier system and behave identically in terms of spawn mechanics. The only difference is the material they produce.
+
+## Tier System (4.4 -- 8.4)
+
+Resource nodes in the Black Zone use enchantment-based tiers. The first digit represents the base tier and the second digit (always `.4`) represents the enchantment level. Higher tiers yield rarer materials with significantly higher market value.
+
+| Tier | Rarity Level | Market Value | Competition |
+|------|-------------|--------------|-------------|
+| **4.4** | Uncommon | Entry-level enchanted materials | Low |
+| **5.4** | Rare | Moderate value, steady demand | Low to moderate |
+| **6.4** | Very Rare | Strong value, popular crafting tier | Moderate |
+| **7.4** | Extremely Rare | High value, sought after by crafters | High |
+| **8.4** | Legendary | Maximum value, top-tier materials | Very high |
+
+The price difference between tiers is not linear. An 8.4 resource can be worth many times more than a 6.4 of the same type. This makes high-tier nodes worth the risk of traveling deep into hostile Black Zone maps.
+
+## Tracking Nodes with Albion Online Objectives
+
+When a scout or gatherer spots a resource node, they report it using the [`/add`](/docs/commands/add/) command. The bot's autocomplete system is context-aware — selecting a tier-based rarity (4.4 through 8.4) automatically filters the type list to show only node types, and vice versa.
+
+### Example Commands
+
+```
+/add type:Ore node rarity:8.4 map:Murdergulch Ravine time:02:30
+/add type:Fiber node rarity:7.4 map:Drownfield Wetland time:01:45
+/add type:Hide node rarity:6.4 map:Deepwood Gorge time:03:15
+/add type:Wood node rarity:5.4 map:Giantweald Copse time:04:00
+```
+
+After reporting, the node appears in the [`/list`](/docs/commands/list/) output with a live countdown to its spawn time. Your entire guild can plan their gathering runs around these timers.
+
+<ScrollReveal animation="fade-in">
+  <Screenshot src="/screenshots/node-tracked.png" alt="Tracked resource node in /list output" mode="discord" />
+</ScrollReveal>
+
+### Duplicate Prevention
+
+If two scouts report the same node (matching type, rarity, and map) within an 8-minute window, the bot rejects the duplicate automatically. This means multiple scouts can cover the same zones without cluttering the objective list.
+
+## Gathering Tips
+
+### Equipment
+
+- **Wear gathering gear** appropriate to the resource type. Fiber harvester gear for fiber nodes, quarrier gear for ore, and so on. The gathering speed bonus is substantial.
+- **Bring an escape tool.** Black Zones are full-loot PvP areas. A Bloodletter, Miner Workboots, or similar mobility option can save your inventory.
+- **Consider a mount with carry weight bonuses** for hauling large quantities of enchanted materials back to the nearest Hideout or portal.
+
+### Safety in the Black Zone
+
+- **Check the map for hostile activity** before committing to a node. If gankers are active in the zone, consider waiting or bringing an escort.
+- **Gather in groups when possible.** A gatherer with two escorts is far harder to gank than a solo player. Use the [guild workflow](/docs/guides/guild-workflow/) to coordinate protection.
+- **Report every node you see**, even ones you cannot gather yourself. Another guild member with the right tools might be able to reach it in time.
+
+### Timing
+
+- **High-tier nodes spawn on timers.** The earlier your guild knows about them, the more time you have to position gatherers. Encourage scouts to `/add` nodes the moment they spot the timer.
+- **Watch for the maintenance flag.** Nodes with spawn times crossing the 10:00 UTC server maintenance may not survive the daily reset. Albion Online Objectives flags these automatically.
+- **Prioritize 8.4 and 7.4 nodes.** The value difference justifies dedicating your best gatherers and escorts to the highest-tier spawns.
+
+## Related
+
+- [Objective types reference](/docs/guides/objective-types/) — all types and rarities at a glance
+- [`/add` command](/docs/commands/add/) — full parameter reference
+- [Power Cores & Energy Vortexes](/docs/guides/cores-and-vortexes/) — the other major Black Zone objective category
+- [Guild coordination workflow](/docs/guides/guild-workflow/) — structured approach to objective sessions

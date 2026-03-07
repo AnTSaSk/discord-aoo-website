@@ -1,0 +1,106 @@
+---
+title: Rapporter votre premier objectif
+description: Tutoriel pas à pas pour rapporter et suivre votre premier objectif de Black Zone avec Albion Online Objectives. Apprenez à utiliser /add et /list en moins de deux minutes.
+navLabel: Premier objectif
+---
+
+<script type="application/ld+json">{JSON.stringify({
+  "@context": "https://schema.org",
+  "@type": "HowTo",
+  "name": "Rapporter votre premier objectif de Black Zone",
+  "description": "Tutoriel pas à pas pour rapporter et suivre votre premier objectif de Black Zone avec Albion Online Objectives.",
+  "step": [
+    {
+      "@type": "HowToStep",
+      "name": "Ouvrir Discord",
+      "text": "Ouvrez Discord et rendez-vous dans n'importe quel salon où le bot a accès."
+    },
+    {
+      "@type": "HowToStep",
+      "name": "Taper la commande /add",
+      "text": "Tapez /add — Discord affichera la commande avec ses quatre paramètres obligatoires."
+    },
+    {
+      "@type": "HowToStep",
+      "name": "Remplir les paramètres",
+      "text": "Remplissez les paramètres type, rarity, map et time à l'aide de l'autocomplétion."
+    },
+    {
+      "@type": "HowToStep",
+      "name": "Envoyer la commande",
+      "text": "Appuyez sur Entrée pour envoyer. Albion Online Objectives confirme que l'objectif a été ajouté."
+    }
+  ]
+})}</script>
+
+import CommandPreview from '@/components/docs/CommandPreview';
+import Screenshot from '@/components/docs/Screenshot.astro';
+import ScrollReveal from '@/components/docs/ScrollReveal.astro';
+import Callout from '@/components/docs/Callout.astro';
+
+Ce tutoriel vous guide pour rapporter votre premier objectif de Black Zone dans Albion Online. Aucune configuration n'est nécessaire — Albion Online Objectives (AOO) fonctionne immédiatement après l'[installation](/docs/getting-started/installation/).
+
+## Rapporter un objectif
+
+1. **Ouvrez Discord** et rendez-vous dans n'importe quel salon où le bot a accès.
+
+2. **Tapez `/add`** — Discord affichera la commande avec ses quatre paramètres obligatoires.
+
+<ScrollReveal animation="fade-in">
+  <Screenshot src="/screenshots/add-autocomplete.png" alt="Autocomplétion Discord affichant les paramètres de la commande /add" mode="discord" />
+</ScrollReveal>
+
+3. **Remplissez les paramètres :**
+
+   | Paramètre | Quoi saisir | Exemple |
+   |-----------|-------------|---------|
+   | `type` | Le type d'objectif (autocomplétion) | `Ore node` |
+   | `rarity` | La rareté ou le tier (autocomplétion) | `7.4` |
+   | `map` | Le nom de la carte en Black Zone (autocomplétion) | `Murdergulch Ravine` |
+   | `time` | Temps restant avant l'apparition, format `HH:MM` | `02:30` |
+
+4. **Appuyez sur Entrée** pour envoyer. Albion Online Objectives confirme que l'objectif a été ajouté.
+
+<ScrollReveal animation="fade-in">
+  <Screenshot src="/screenshots/add-success.png" alt="Message éphémère de confirmation après l'ajout d'un objectif" mode="discord" />
+</ScrollReveal>
+
+<CommandPreview
+  client:load
+  command="/add"
+  syntax="/add type:<type> rarity:<rarity> map:<map> time:<HH:MM>"
+  ephemeral
+  example={{
+    input: "/add type:Ore rarity:6.4 map:Birken Fell time:00:30",
+    output: "Your objective (Ore node) has been successfully added!\nIt will be available at 14:45 UTC (<t:1709727900:R>) on the map Birken Fell"
+  }}
+/>
+
+<Callout variant="tip">Les trois paramètres textuels — `type`, `rarity` et `map` — supportent l'**autocomplétion**. Commencez à taper et sélectionnez parmi les suggestions. Pour les cartes, vous pouvez saisir n'importe quelle partie du nom (début, milieu ou fin) et les résultats correspondants apparaîtront. De plus, type et rarity se filtrent mutuellement — si vous sélectionnez une rareté de node (par ex. 7.4), seuls les types de nodes apparaissent, et inversement.</Callout>
+
+## Consulter les objectifs actifs
+
+Tapez `/list` pour voir tous les objectifs actuellement rapportés sur votre serveur. Le bot les affiche regroupés par catégorie :
+
+- **Nodes** — Nodes de ressources Fibre, Peau, Minerai et Bois
+- **Cores** — Cores d'énergie
+- **Vortexes** — Vortex
+
+Chaque entrée affiche la rareté, l'heure avec un compte à rebours en temps réel et le nom de la carte.
+
+<ScrollReveal animation="fade-in">
+  <Screenshot src="/screenshots/list-output.png" alt="Résultat de /list affichant les objectifs regroupés par Node, Core et Vortex" mode="discord" />
+</ScrollReveal>
+
+## Ce qui se passe ensuite
+
+- **Les doublons sont empêchés** — si quelqu'un tente d'ajouter le même objectif dans un intervalle de 8 minutes, le bot le refuse.
+- **Les objectifs expirés sont nettoyés** automatiquement toutes les 30 minutes.
+- **Détection de maintenance** — si l'heure d'apparition calculée chevauche la fenêtre de maintenance quotidienne de 10:00 UTC, le bot le signale.
+
+## Étapes suivantes
+
+- Découvrez tous les [types d'objectifs et raretés](/docs/guides/objective-types/)
+- Parcourez les [276 cartes de Black Zone supportées](/docs/guides/black-zone-maps/)
+- Consultez la [référence complète de la commande `/add`](/docs/commands/add/) pour les détails avancés
+- Utilisez [`/remove`](/docs/commands/remove/) pour supprimer une entrée incorrecte

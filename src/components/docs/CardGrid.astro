@@ -1,0 +1,24 @@
+---
+import { cn } from "@/lib/utils";
+
+interface Props {
+  columns?: 2 | 3;
+  animated?: boolean;
+  class?: string;
+}
+
+const { columns = 2, animated = false, class: className } = Astro.props;
+---
+
+<div
+  class={cn(
+    "grid gap-4 my-6",
+    columns === 2 && "sm:grid-cols-2",
+    columns === 3 && "sm:grid-cols-2 lg:grid-cols-3",
+    className,
+  )}
+  data-reveal={animated ? "fade-up" : undefined}
+  data-stagger={animated ? "" : undefined}
+>
+  <slot />
+</div>

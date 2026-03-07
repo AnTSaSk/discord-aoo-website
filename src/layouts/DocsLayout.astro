@@ -1,0 +1,193 @@
+---
+import BaseLayout from "./BaseLayout.astro";
+
+import Breadcrumb from "@/components/docs/Breadcrumb.astro";
+import CodeCopyButton from "@/components/docs/CodeCopyButton.astro";
+import Sidebar from "@/components/docs/Sidebar.astro";
+import TableOfContents from "@/components/docs/TableOfContents.astro";
+import { defaultLang, useTranslations, type Lang } from "@/i18n";
+import { buildBreadcrumbItems } from "@/lib/docs/breadcrumb";
+import type { DocsLayoutProps, Heading } from "@/lib/docs/types";
+import { getActiveTab } from "@/lib/navigation";
+import { getPrevNext } from "@/lib/navigation/prevNext";
+import type { NavigationResult } from "@/lib/navigation/types";
+
+interface Props extends DocsLayoutProps {
+    nav?: NavigationResult;
+    lang?: Lang;
+}
+
+const props = Astro.props as Props;
+const { headings = [], frontmatter, collection, nav, image, imageAlt, lang = defaultLang } = props;
+const collectionId = collection ?? "docs";
+const t = useTranslations(lang);
+const localePrefix = lang === defaultLang ? "" : `/${lang}`;
+
+// Use prebuilt nav or handle missing nav gracefully
+if (!nav) {
+    throw new Error(`Navigation data missing for collection: ${collectionId}`);
+}
+
+const activeTab = getActiveTab(frontmatter.id, nav.tabs);
+
+// Build breadcrumb items
+const breadcrumbItems = buildBreadcrumbItems(frontmatter.id, collectionId, lang);
+
+// Convert headings to TableOfContents format
+const tableOfContentsHeadings = headings
+    .map((h) => ({
+        depth: h.depth,
+        text: h.text,
+        id: h.slug,
+    }))
+    .filter((heading): heading is Heading => Boolean(heading.id));
+
+// Get prev/next navigation links
+const { prev, next } = getPrevNext(frontmatter.id, nav.tabs);
+
+// Hero image from frontmatter
+const heroImage = frontmatter.data.heroImage;
+const heroImageAlt = frontmatter.data.heroImageAlt ?? frontmatter.data.title;
+---
+
+<BaseLayout image={image} imageAlt={imageAlt} contentType="article" lang={lang} breadcrumbs={breadcrumbItems}>
+    {/* Reading progress bar */}
+    <div
+        id="reading-progress"
+        class="fixed top-0 left-0 z-[60] h-0.5 bg-primary transition-[width] duration-150 ease-out"
+        style="width: 0%"
+    />
+
+    <div class="flex min-h-screen">
+        <!-- Sidebar with tabs inside  -->
+        <Sidebar
+            tabs={nav.tabs}
+            showTabs={nav.showTabs}
+            activeTab={activeTab}
+            currentSlug={frontmatter.id}
+            collectionId={collectionId}
+            lang={lang}
+        />
+
+        <!-- Main content  -->
+        <main class="docs-main min-w-0 flex-1 lg:py-6">
+            <div class="mb-6 flex items-center justify-between gap-4">
+                <div class="hidden w-full items-center justify-between lg:flex">
+                    <div>
+                        {
+                            !frontmatter.data.hideBreadcrumbs && (
+                                <Breadcrumb items={breadcrumbItems} />
+                            )
+                        }
+                    </div>
+                </div>
+            </div>
+
+            {/* Article header with optional hero image */}
+            {
+                heroImage && (
+                    <div class="mb-8 overflow-hidden rounded-xl">
+                        <img
+                            src={heroImage}
+                            alt={heroImageAlt}
+                            class="max-h-70 w-full object-cover"
+                            loading="eager"
+                            decoding="async"
+                        />
+                    </div>
+                )
+            }
+
+            <article class="prose prose-slate dark:prose-invert min-w-0 mt-6">
+                <h1>{frontmatter.data.title}</h1>
+                <slot />
+            </article>
+
+            {/* Previous / Next navigation */}
+            {
+                (prev || next) && (
+                    <nav
+                        class="mt-16 flex items-stretch gap-4 border-t border-border pt-6"
+                        aria-label={t("docs.pageNavigation")}
+                    >
+                        {prev ? (
+                            <a
+                                href={`${localePrefix}/${collectionId}/${prev.slug}/`}
+                                class="group flex flex-1 flex-col items-start gap-1 rounded-lg border border-border p-4 transition-colors hover:border-primary/50"
+                            >
+                                <span class="text-xs text-muted-foreground">{t("docs.previous")}</span>
+                                <span class="flex items-center gap-1 text-sm font-medium text-foreground group-hover:text-primary">
+                                    <svg
+                                        class="size-4 shrink-0"
+                                        viewBox="0 0 24 24"
+                                        fill="none"
+                                        stroke="currentColor"
+                                        stroke-width="2"
+                                        stroke-linecap="round"
+                                        stroke-linejoin="round"
+                                        aria-hidden="true"
+                                    >
+                                        <path d="m15 18-6-6 6-6" />
+                                    </svg>
+                                    {prev.label}
+                                </span>
+                            </a>
+                        ) : (
+                            <div class="flex-1" />
+                        )}
+                        {next ? (
+                            <a
+                                href={`${localePrefix}/${collectionId}/${next.slug}/`}
+                                class="group flex flex-1 flex-col items-end gap-1 rounded-lg border border-border p-4 transition-colors hover:border-primary/50"
+                            >
+                                <span class="text-xs text-muted-foreground">{t("docs.next")}</span>
+                                <span class="flex items-center gap-1 text-sm font-medium text-foreground group-hover:text-primary">
+                                    {next.label}
+                                    <svg
+                                        class="size-4 shrink-0"
+                                        viewBox="0 0 24 24"
+                                        fill="none"
+                                        stroke="currentColor"
+                                        stroke-width="2"
+                                        stroke-linecap="round"
+                                        stroke-linejoin="round"
+                                        aria-hidden="true"
+                                    >
+                                        <path d="m9 18 6-6-6-6" />
+                                    </svg>
+                                </span>
+                            </a>
+                        ) : (
+                            <div class="flex-1" />
+                        )}
+                    </nav>
+                )
+            }
+        </main>
+
+        <!-- Table of Contents on the right  -->
+        <TableOfContents headings={tableOfContentsHeadings} />
+    </div>
+    <CodeCopyButton />
+
+    {/* Reading progress bar script */}
+    <script>
+        function initReadingProgress() {
+            const bar = document.getElementById("reading-progress");
+            if (!bar) return;
+
+            function updateProgress() {
+                const scrollTop = window.scrollY;
+                const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+                const progress = docHeight > 0 ? Math.min((scrollTop / docHeight) * 100, 100) : 0;
+                bar!.style.width = `${progress}%`;
+            }
+
+            window.addEventListener("scroll", updateProgress, { passive: true });
+            updateProgress();
+        }
+
+        initReadingProgress();
+        document.addEventListener("astro:page-load", initReadingProgress);
+    </script>
+</BaseLayout>

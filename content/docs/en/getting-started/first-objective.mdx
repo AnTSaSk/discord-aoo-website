@@ -1,0 +1,105 @@
+---
+title: Report Your First Objective
+description: Step-by-step tutorial to report and track your first Black Zone objective with Albion Online Objectives. Learn how to use /add and /list in under two minutes.
+---
+
+<script type="application/ld+json">{JSON.stringify({
+  "@context": "https://schema.org",
+  "@type": "HowTo",
+  "name": "Report Your First Black Zone Objective",
+  "description": "Step-by-step tutorial to report and track your first Black Zone objective with Albion Online Objectives.",
+  "step": [
+    {
+      "@type": "HowToStep",
+      "name": "Open Discord",
+      "text": "Open Discord and go to any channel where the bot has access."
+    },
+    {
+      "@type": "HowToStep",
+      "name": "Type the /add command",
+      "text": "Type /add — Discord will show the command with its four required parameters."
+    },
+    {
+      "@type": "HowToStep",
+      "name": "Fill in the parameters",
+      "text": "Fill in the type, rarity, map, and time parameters using autocomplete."
+    },
+    {
+      "@type": "HowToStep",
+      "name": "Submit the command",
+      "text": "Press Enter to submit. Albion Online Objectives confirms the objective was added."
+    }
+  ]
+})}</script>
+
+import CommandPreview from '@/components/docs/CommandPreview';
+import Screenshot from '@/components/docs/Screenshot.astro';
+import ScrollReveal from '@/components/docs/ScrollReveal.astro';
+import Callout from '@/components/docs/Callout.astro';
+
+This tutorial walks you through reporting your first Albion Online Black Zone objective. No configuration is needed — Albion Online Objectives (AOO) works immediately after [installation](/docs/getting-started/installation/).
+
+## Reporting an Objective
+
+1. **Open Discord** and go to any channel where the bot has access.
+
+2. **Type `/add`** — Discord will show the command with its four required parameters.
+
+<ScrollReveal animation="fade-in">
+  <Screenshot src="/screenshots/add-autocomplete.png" alt="Discord autocomplete showing /add command parameters" mode="discord" />
+</ScrollReveal>
+
+3. **Fill in the parameters:**
+
+   | Parameter | What to enter | Example |
+   |-----------|---------------|---------|
+   | `type` | The objective type (autocomplete) | `Ore node` |
+   | `rarity` | The rarity or tier (autocomplete) | `7.4` |
+   | `map` | The Black Zone map name (autocomplete) | `Murdergulch Ravine` |
+   | `time` | Time remaining until spawn, `HH:MM` format | `02:30` |
+
+4. **Press Enter** to submit. Albion Online Objectives confirms the objective was added.
+
+<ScrollReveal animation="fade-in">
+  <Screenshot src="/screenshots/add-success.png" alt="Ephemeral success message after adding an objective" mode="discord" />
+</ScrollReveal>
+
+<CommandPreview
+  client:load
+  command="/add"
+  syntax="/add type:<type> rarity:<rarity> map:<map> time:<HH:MM>"
+  ephemeral
+  example={{
+    input: "/add type:Ore rarity:6.4 map:Birken Fell time:00:30",
+    output: "Your objective (Ore node) has been successfully added!\nIt will be available at 14:45 UTC (<t:1709727900:R>) on the map Birken Fell"
+  }}
+/>
+
+<Callout variant="tip">All three parameters with text values — `type`, `rarity`, and `map` — support **autocomplete**. Start typing and select from the suggestions. For maps, you can type any part of the name (beginning, middle, or end) and matching results will appear. Additionally, type and rarity filter each other — if you select a node rarity (e.g., 7.4), only node types appear, and vice versa.</Callout>
+
+## Viewing Active Objectives
+
+Type `/list` to see all objectives currently reported for your server. The bot displays them grouped by category:
+
+- **Nodes** — Fiber, Hide, Ore, and Wood resource nodes
+- **Cores** — Energy cores
+- **Vortexes** — Vortexes
+
+Each entry shows the rarity, time with a live countdown, and the map name.
+
+<ScrollReveal animation="fade-in">
+  <Screenshot src="/screenshots/list-output.png" alt="Bot /list output showing objectives grouped by Node, Core, and Vortex" mode="discord" />
+</ScrollReveal>
+
+## What Happens Next
+
+- **Duplicates are prevented** — if someone tries to add the same objective within an 8-minute window, the bot rejects it.
+- **Expired objectives are cleaned up** automatically every 30 minutes.
+- **Maintenance detection** — if the calculated spawn time crosses the 10:00 UTC daily maintenance window, the bot flags it.
+
+## Next Steps
+
+- Learn about all [objective types and rarities](/docs/guides/objective-types/)
+- Browse the [276 supported Black Zone maps](/docs/guides/black-zone-maps/)
+- See the full [`/add` command reference](/docs/commands/add/) for advanced details
+- Use [`/remove`](/docs/commands/remove/) to delete an incorrect entry

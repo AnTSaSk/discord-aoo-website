@@ -1,0 +1,38 @@
+---
+title: Référence des commandes Albion Online Objectives
+description: Référence complète de toutes les commandes slash d'Albion Online Objectives — /add pour rapporter des objectifs, /list pour consulter les objectifs actifs et /remove pour supprimer des entrées.
+navLabel: Vue d'ensemble
+---
+
+import Badge from '@/components/ui/Badge.astro';
+import Callout from '@/components/docs/Callout.astro';
+
+Toutes les interactions avec Albion Online Objectives (AOO) passent par les commandes slash Discord. Tapez `/` dans n'importe quel salon où le bot a accès pour voir les commandes disponibles.
+
+<Callout variant="info">Les commandes ont des temps de recharge pour éviter le spam — 2 secondes pour /add et /remove, 5 secondes pour /list.</Callout>
+
+## Commandes
+
+| Commande | Description | Temps de recharge |
+|----------|-------------|-------------------|
+| [`/add`](/docs/commands/add/) | Rapporter un nouvel objectif de Black Zone | 2 secondes |
+| [`/list`](/docs/commands/list/) | Voir tous les objectifs actifs de votre serveur | 5 secondes |
+| [`/remove`](/docs/commands/remove/) | Supprimer un objectif rapporté | 2 secondes |
+
+## Démarrage rapide
+
+Vous découvrez Albion Online Objectives ? Suivez le tutoriel [Rapporter votre premier objectif](/docs/getting-started/first-objective/) pour apprendre le fonctionnement de base :
+
+1. **Rapportez** un objectif trouvé en Black Zone avec [`/add`](/docs/commands/add/)
+2. **Consultez** tous les objectifs actifs de votre guilde avec [`/list`](/docs/commands/list/)
+3. **Supprimez** une entrée expirée ou incorrecte avec [`/remove`](/docs/commands/remove/)
+
+## Permissions
+
+<Badge variant="green">Aucune permission requise</Badge> Les trois commandes sont accessibles à tous les membres de votre serveur. La seule exception est `/remove`, qui nécessite l'une des conditions suivantes pour supprimer le rapport d'un autre joueur :
+
+- Permission **Administrateur**
+- Permission **Gérer les messages**
+- Être l'auteur du rapport original
+
+Consultez la page dédiée de chaque commande pour les détails complets des paramètres et des exemples.

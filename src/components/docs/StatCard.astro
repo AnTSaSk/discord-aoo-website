@@ -1,0 +1,23 @@
+---
+import { cn } from "@/lib/utils";
+
+interface Props {
+    value: string;
+    label: string;
+    sublabel?: string;
+    class?: string;
+}
+
+const { value, label, sublabel, class: className } = Astro.props;
+---
+
+<div
+    class={cn(
+        "rounded-lg bg-popover border border-border p-5 text-center",
+        className,
+    )}
+>
+    <div class="text-3xl font-bold text-foreground">{value}</div>
+    <div class="mt-1 text-sm font-medium text-muted-foreground">{label}</div>
+    {sublabel && <div class="mt-0.5 text-xs text-muted-foreground/70">{sublabel}</div>}
+</div>

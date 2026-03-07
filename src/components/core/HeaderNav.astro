@@ -1,0 +1,25 @@
+---
+import { HEADER_NAV_ITEMS } from "@data/config";
+
+import { defaultLang, useTranslations, useTranslatedPath, type Lang } from "@/i18n";
+
+import { HeaderNavClient } from "./HeaderNav.client";
+
+interface Props {
+    lang?: Lang;
+}
+
+const { lang = defaultLang } = Astro.props;
+const t = useTranslations(lang);
+const tp = useTranslatedPath(lang);
+
+const navItems = HEADER_NAV_ITEMS.map((item) => ({
+    ...item,
+    href: tp(item.href),
+    label: item.label === "Docs" ? t("nav.docs") :
+           item.label === "Commands" ? t("nav.commands") :
+           item.label === "FAQ" ? t("nav.faq") : item.label,
+}));
+---
+
+<HeaderNavClient client:only="react" navItems={navItems} />

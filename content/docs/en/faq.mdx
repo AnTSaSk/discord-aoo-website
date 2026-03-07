@@ -1,0 +1,200 @@
+---
+title: FAQ
+description: Frequently asked questions about Albion Online Objectives — pricing, supported features, and troubleshooting the Albion Online objectives tracker.
+navLabel: FAQ
+---
+
+import FaqAccordion from '@/components/docs/FaqAccordion';
+import { BOT } from '@data/config';
+
+<script type="application/ld+json">{JSON.stringify({
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "Is Albion Online Objectives free?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Yes, Albion Online Objectives (AOO) is completely free and open source under the GPL-3.0 license."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Does Albion Online Objectives use the Albion Online API?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "No. Albion Online Objectives does not connect to any Albion Online API. Objectives are reported manually by guild members using the /add command."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Which Albion Online objectives are supported?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Albion Online Objectives supports three categories of Black Zone objectives: Resource Nodes (Fiber, Hide, Ore, and Wood, rarities 4.4 through 8.4), Energy Cores (Green, Blue, Purple, and Gold), and Vortexes (Green, Blue, Purple, and Gold)."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "How many maps does the bot support?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Albion Online Objectives supports 276 Black Zone maps with autocomplete search."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Does the bot need any configuration?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "No. Albion Online Objectives works immediately after installation — there is no setup or configuration command. Any server member can start using /add right away."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Which Albion Online server regions are supported?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Albion Online Objectives is region-agnostic. Since it relies on manual reports, it works with any server. The maintenance window (10:00 UTC) applies to all regions."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Can multiple guilds use the bot on the same Discord server?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Yes. Albion Online Objectives operates per Discord server. All members see the same objective list."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "How are expired objectives handled?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "A background task runs every 30 minutes to automatically remove expired objectives from the database and update the displayed list."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "What happens during Albion Online maintenance?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "The daily server maintenance at 10:00 UTC resets all objectives. When the calculated spawn time crosses the maintenance window, the bot flags it so your guildmates know the objective may not survive the reset."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Can the same objective be reported twice?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Albion Online Objectives prevents duplicates automatically. If someone tries to report the same objective type, rarity, and map within an 8-minute window of an existing report, the bot will reject it and notify the user."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "How accurate are the spawn timers?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Timers are as accurate as the report. When a guild member uses /add, they provide the minutes until spawn. The bot calculates the exact UTC spawn time from that input."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "The bot is not responding to commands",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Make sure the bot has the required permissions. Check that the bot is online (green status indicator). Ensure slash commands are enabled for the channel. Try removing and re-inviting the bot."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "I get a \"cooldown\" error",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Commands have cooldowns to prevent spam — 2 seconds for /add and /remove, 5 seconds for /list. Wait briefly and try again."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "How do I report a bug?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Open an issue on the GitHub repository or join our Discord server."
+      }
+    },
+  ]
+})}</script>
+
+## General
+
+<FaqAccordion client:load idPrefix="general" items={[
+  {
+    question: "Is Albion Online Objectives free?",
+    answer: "Yes, Albion Online Objectives (AOO) is completely free and open source under the GPL-3.0 license."
+  },
+  {
+    question: "Does Albion Online Objectives use the Albion Online API?",
+    answer: 'No. Albion Online Objectives does not connect to any Albion Online API. Objectives are reported manually by guild members using the <a href="/docs/commands/add/">/add</a> command. This means the bot is only as accurate as the reports your guild submits.'
+  },
+  {
+    question: "Which Albion Online objectives are supported?",
+    answer: 'Albion Online Objectives supports three categories of Black Zone objectives:<ul class="mt-2 list-disc pl-6 space-y-1"><li><strong>Resource Nodes</strong> — Fiber, Hide, Ore, and Wood (rarities 4.4 through 8.4)</li><li><strong>Energy Cores</strong> — Green, Blue, Purple, and Gold</li><li><strong>Vortexes</strong> — Green, Blue, Purple, and Gold</li></ul><p class="mt-2">See the full <a href="/docs/guides/objective-types/">objective types reference</a> for details.</p>'
+  },
+  {
+    question: "How many maps does the bot support?",
+    answer: 'Albion Online Objectives supports 276 Black Zone maps with autocomplete search. See the <a href="/docs/guides/black-zone-maps/">Black Zone maps list</a> for the complete list.'
+  },
+  {
+    question: "Does the bot need any configuration?",
+    answer: 'No. Albion Online Objectives works immediately after <a href="/docs/getting-started/installation/">installation</a> — there is no setup or configuration command. Any server member can start using <code>/add</code> right away.'
+  },
+  {
+    question: "Which Albion Online server regions are supported?",
+    answer: "Albion Online Objectives is region-agnostic. Since it relies on manual reports, it works with any server. The maintenance window (10:00 UTC) applies to all regions."
+  },
+  {
+    question: "Can multiple guilds use the bot on the same Discord server?",
+    answer: "Yes. Albion Online Objectives operates per Discord server. All members see the same objective list."
+  }
+]} />
+
+## How It Works
+
+<FaqAccordion client:load idPrefix="how" items={[
+  {
+    question: "How are expired objectives handled?",
+    answer: 'A background task runs every 30 minutes to automatically remove expired objectives from the database and update the displayed list. Expired objectives are also filtered out whenever someone runs <a href="/docs/commands/list/">/list</a>.'
+  },
+  {
+    question: "What happens during Albion Online maintenance?",
+    answer: "The daily server maintenance at 10:00 UTC resets all objectives. When the calculated spawn time of your objective crosses the 10:00 UTC maintenance window, the bot flags it — so your guildmates know the objective may not survive the reset."
+  },
+  {
+    question: "Can the same objective be reported twice?",
+    answer: "Albion Online Objectives prevents duplicates automatically. If someone tries to report the same objective type, rarity, and map within an 8-minute window of an existing report, the bot will reject it and notify the user."
+  },
+  {
+    question: "How accurate are the spawn timers?",
+    answer: "Timers are as accurate as the report. When a guild member uses <code>/add</code>, they provide the minutes until spawn. The bot calculates the exact UTC spawn time from that input."
+  }
+]} />
+
+## Troubleshooting
+
+<FaqAccordion client:load idPrefix="trouble" items={[
+  {
+    question: "The bot is not responding to commands",
+    answer: '<ol class="list-decimal pl-6 space-y-1"><li>Make sure the bot has the required <a href="/docs/getting-started/installation/#required-permissions">permissions</a></li><li>Check that the bot is online (green status indicator)</li><li>Ensure slash commands are enabled for the channel</li><li>Try removing and re-inviting the bot</li></ol>'
+  },
+  {
+    question: 'I get a "cooldown" error',
+    answer: "Commands have cooldowns to prevent spam — 2 seconds for <code>/add</code> and <code>/remove</code>, 5 seconds for <code>/list</code>. Wait briefly and try again."
+  },
+  {
+    question: "How do I report a bug?",
+    answer: `Open an issue on the <a href="${BOT.repo}/issues">GitHub repository</a> or join our <a href="${BOT.discordInvite}">Discord server</a>.`
+  }
+]} />
+
+Learn more [about the bot](/docs/about/).
