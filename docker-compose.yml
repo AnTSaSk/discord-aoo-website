@@ -53,14 +53,17 @@ services:
         target: /var/cache/nginx
         tmpfs:
           size: 16777216 # 16MB
+          mode: 1777
       - type: tmpfs
         target: /var/run
         tmpfs:
           size: 1048576 # 1MB
+          mode: 1777
       - type: tmpfs
         target: /var/log/nginx
         tmpfs:
           size: 8388608 # 8MB
+          mode: 1777
     healthcheck:
       test: ["CMD", "wget", "--no-verbose", "--tries=1", "--spider", "http://127.0.0.1:8080/"]
       interval: 30s
