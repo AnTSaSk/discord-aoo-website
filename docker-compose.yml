@@ -30,11 +30,11 @@ services:
           cpus: "0.05"
       labels:
         - "traefik.enable=true"
-        - "traefik.http.routers.aoo-website.rule=Host(`${APP_DOMAIN:-albion-online-objectives.com}`)"
-        - "traefik.http.routers.aoo-website.entrypoints=websecure"
-        - "traefik.http.routers.aoo-website.tls.certresolver=letsencrypt"
-        - "traefik.http.services.aoo-website.loadbalancer.server.port=8080"
-        - "traefik.http.routers.aoo-website.middlewares=aoo-ratelimit"
+        - "traefik.http.routers.discord-aoo-website.rule=Host(`${APP_DOMAIN:-albion-online-objectives.com}`)"
+        - "traefik.http.routers.discord-aoo-website.entrypoints=websecure"
+        - "traefik.http.routers.discord-aoo-website.tls.certresolver=letsencrypt"
+        - "traefik.http.services.discord-aoo-website.loadbalancer.server.port=8080"
+        - "traefik.http.routers.discord-aoo-website.middlewares=aoo-ratelimit"
         - "traefik.http.middlewares.aoo-ratelimit.ratelimit.average=100"
         - "traefik.http.middlewares.aoo-ratelimit.ratelimit.burst=50"
         - "traefik.http.middlewares.aoo-ratelimit.ratelimit.period=1s"
@@ -52,15 +52,15 @@ services:
       - type: tmpfs
         target: /var/cache/nginx
         tmpfs:
-          size: 16777216    # 16MB
+          size: 16777216 # 16MB
       - type: tmpfs
         target: /var/run
         tmpfs:
-          size: 1048576     # 1MB
+          size: 1048576 # 1MB
       - type: tmpfs
         target: /var/log/nginx
         tmpfs:
-          size: 8388608     # 8MB
+          size: 8388608 # 8MB
     healthcheck:
       test: ["CMD", "wget", "--no-verbose", "--tries=1", "--spider", "http://127.0.0.1:8080/"]
       interval: 30s
