@@ -11,7 +11,7 @@ RUN pnpm build
 FROM nginx:1-alpine AS runtime
 COPY --from=builder /app/dist /usr/share/nginx/html
 COPY nginx.conf /etc/nginx/nginx.conf
-RUN chown -R 101:101 /var/cache/nginx /var/run /usr/share/nginx/html
+RUN chown -R 101:101 /usr/share/nginx/html
 EXPOSE 8080
 USER 101
 HEALTHCHECK --interval=30s --timeout=5s --start-period=5s --retries=3 \
