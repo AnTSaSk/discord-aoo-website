@@ -1,4 +1,5 @@
 ---
+import { SITE } from "@data/config";
 import BaseLayout from "./BaseLayout.astro";
 
 import Breadcrumb from "@/components/docs/Breadcrumb.astro";
@@ -50,7 +51,15 @@ const heroImage = frontmatter.data.heroImage;
 const heroImageAlt = frontmatter.data.heroImageAlt ?? frontmatter.data.title;
 ---
 
-<BaseLayout image={image} imageAlt={imageAlt} contentType="article" lang={lang} breadcrumbs={breadcrumbItems}>
+<BaseLayout
+    title={`${frontmatter.data.title} — ${SITE.name}`}
+    description={frontmatter.data.description}
+    image={image}
+    imageAlt={imageAlt}
+    contentType="article"
+    lang={lang}
+    breadcrumbs={breadcrumbItems}
+>
     {/* Reading progress bar */}
     <div
         id="reading-progress"

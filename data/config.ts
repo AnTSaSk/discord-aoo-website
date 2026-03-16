@@ -41,9 +41,10 @@ export const SITE: SiteConfig = {
   website: "https://albion-online-objectives.com",
   author: "AnTSaSk",
   repo: "https://github.com/AnTSaSk/discord-aoo-website",
+  name: "Albion Online Objectives",
   title: "AOO — Albion Online Objectives",
   description:
-    "Open-source Discord bot for Albion Online guilds — report and track Black Zone objectives in real time: resource nodes, energy cores, and vortexes.",
+    "Your guild's shared Black Zone tracker — report objectives, coordinate timers, and never miss a spawn. Right from Discord.",
   image: "/og-image.png",
   imageAlt: "AOO — Albion Online Objectives",
 };

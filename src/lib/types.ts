@@ -42,6 +42,7 @@ export interface SiteConfig {
   author: string;
   authorUrl?: string;
   repo: string;
+  name: string;
   title: string;
   description: string;
   image: string | ImageMetadata;

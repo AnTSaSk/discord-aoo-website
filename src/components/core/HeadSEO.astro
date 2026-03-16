@@ -27,7 +27,7 @@ const {
     breadcrumbs,
 } = Astro.props as HeadSEOProps;
 
-const canonicalURL = new URL(Astro.url);
+const canonicalURL = new URL(Astro.url.pathname, Astro.site ?? SITE.website ?? "http://127.0.0.1:4321");
 // Prefer configured site URL when Astro.site isn't available (e.g., in dev)
 const siteUrl = Astro.site ?? SITE.website ?? "http://127.0.0.1:4321";
 
@@ -102,7 +102,7 @@ const hreflangAlternates = langKeys.map((l) => ({
 
 <!-- OpenGraph Meta Tags -->
 <meta property="og:type" content={contentType === "article" ? "article" : "website"} />
-<meta property="og:site_name" content={SITE.title} />
+<meta property="og:site_name" content={SITE.name} />
 <meta property="og:url" content={canonicalURL} />
 <meta property="og:title" content={title} />
 <meta property="og:description" content={description} />
@@ -110,6 +110,7 @@ const hreflangAlternates = langKeys.map((l) => ({
 <meta property="og:image:alt" content={imageAlt} />
 <meta property="og:image:width" content="1200" />
 <meta property="og:image:height" content="630" />
+<meta property="og:locale" content={_lang === "fr" ? "fr_FR" : "en_US"} />
 
 <!-- Twitter Card Meta Tags -->
 <meta name="twitter:card" content="summary_large_image" />
@@ -125,17 +126,20 @@ const hreflangAlternates = langKeys.map((l) => ({
     "@graph": [
         {
             "@type": "SoftwareApplication",
-            name: "Albion Online Objectives",
-            description: "Open-source Discord bot for Albion Online guilds — report and track Black Zone objectives in real time: resource nodes, energy cores, and vortexes.",
+            name: SITE.name,
+            description: SITE.description,
             applicationCategory: "GameApplication",
             operatingSystem: "Discord",
             offers: { "@type": "Offer", price: "0", priceCurrency: "USD" },
-            url: "https://albion-online-objectives.com",
+            url: SITE.website,
+            image: new URL(typeof SITE.image === "string" ? SITE.image : SITE.image.src, siteUrl).toString(),
+            author: { "@type": "Person", name: SITE.author },
         },
         {
             "@type": "WebSite",
-            name: "AOO — Albion Online Objectives Documentation",
-            url: "https://albion-online-objectives.com",
+            name: SITE.name,
+            url: SITE.website,
+            description: SITE.description,
         },
     ],
 })} />

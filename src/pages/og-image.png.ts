@@ -5,7 +5,7 @@ import { renderOgImage } from "@/lib/og/render";
 
 export const GET: APIRoute = async () => {
   const png = await renderOgImage({
-    title: "Albion Online Objectives",
+    title: SITE.name,
     description: SITE.description,
   });
 
