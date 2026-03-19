@@ -1,4 +1,6 @@
 User-agent: *
 Allow: /
+Disallow: /api/
+Disallow: /*.md
 
 Sitemap: https://albion-online-objectives.com/sitemap-index.xml

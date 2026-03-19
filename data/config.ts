@@ -44,7 +44,7 @@ export const SITE: SiteConfig = {
   name: "Albion Online Objectives",
   title: "AOO — Albion Online Objectives",
   description:
-    "Your guild's shared Black Zone tracker — report objectives, coordinate timers, and never miss a spawn. Right from Discord.",
+    "Your guild's shared Black Zone tracker — report objectives, coordinate timers, and never miss a spawn. Free open-source Discord bot for Albion Online.",
   image: "/og-image.png",
   imageAlt: "AOO — Albion Online Objectives",
 };

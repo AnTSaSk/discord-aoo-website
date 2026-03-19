@@ -120,43 +120,66 @@ const hreflangAlternates = langKeys.map((l) => ({
 <meta name="twitter:image:alt" content={imageAlt} />
 {SITE.twitterHandle && <meta name="twitter:creator" content={SITE.twitterHandle} />}
 
-<!-- JSON-LD Structured Data -->
-<script is:inline type="application/ld+json" set:html={JSON.stringify({
-    "@context": "https://schema.org",
-    "@graph": [
-        {
-            "@type": "SoftwareApplication",
-            name: SITE.name,
-            description: SITE.description,
-            applicationCategory: "GameApplication",
-            operatingSystem: "Discord",
-            offers: { "@type": "Offer", price: "0", priceCurrency: "USD" },
-            url: SITE.website,
-            image: new URL(typeof SITE.image === "string" ? SITE.image : SITE.image.src, siteUrl).toString(),
-            author: { "@type": "Person", name: SITE.author },
-        },
-        {
-            "@type": "WebSite",
-            name: SITE.name,
-            url: SITE.website,
-            description: SITE.description,
-        },
-    ],
-})} />
-
-{/* BreadcrumbList JSON-LD for documentation pages */}
-{breadcrumbs && breadcrumbs.length > 0 && (
+<!-- JSON-LD Structured Data (homepage only: SoftwareApplication + WebSite) -->
+{!contentType && !noIndex && (
     <script is:inline type="application/ld+json" set:html={JSON.stringify({
         "@context": "https://schema.org",
-        "@type": "BreadcrumbList",
-        itemListElement: breadcrumbs.map((item, index) => ({
-            "@type": "ListItem",
-            position: index + 1,
-            name: item.label,
-            ...(item.href ? { item: new URL(item.href, siteUrl).toString() } : {}),
-        })),
+        "@graph": [
+            {
+                "@type": "SoftwareApplication",
+                "@id": `${SITE.website}/#software`,
+                name: SITE.name,
+                description: SITE.description,
+                applicationCategory: "GameApplication",
+                operatingSystem: "Discord",
+                offers: { "@type": "Offer", price: "0", priceCurrency: "USD" },
+                url: SITE.website,
+                image: new URL(typeof SITE.image === "string" ? SITE.image : SITE.image.src, siteUrl).toString(),
+                author: { "@type": "Person", name: SITE.author },
+            },
+            {
+                "@type": "WebSite",
+                "@id": `${SITE.website}/#website`,
+                name: SITE.name,
+                url: SITE.website,
+                description: SITE.description,
+            },
+        ],
     })} />
 )}
+
+{/* BreadcrumbList JSON-LD for documentation pages */}
+{breadcrumbs && breadcrumbs.length > 0 && (() => {
+    const basePath = breadcrumbs[0]?.href ?? "/docs";
+    const baseSegmentCount = basePath.replace(/^\//, "").split("/").filter(Boolean).length;
+    const canonicalParts = canonicalURL.pathname.replace(/\/$/, "").split("/").filter(Boolean);
+
+    return (
+        <script is:inline type="application/ld+json" set:html={JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "BreadcrumbList",
+            itemListElement: breadcrumbs.map((bc, index) => {
+                const isLast = index === breadcrumbs.length - 1;
+                let itemUrl: string | undefined;
+
+                if (bc.href) {
+                    itemUrl = new URL(bc.href, siteUrl).toString();
+                } else if (!isLast) {
+                    const segmentCount = baseSegmentCount + index;
+                    const derivedPath = "/" + canonicalParts.slice(0, segmentCount).join("/");
+                    itemUrl = new URL(derivedPath, siteUrl).toString();
+                }
+
+                return {
+                    "@type": "ListItem",
+                    position: index + 1,
+                    name: bc.label,
+                    ...(itemUrl ? { item: itemUrl } : {}),
+                };
+            }),
+        })} />
+    );
+})()}
 
 <!-- Theme initialization script (inline to prevent flash) -->
 <script is:inline>

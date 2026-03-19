@@ -70,7 +70,7 @@ const { doc, collection, nav, lang } = Astro.props as {
 const { Content, headings } = await render(doc);
 
 const canonicalSlug = doc.id.replace(/^(en|fr)\//, "");
-const ogImage = `/${lang}/og/${collection}/${canonicalSlug}.png`;
+const ogImage = `/og/${lang}/${collection}/${canonicalSlug}.png`;
 
 const components = {
     img: MdxImage,
