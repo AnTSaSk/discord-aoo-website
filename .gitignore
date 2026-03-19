@@ -28,3 +28,6 @@ pnpm-debug.log*
 CLAUDE.md
 .claude/
 tasks/
+
+# Git worktrees
+.worktrees/
