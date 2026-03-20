@@ -5,6 +5,13 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.1.7](https://github.com/AnTSaSk/discord-aoo-website/compare/discord-aoo-website-v0.1.6...discord-aoo-website-v0.1.7) (2026-03-20)
+
+
+### Bug Fixes
+
+* **seo:** Google SEO guide audit — titles, structured data, favicons, HTML validity ([6faad9a](https://github.com/AnTSaSk/discord-aoo-website/commit/6faad9a40e75cc86d55c43f599838940eec03ad8))
+
 ## [0.1.6](https://github.com/AnTSaSk/discord-aoo-website/compare/discord-aoo-website-v0.1.5...discord-aoo-website-v0.1.6) (2026-03-19)
 
 
