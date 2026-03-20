@@ -23,7 +23,7 @@ const tp = useTranslatedPath(lang);
 <BaseLayout
     fullWidth
     lang={lang}
-    title={`${t("home.hero.title")} — Discord Bot for Guilds`}
+    title={`${t("home.hero.title")} — ${t("home.meta.titleSuffix")}`}
     description={t("home.meta.description")}
     image="/og-image.png"
     imageAlt="AOO — Albion Online Objectives"
@@ -32,7 +32,7 @@ const tp = useTranslatedPath(lang);
     <section class="mx-auto max-w-6xl px-5 py-12 sm:py-20">
         <div class="hero-animate space-y-8">
             <div class="space-y-4">
-                <img src="/LogoAOO.svg" alt="AOO Logo" class="mx-auto w-40 sm:w-56" />
+                <img src="/LogoAOO.svg" alt="Albion Online Objectives" width="224" height="214" class="mx-auto w-40 sm:w-56" />
                 <h1
                     class="font-display text-foreground text-5xl leading-tight font-bold tracking-tight sm:text-6xl lg:text-7xl"
                 >
@@ -44,7 +44,7 @@ const tp = useTranslatedPath(lang);
             </div>
 
             <div class="flex flex-col items-center justify-center gap-3 sm:flex-row">
-                <Button size="lg">
+                <Button asChild size="lg">
                     <a
                         href={`https://discord.com/oauth2/authorize?client_id=${BOT.clientId}`}
                         target="_blank"
@@ -55,7 +55,7 @@ const tp = useTranslatedPath(lang);
                         {t("home.cta.addToDiscord")}
                     </a>
                 </Button>
-                <Button size="lg" variant="secondary">
+                <Button asChild size="lg" variant="secondary">
                     <a href={tp("/docs/getting-started/installation")}>{t("home.cta.getStarted")}</a>
                 </Button>
             </div>
@@ -237,7 +237,7 @@ const tp = useTranslatedPath(lang);
                     <Badge variant="outline">{t("home.community.badges.noApi")}</Badge>
                 </div>
                 <div class="flex flex-col items-center justify-center gap-3 sm:flex-row pt-2">
-                    <Button size="lg" variant="secondary">
+                    <Button asChild size="lg" variant="secondary">
                         <a
                             href={BOT.repo}
                             target="_blank"
@@ -247,7 +247,7 @@ const tp = useTranslatedPath(lang);
                             {t("home.community.cta.github")}
                         </a>
                     </Button>
-                    <Button size="lg" variant="secondary">
+                    <Button asChild size="lg" variant="secondary">
                         <a
                             href={BOT.discordInvite}
                             target="_blank"
@@ -275,13 +275,13 @@ const tp = useTranslatedPath(lang);
             </p>
         </div>
         <div class="flex flex-col items-center justify-center gap-3 sm:flex-row">
-            <Button size="lg" variant="secondary">
+            <Button asChild size="lg" variant="secondary">
                 <a href={tp("/docs/commands")} class="flex flex-row items-center gap-3">
                     {t("home.docsCta.browseCommands")}
                     <Icon name="right" />
                 </a>
             </Button>
-            <Button size="lg" variant="secondary">
+            <Button asChild size="lg" variant="secondary">
                 <a
                     href={tp("/docs/guides/objective-types")}
                     class="flex flex-row items-center gap-3"
@@ -290,7 +290,7 @@ const tp = useTranslatedPath(lang);
                     <Icon name="right" />
                 </a>
             </Button>
-            <Button size="lg" variant="secondary">
+            <Button asChild size="lg" variant="secondary">
                 <a href={tp("/docs/faq")} class="flex flex-row items-center gap-3">
                     {t("home.docsCta.readFaq")}
                     <Icon name="right" />

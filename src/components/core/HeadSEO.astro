@@ -83,6 +83,7 @@ const hreflangAlternates = langKeys.map((l) => ({
 <meta charset="UTF-8" />
 <meta name="robots" content={noIndex ? "noindex, nofollow" : "index, follow"} />
 <meta name="googlebot" content={noIndex ? "noindex, nofollow" : "index, follow"} />
+<meta name="author" content={SITE.author} />
 
 <!-- Canonical URL -->
 <link rel="canonical" href={canonicalURL} />
@@ -97,8 +98,9 @@ const hreflangAlternates = langKeys.map((l) => ({
 <link rel="sitemap" href="/sitemap-index.xml" />
 
 <!-- Favicon -->
-<link rel="apple-touch-icon" type="image/svg+xml" href="/favicon.svg" />
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
 <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+<link rel="icon" type="image/png" sizes="48x48" href="/favicon-48x48.png" />
 
 <!-- OpenGraph Meta Tags -->
 <meta property="og:type" content={contentType === "article" ? "article" : "website"} />
@@ -136,13 +138,16 @@ const hreflangAlternates = langKeys.map((l) => ({
                 url: SITE.website,
                 image: new URL(typeof SITE.image === "string" ? SITE.image : SITE.image.src, siteUrl).toString(),
                 author: { "@type": "Person", name: SITE.author },
+                inLanguage: _lang === "fr" ? "fr-FR" : "en-US",
             },
             {
                 "@type": "WebSite",
                 "@id": `${SITE.website}/#website`,
                 name: SITE.name,
+                alternateName: ["AOO", "AOO Bot"],
                 url: SITE.website,
                 description: SITE.description,
+                inLanguage: _lang === "fr" ? "fr-FR" : "en-US",
             },
         ],
     })} />

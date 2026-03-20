@@ -72,6 +72,7 @@ export const ui = {
       "Your guild's shared Black Zone tracker — report objectives, coordinate timers, and never miss a spawn. Right from Discord.",
     "home.meta.description":
       "Your guild's shared Black Zone tracker — report objectives, coordinate timers, and never miss a spawn. Free open-source Discord bot for Albion Online.",
+    "home.meta.titleSuffix": "Discord Bot for Guilds",
     "home.cta.addToDiscord": "Add to Discord",
     "home.cta.getStarted": "Get Started",
 
@@ -231,6 +232,7 @@ export const ui = {
       "Le tracker de Black Zone de votre guilde — rapportez les objectifs, coordonnez les timers, et ne ratez jamais un spawn. Directement depuis Discord.",
     "home.meta.description":
       "Le tracker de Black Zone de votre guilde — rapportez les objectifs, coordonnez les timers, ne ratez jamais un spawn. Bot Discord open source pour Albion Online.",
+    "home.meta.titleSuffix": "Bot Discord pour les guildes",
     "home.cta.addToDiscord": "Ajouter à Discord",
     "home.cta.getStarted": "Commencer",
 

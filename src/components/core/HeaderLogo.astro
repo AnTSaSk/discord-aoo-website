@@ -10,8 +10,8 @@ const { lang = defaultLang } = Astro.props;
 const tp = useTranslatedPath(lang);
 ---
 
-<Button variant="ghost" size="icon">
+<Button asChild variant="ghost" size="icon">
     <a href={tp("/")} class="flex items-center gap-2" aria-label="Home">
-        <img src="/crystal-icon.svg" alt="AOO" class="size-5" />
+        <img src="/crystal-icon.svg" alt="AOO" width="20" height="20" class="size-5" />
     </a>
 </Button>
