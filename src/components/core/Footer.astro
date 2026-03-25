@@ -3,7 +3,8 @@ import { SITE, FOOTER_SOCIAL_LINKS } from "@data/config";
 import { Icon } from "astro-icon/components";
 
 import { defaultLang, useTranslations, type Lang } from "@/i18n";
-import { Button } from "@/components/ui/button";
+import { buttonVariants } from "@/components/ui/button";
+import { cn } from "@/lib/utils";
 
 interface Props {
     class?: string;
@@ -40,16 +41,15 @@ const showAuthorLine = Boolean(authorHref && SITE.author);
         <div class="flex justify-center gap-3 sm:justify-end">
             {
                 activeSocials.map(({ name, href, linkTitle }) => (
-                    <Button asChild variant="ghost" size="icon">
-                        <a
-                            href={href}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            aria-label={linkTitle ?? name}
-                        >
-                            <Icon name={name} class="size-5" />
-                        </a>
-                    </Button>
+                    <a
+                        href={href}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        aria-label={linkTitle ?? name}
+                        class={cn(buttonVariants({ variant: "ghost", size: "icon" }))}
+                    >
+                        <Icon name={name} class="size-5" />
+                    </a>
                 ))
             }
         </div>

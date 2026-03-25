@@ -1,7 +1,8 @@
 ---
 import { Icon } from "astro-icon/components";
 
-import { Button } from "@/components/ui/button";
+import { buttonVariants } from "@/components/ui/button";
+import { cn } from "@/lib/utils";
 import Badge from "@/components/ui/Badge.astro";
 import StatCard from "@/components/docs/StatCard.astro";
 import FeatureCard from "@/components/docs/FeatureCard.astro";
@@ -44,20 +45,21 @@ const tp = useTranslatedPath(lang);
             </div>
 
             <div class="flex flex-col items-center justify-center gap-3 sm:flex-row">
-                <Button asChild size="lg">
-                    <a
-                        href={`https://discord.com/oauth2/authorize?client_id=${BOT.clientId}`}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        class="flex flex-row items-center gap-3"
-                    >
-                        <Icon name="discord" class="size-5" />
-                        {t("home.cta.addToDiscord")}
-                    </a>
-                </Button>
-                <Button asChild size="lg" variant="secondary">
-                    <a href={tp("/docs/getting-started/installation")}>{t("home.cta.getStarted")}</a>
-                </Button>
+                <a
+                    href={`https://discord.com/oauth2/authorize?client_id=${BOT.clientId}`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    class={cn(buttonVariants({ size: "lg" }), "flex flex-row items-center gap-3")}
+                >
+                    <Icon name="discord" class="size-5" />
+                    {t("home.cta.addToDiscord")}
+                </a>
+                <a
+                    href={tp("/docs/getting-started/installation")}
+                    class={cn(buttonVariants({ variant: "secondary", size: "lg" }))}
+                >
+                    {t("home.cta.getStarted")}
+                </a>
             </div>
         </div>
     </section>
@@ -237,26 +239,22 @@ const tp = useTranslatedPath(lang);
                     <Badge variant="outline">{t("home.community.badges.noApi")}</Badge>
                 </div>
                 <div class="flex flex-col items-center justify-center gap-3 sm:flex-row pt-2">
-                    <Button asChild size="lg" variant="secondary">
-                        <a
-                            href={BOT.repo}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            class="flex flex-row items-center gap-3"
-                        >
-                            {t("home.community.cta.github")}
-                        </a>
-                    </Button>
-                    <Button asChild size="lg" variant="secondary">
-                        <a
-                            href={BOT.discordInvite}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            class="flex flex-row items-center gap-3"
-                        >
-                            {t("home.community.cta.discord")}
-                        </a>
-                    </Button>
+                    <a
+                        href={BOT.repo}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        class={cn(buttonVariants({ variant: "secondary", size: "lg" }), "flex flex-row items-center gap-3")}
+                    >
+                        {t("home.community.cta.github")}
+                    </a>
+                    <a
+                        href={BOT.discordInvite}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        class={cn(buttonVariants({ variant: "secondary", size: "lg" }), "flex flex-row items-center gap-3")}
+                    >
+                        {t("home.community.cta.discord")}
+                    </a>
                 </div>
             </div>
             </ScrollReveal>
@@ -275,27 +273,27 @@ const tp = useTranslatedPath(lang);
             </p>
         </div>
         <div class="flex flex-col items-center justify-center gap-3 sm:flex-row">
-            <Button asChild size="lg" variant="secondary">
-                <a href={tp("/docs/commands")} class="flex flex-row items-center gap-3">
-                    {t("home.docsCta.browseCommands")}
-                    <Icon name="right" />
-                </a>
-            </Button>
-            <Button asChild size="lg" variant="secondary">
-                <a
-                    href={tp("/docs/guides/objective-types")}
-                    class="flex flex-row items-center gap-3"
-                >
-                    {t("home.docsCta.exploreGuides")}
-                    <Icon name="right" />
-                </a>
-            </Button>
-            <Button asChild size="lg" variant="secondary">
-                <a href={tp("/docs/faq")} class="flex flex-row items-center gap-3">
-                    {t("home.docsCta.readFaq")}
-                    <Icon name="right" />
-                </a>
-            </Button>
+            <a
+                href={tp("/docs/commands")}
+                class={cn(buttonVariants({ variant: "secondary", size: "lg" }), "flex flex-row items-center gap-3")}
+            >
+                {t("home.docsCta.browseCommands")}
+                <Icon name="right" />
+            </a>
+            <a
+                href={tp("/docs/guides/objective-types")}
+                class={cn(buttonVariants({ variant: "secondary", size: "lg" }), "flex flex-row items-center gap-3")}
+            >
+                {t("home.docsCta.exploreGuides")}
+                <Icon name="right" />
+            </a>
+            <a
+                href={tp("/docs/faq")}
+                class={cn(buttonVariants({ variant: "secondary", size: "lg" }), "flex flex-row items-center gap-3")}
+            >
+                {t("home.docsCta.readFaq")}
+                <Icon name="right" />
+            </a>
         </div>
         </ScrollReveal>
     </section>

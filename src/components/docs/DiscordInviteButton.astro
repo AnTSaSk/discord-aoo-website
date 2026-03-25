@@ -1,6 +1,7 @@
 ---
 import { Icon } from "astro-icon/components";
-import { Button } from "@/components/ui/button";
+import { buttonVariants } from "@/components/ui/button";
+import { cn } from "@/lib/utils";
 import { BOT } from "@data/config";
 import { getLangFromUrl, useTranslations } from "@/i18n";
 
@@ -9,15 +10,13 @@ const t = useTranslations(lang);
 ---
 
 <div class="my-6 flex justify-center">
-  <Button asChild size="lg">
-    <a
-      href={`https://discord.com/oauth2/authorize?client_id=${BOT.clientId}`}
-      target="_blank"
-      rel="noopener noreferrer"
-      class="flex items-center gap-2 !text-black"
-    >
-      <Icon name="discord" class="size-5" />
-      {t("install.cta.addToServer")}
-    </a>
-  </Button>
+  <a
+    href={`https://discord.com/oauth2/authorize?client_id=${BOT.clientId}`}
+    target="_blank"
+    rel="noopener noreferrer"
+    class={cn(buttonVariants({ size: "lg" }), "flex items-center gap-2 !text-black")}
+  >
+    <Icon name="discord" class="size-5" />
+    {t("install.cta.addToServer")}
+  </a>
 </div>

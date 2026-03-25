@@ -4,7 +4,8 @@ import { Icon } from "astro-icon/components";
 
 import DocsContent from "@/components/docs/DocsContent.astro";
 import DocsTabs from "@/components/docs/DocsTabs.astro";
-import { Button } from "@/components/ui/button";
+import { buttonVariants } from "@/components/ui/button";
+import { cn } from "@/lib/utils";
 import { getActiveTab, buildNavigation } from "@/lib/navigation";
 
 const activeSocials = HEADER_SOCIAL_LINKS.filter((social) => social.active);
@@ -91,16 +92,15 @@ const showDocs = Boolean(collectionId && navResult && activeTab);
                 <div class="border-border/40 flex items-center justify-center gap-3 border-t pt-4">
                     {
                         activeSocials.map(({ name, href, linkTitle }) => (
-                            <Button key={name} variant="ghost" size="icon" asChild>
-                                <a
-                                    href={href}
-                                    target="_blank"
-                                    rel="noopener noreferrer"
-                                    aria-label={linkTitle ?? name}
-                                >
-                                    <Icon name={name} class="size-5" />
-                                </a>
-                            </Button>
+                            <a
+                                href={href}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                aria-label={linkTitle ?? name}
+                                class={cn(buttonVariants({ variant: "ghost", size: "icon" }))}
+                            >
+                                <Icon name={name} class="size-5" />
+                            </a>
                         ))
                     }
                 </div>

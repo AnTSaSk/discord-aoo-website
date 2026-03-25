@@ -1,5 +1,6 @@
 ---
-import { Button } from "@/components/ui/button";
+import { buttonVariants } from "@/components/ui/button";
+import { cn } from "@/lib/utils";
 import { defaultLang, useTranslatedPath, type Lang } from "@/i18n";
 
 interface Props {
@@ -10,8 +11,6 @@ const { lang = defaultLang } = Astro.props;
 const tp = useTranslatedPath(lang);
 ---
 
-<Button asChild variant="ghost" size="icon">
-    <a href={tp("/")} class="flex items-center gap-2" aria-label="Home">
-        <img src="/crystal-icon.svg" alt="AOO" width="20" height="20" class="size-5" />
-    </a>
-</Button>
+<a href={tp("/")} class={cn(buttonVariants({ variant: "ghost", size: "icon" }), "flex items-center gap-2")} aria-label="Home">
+    <img src="/crystal-icon.svg" alt="AOO" width="20" height="20" class="size-5" />
+</a>
