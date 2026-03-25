@@ -64,9 +64,6 @@ jobs:
           cache-to: type=gha,mode=max
           platforms: linux/amd64
 
-      # TODO: Re-enable Trivy vulnerability scanning when aquasecurity/trivy GitHub repo is restored
-      # Ref: https://www.reddit.com/r/devsecops/comments/1rhp8mz/trivy_github_repository_is_empty/
-
   deploy:
     needs: build
     runs-on: ubuntu-latest
