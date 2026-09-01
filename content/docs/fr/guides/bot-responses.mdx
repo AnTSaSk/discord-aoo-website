@@ -142,6 +142,15 @@ Avec [`/edit`](/docs/commands/edit/), ce contrôle porte sur la combinaison **r�
 
 **Résolution :** Demandez à l'auteur du rapport de le supprimer, ou faites appel à un modérateur ou administrateur pour effectuer la suppression.
 
+### Salon inaccessible en écriture
+
+**Message :**
+> I cannot post in that channel: the **View Channel** permission is missing. Grant it there, then run the command again.
+
+**Cause :** Vous avez désigné avec `/settings announcement-channel` un salon d'annonces où le bot ne peut pas écrire. Le message nomme la permission manquante — **View Channel** ou **Send Messages**.
+
+**Résolution :** Accordez au bot la permission nommée sur ce salon, puis relancez la commande. Rien n'est enregistré tant que la vérification échoue : votre réglage précédent reste intact.
+
 ### Cooldown actif
 
 Si vous utilisez une commande trop rapidement après la précédente, Discord affiche un avis de cooldown. Le bot applique les délais suivants :
@@ -149,7 +158,9 @@ Si vous utilisez une commande trop rapidement après la précédente, Discord af
 | Commande | Cooldown |
 |----------|----------|
 | `/add` | 2 secondes |
+| `/edit` | 2 secondes |
 | `/remove` | 2 secondes |
+| `/about` | 2 secondes |
 | `/list` | 5 secondes |
 
 **Résolution :** Attendez la fin du cooldown puis réessayez.
@@ -163,3 +174,19 @@ Lorsque l'heure d'apparition calculée d'un objectif chevauche la fenêtre de **
 - Les objectifs qui apparaissent bien avant ou bien après la maintenance ne sont pas concernés
 
 Utilisez cet indicateur pour éviter d'engager des ressources sur un objectif qui risque de disparaître lors du redémarrage des serveurs.
+
+## Messages d'annonce
+
+À chaque nouvelle version, le bot publie une annonce sur votre serveur. Elle part dans le salon défini via [`/settings announcement-channel`](/docs/commands/settings/).
+
+Sans salon défini, l'annonce se replie sur le dernier salon où le bot a été utilisé et porte cette notice :
+
+> No announcement channel is set yet, so this message landed in the last channel where the bot was used. An admin can pick a dedicated one with `/settings announcement-channel`.
+
+Définir un salon fait disparaître la notice. Chaque annonce n'est envoyée qu'**une fois par serveur** : elle n'est jamais répétée.
+
+Un administrateur peut désactiver complètement les annonces avec `/settings announcements enabled:false`.
+
+## Message de bienvenue
+
+À son arrivée sur un serveur, le bot publie un message de bienvenue unique présentant `/add`, `/list` et `/settings`, avec les liens vers ce site et les documents légaux. Il choisit le salon système s'il peut y écrire, sinon le premier salon textuel accessible.

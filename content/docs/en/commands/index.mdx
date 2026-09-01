@@ -1,6 +1,6 @@
 ---
 title: Commands Reference
-description: Complete reference for all Albion Online Objectives slash commands — /add to report objectives, /list to view them, /edit to modify one, and /remove to delete entries.
+description: Complete reference for all Albion Online Objectives slash commands — report and track Black Zone objectives, configure announcements, and check the bot version.
 navLabel: Overview
 ---
 
@@ -9,7 +9,7 @@ import Callout from '@/components/docs/Callout.astro';
 
 All Albion Online Objectives (AOO) interactions use Discord slash commands. Type `/` in any channel where the bot has access to see available commands.
 
-<Callout variant="info">Commands have cooldowns to prevent spam — 2 seconds for /add, /edit and /remove, 5 seconds for /list.</Callout>
+<Callout variant="info">Commands have cooldowns to prevent spam — 2 seconds for /add, /edit, /remove and /about, 5 seconds for /list.</Callout>
 
 ## Commands
 
@@ -19,6 +19,8 @@ All Albion Online Objectives (AOO) interactions use Discord slash commands. Type
 | [`/list`](/docs/commands/list/) | View all active objectives for your server | 5 seconds |
 | [`/edit`](/docs/commands/edit/) | Modify an objective already reported | 2 seconds |
 | [`/remove`](/docs/commands/remove/) | Delete a reported objective | 2 seconds |
+| [`/settings`](/docs/commands/settings/) | Configure release announcements for your server | — |
+| `/about` | Bot version, website and legal documents | 2 seconds |
 
 ## Quick Start
 
@@ -29,12 +31,22 @@ New to Albion Online Objectives? Follow the [Report Your First Objective](/docs/
 3. **Correct** a mistake with [`/edit`](/docs/commands/edit/) — no need to delete and re-add
 4. **Remove** an expired or incorrect entry with [`/remove`](/docs/commands/remove/)
 
+An admin can then choose where release announcements land with [`/settings`](/docs/commands/settings/).
+
 ## Permissions
 
-<Badge variant="green">No permissions required</Badge> All four commands are available to every member of your server. The exceptions are `/edit` and `/remove`, which require one of the following to modify or delete another player's report:
+<Badge variant="green">No permissions required</Badge> `/add`, `/list` and `/about` are available to every member of your server.
+
+`/edit` and `/remove` require one of the following to modify or delete **another player's** report:
 
 - **Administrator** permission
 - **Manage Messages** permission
 - Being the original reporter
+
+[`/settings`](/docs/commands/settings/) is the only command gated by a server permission: it requires **Manage Server**, and members without it do not see it at all.
+
+## `/about`
+
+`/about` replies privately with the bot's current version and links to this site, the [Terms of Use](/terms) and the [Privacy Policy](/privacy). Every member can use it.
 
 See each command's dedicated page for full parameter details and examples.

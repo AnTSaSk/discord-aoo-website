@@ -49,7 +49,7 @@ import { BOT } from '@data/config';
       "name": "Does the bot need any configuration?",
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "No. Albion Online Objectives works immediately after installation — there is no setup or configuration command. Any server member can start using /add right away."
+        "text": "Not to track objectives. Albion Online Objectives works immediately after installation and any server member can use /add right away. One optional setting exists: /settings lets an admin choose where release announcements land."
       }
     },
     {
@@ -113,7 +113,7 @@ import { BOT } from '@data/config';
       "name": "I get a \"cooldown\" error",
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "Commands have cooldowns to prevent spam — 2 seconds for /add, /edit and /remove, 5 seconds for /list. Wait briefly and try again."
+        "text": "Commands have cooldowns to prevent spam — 2 seconds for /add, /edit, /remove and /about, 5 seconds for /list. Wait briefly and try again."
       }
     },
     {
@@ -122,6 +122,30 @@ import { BOT } from '@data/config';
       "acceptedAnswer": {
         "@type": "Answer",
         "text": "Open an issue on the GitHub repository or join our Discord server."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Where does the bot post release announcements?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "In the channel set with /settings announcement-channel. Without one, the announcement falls back to the last channel the bot was used in, and carries a notice explaining the fallback. Each announcement is sent once per server."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Will the bot ping @everyone?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "No, not unless an admin turns it on. The @everyone mention is disabled by default and only a member with the Manage Server permission can enable it with /settings announcements mention-everyone:true."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "How do I turn off release announcements?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Run /settings announcements enabled:false. It requires the Manage Server permission and stops all future announcements on that server."
       }
     },
   ]
@@ -148,7 +172,7 @@ import { BOT } from '@data/config';
   },
   {
     question: "Does the bot need any configuration?",
-    answer: 'No. Albion Online Objectives works immediately after <a href="/docs/getting-started/installation/">installation</a> — there is no setup or configuration command. Any server member can start using <code>/add</code> right away.'
+    answer: 'Not to track objectives. Albion Online Objectives works immediately after <a href="/docs/getting-started/installation/">installation</a> and any server member can use <code>/add</code> right away. One optional setting exists: <a href="/docs/commands/settings/">/settings</a> lets an admin choose where release announcements land.'
   },
   {
     question: "Which Albion Online server regions are supported?",
@@ -157,6 +181,18 @@ import { BOT } from '@data/config';
   {
     question: "Can multiple guilds use the bot on the same Discord server?",
     answer: "Yes. Albion Online Objectives operates per Discord server. All members see the same objective list."
+  },
+  {
+    question: "Where does the bot post release announcements?",
+    answer: 'In the channel set with <a href="/docs/commands/settings/">/settings announcement-channel</a>. Without one, the announcement falls back to the last channel the bot was used in and carries a notice explaining why. Each announcement is sent once per server, never repeated.'
+  },
+  {
+    question: "Will the bot ping @everyone?",
+    answer: 'No, not unless an admin turns it on. The <code>@everyone</code> mention is <strong>disabled by default</strong> and only a member with the <strong>Manage Server</strong> permission can enable it, with <code>/settings announcements mention-everyone:true</code>.'
+  },
+  {
+    question: "How do I turn off release announcements?",
+    answer: 'Run <code>/settings announcements enabled:false</code>. It requires the <strong>Manage Server</strong> permission and stops every future announcement on that server.'
   }
 ]} />
 

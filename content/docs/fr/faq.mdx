@@ -49,7 +49,7 @@ import { BOT } from '@data/config';
       "name": "Le bot nécessite-t-il une configuration ?",
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "Non. Albion Online Objectives fonctionne immédiatement après l'installation -- aucune commande de configuration n'est nécessaire. N'importe quel membre du serveur peut commencer à utiliser /add tout de suite."
+        "text": "Pas pour suivre des objectifs. Albion Online Objectives fonctionne immédiatement après l'installation et n'importe quel membre peut utiliser /add tout de suite. Un réglage facultatif existe : /settings permet à un administrateur de choisir où atterrissent les annonces de version."
       }
     },
     {
@@ -113,7 +113,7 @@ import { BOT } from '@data/config';
       "name": "J'obtiens une erreur \"cooldown\"",
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "Les commandes ont des cooldowns pour éviter le spam -- 2 secondes pour /add, /edit et /remove, 5 secondes pour /list. Patientez un instant et réessayez."
+        "text": "Les commandes ont des cooldowns pour éviter le spam -- 2 secondes pour /add, /edit, /remove et /about, 5 secondes pour /list. Patientez un instant et réessayez."
       }
     },
     {
@@ -122,6 +122,30 @@ import { BOT } from '@data/config';
       "acceptedAnswer": {
         "@type": "Answer",
         "text": "Ouvrez une issue sur le dépôt GitHub ou rejoignez notre serveur Discord."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Où le bot publie-t-il les annonces de version ?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Dans le salon défini via /settings announcement-channel. Sans salon défini, l'annonce se replie sur le dernier salon où le bot a été utilisé et porte une notice expliquant ce repli. Chaque annonce n'est envoyée qu'une fois par serveur."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Le bot va-t-il mentionner @everyone ?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Non, sauf si un administrateur l'active. La mention @everyone est désactivée par défaut et seul un membre disposant de la permission Gérer le serveur peut l'activer avec /settings announcements mention-everyone:true."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Comment désactiver les annonces de version ?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Lancez /settings announcements enabled:false. La commande exige la permission Gérer le serveur et arrête toutes les annonces futures sur ce serveur."
       }
     },
   ]
@@ -148,7 +172,7 @@ import { BOT } from '@data/config';
   },
   {
     question: "Le bot nécessite-t-il une configuration ?",
-    answer: 'Non. Albion Online Objectives fonctionne immédiatement après l\'<a href="/docs/getting-started/installation/">installation</a> — aucune commande de configuration n\'est nécessaire. N\'importe quel membre du serveur peut commencer à utiliser <code>/add</code> tout de suite.'
+    answer: 'Pas pour suivre des objectifs. Albion Online Objectives fonctionne immédiatement après l\'<a href="/docs/getting-started/installation/">installation</a> et n\'importe quel membre peut utiliser <code>/add</code> tout de suite. Un réglage facultatif existe : <a href="/docs/commands/settings/">/settings</a> permet à un administrateur de choisir où atterrissent les annonces de version.'
   },
   {
     question: "Quelles régions de serveurs Albion Online sont prises en charge ?",
@@ -157,6 +181,18 @@ import { BOT } from '@data/config';
   {
     question: "Plusieurs guildes peuvent-elles utiliser le bot sur le même serveur Discord ?",
     answer: "Oui. Albion Online Objectives fonctionne par serveur Discord. Tous les membres voient la même liste d'objectifs."
+  },
+  {
+    question: "Où le bot publie-t-il les annonces de version ?",
+    answer: 'Dans le salon défini via <a href="/docs/commands/settings/">/settings announcement-channel</a>. Sans salon défini, l\'annonce se replie sur le dernier salon où le bot a été utilisé et porte une notice expliquant ce repli. Chaque annonce n\'est envoyée qu\'une fois par serveur, jamais répétée.'
+  },
+  {
+    question: "Le bot va-t-il mentionner @everyone ?",
+    answer: 'Non, sauf si un administrateur l\'active. La mention <code>@everyone</code> est <strong>désactivée par défaut</strong> et seul un membre disposant de la permission <strong>Gérer le serveur</strong> peut l\'activer, avec <code>/settings announcements mention-everyone:true</code>.'
+  },
+  {
+    question: "Comment désactiver les annonces de version ?",
+    answer: 'Lancez <code>/settings announcements enabled:false</code>. La commande exige la permission <strong>Gérer le serveur</strong> et arrête toutes les annonces futures sur ce serveur.'
   }
 ]} />
 

@@ -40,9 +40,17 @@ Albion Online Objectives (AOO) a besoin des permissions suivantes pour fonctionn
 | **Gérer les messages** | Supprimer les messages d'objectifs obsolètes lors du rafraîchissement |
 | **Utiliser les commandes slash** | Enregistrer et répondre aux commandes `/add`, `/list`, `/remove` |
 
-## Aucune configuration nécessaire
+## Message de bienvenue
 
-Albion Online Objectives fonctionne immédiatement après l'installation — il n'y a aucune commande de configuration. N'importe quel membre de votre serveur peut commencer à rapporter des objectifs avec la commande `/add`.
+Dès son arrivée, le bot publie un court message de bienvenue présentant `/add`, `/list` et `/settings`. Il choisit le salon système de votre serveur s'il peut y écrire, sinon le premier salon textuel accessible. Si aucun salon ne l'est, le message est simplement omis — le bot fonctionne malgré tout.
+
+## Configuration facultative
+
+Albion Online Objectives fonctionne immédiatement après l'installation. N'importe quel membre peut rapporter des objectifs avec `/add` : aucune commande de configuration n'est requise.
+
+Un réglage mérite toutefois une minute d'attention d'un administrateur : [`/settings announcement-channel`](/docs/commands/settings/) choisit où atterrissent les annonces de version. Sans lui, elles se replient sur le dernier salon où le bot a été utilisé.
+
+Les annonces sont **activées** par défaut et ne mentionnent jamais `@everyone` sans qu'un administrateur l'ait explicitement autorisé.
 
 ## Étapes suivantes
 

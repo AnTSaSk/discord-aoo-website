@@ -141,6 +141,15 @@ With [`/edit`](/docs/commands/edit/) this check applies to the **resulting** com
 
 **Resolution:** Ask the original reporter to remove it, or have a moderator or administrator handle the removal.
 
+### Channel Not Writable
+
+**Message:**
+> I cannot post in that channel: the **View Channel** permission is missing. Grant it there, then run the command again.
+
+**Cause:** You picked an announcement channel with `/settings announcement-channel` where the bot cannot post. The message names the missing permission — **View Channel** or **Send Messages**.
+
+**Resolution:** Grant the named permission to the bot on that channel, then run the command again. Nothing is saved until the check passes, so your previous setting is untouched.
+
 ### Cooldown Active
 
 If you use a command too quickly after the previous one, Discord shows a cooldown notice. The bot enforces these delays:
@@ -148,7 +157,9 @@ If you use a command too quickly after the previous one, Discord shows a cooldow
 | Command | Cooldown |
 |---------|----------|
 | `/add` | 2 seconds |
+| `/edit` | 2 seconds |
 | `/remove` | 2 seconds |
+| `/about` | 2 seconds |
 | `/list` | 5 seconds |
 
 **Resolution:** Wait for the cooldown to expire and try again.
@@ -162,3 +173,19 @@ When an objective's calculated spawn time crosses the **10:00 UTC** daily mainte
 - Objectives that spawn well before or well after maintenance are not flagged
 
 Use this flag to avoid committing resources to an objective that may disappear during the server restart.
+
+## Announcement Messages
+
+When a new version ships, the bot posts an announcement on your server. It goes to the channel set with [`/settings announcement-channel`](/docs/commands/settings/).
+
+When no channel is set, the announcement falls back to the last channel the bot was used in, and carries this notice:
+
+> No announcement channel is set yet, so this message landed in the last channel where the bot was used. An admin can pick a dedicated one with `/settings announcement-channel`.
+
+Setting a channel removes the notice. Each announcement is sent **once per server** — it is never repeated.
+
+An admin can turn announcements off entirely with `/settings announcements enabled:false`.
+
+## Welcome Message
+
+When the bot joins a server, it posts a one-off welcome message introducing `/add`, `/list` and `/settings`, with links to this site and the legal documents. It picks the system channel when it can post there, otherwise the first writable text channel.
