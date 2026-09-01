@@ -1,0 +1,247 @@
+---
+import { BOT } from "@data/config";
+
+import BaseLayout from "@/layouts/BaseLayout.astro";
+
+const lastUpdated = "1 September 2026";
+---
+
+<BaseLayout
+    title="Privacy Policy"
+    description="What data the AOO bot stores, why, for how long, and how to exercise your rights over it."
+>
+    <main class="prose mx-auto max-w-3xl px-4 py-12">
+        <h1>Privacy Policy</h1>
+
+        <p class="text-muted-foreground">Last updated: {lastUpdated}</p>
+
+        <p>
+            This policy explains what personal data the AOO bot (Albion Online Objectives) processes,
+            why, for how long, and how you can exercise your rights over it. It covers the Discord
+            bot and this website.
+        </p>
+
+        <h2>Who is responsible</h2>
+
+        <p>
+            The AOO bot is operated by an individual developer acting as the data controller. There
+            is no data protection officer, as none is required for processing of this nature and
+            scale.
+        </p>
+
+        <p>You can reach the controller through either channel:</p>
+
+        <ul>
+            <li>
+                <strong>Support Discord server</strong> —
+                <a href={BOT.discordInvite} target="_blank" rel="noopener noreferrer">
+                    join the server
+                </a>. This is the fastest route.
+            </li>
+            <li>
+                <strong>Email</strong> —
+                <a href={`mailto:${BOT.contactEmail}`}>{BOT.contactEmail}</a>
+            </li>
+        </ul>
+
+        <p>
+            Both channels accept any request covered by this policy. Use whichever suits you; the
+            email address remains reachable if you no longer use Discord.
+        </p>
+
+        <h2>What data we collect</h2>
+
+        <p>
+            When a member of your server reports an objective, the bot stores one record containing:
+        </p>
+
+        <ul>
+            <li><strong>Discord server identifier</strong> — the server the objective belongs to</li>
+            <li><strong>Discord channel identifier</strong> — the channel where the tracking message is posted</li>
+            <li><strong>Discord user identifier</strong> — who reported the objective</li>
+            <li><strong>Objective data</strong> — type, rarity, map name, availability time, and a maintenance-window flag</li>
+            <li><strong>Record timestamps</strong> — when the record was created and last modified</li>
+        </ul>
+
+        <p>
+            Of these, the Discord user identifier is personal data. The rest is game data or
+            technical metadata.
+        </p>
+
+        <p><strong>The bot does not collect:</strong></p>
+
+        <ul>
+            <li>The content of your messages</li>
+            <li>Email addresses</li>
+            <li>IP addresses</li>
+            <li>Stored usernames, nicknames or avatars</li>
+            <li>Payment data</li>
+        </ul>
+
+        <p>
+            The bot holds no user account and no credentials of its own — it relies entirely on
+            Discord for identity.
+        </p>
+
+        <h2>Display without storage</h2>
+
+        <p>
+            When the bot posts an objective in your channel, it shows the name of the member who
+            reported it — your <strong>nickname on that server</strong> if you have one, otherwise
+            your global Discord name. That name is read from Discord at the moment the message is
+            rendered and is <strong>never written to our database</strong>. If you change your
+            nickname, the change follows automatically on the next message; we hold no copy of it.
+        </p>
+
+        <h2>Why we process this data, and on what basis</h2>
+
+        <p>
+            The sole purpose is to provide the objective tracking service: recording objectives your
+            server reports, displaying them in the channel, and removing them once they expire.
+        </p>
+
+        <p>
+            The legal basis is the <strong>legitimate interest</strong> of the controller and of your
+            server in operating a functioning tracking tool (Article 6(1)(f) GDPR). Adding the bot to
+            a server, and using its commands, is voluntary.
+        </p>
+
+        <p>
+            Data is used for nothing else. It is not sold, not licensed, not shared with advertising
+            networks or data brokers, and not used to train machine learning models.
+        </p>
+
+        <h2>How long we keep it</h2>
+
+        <p>
+            An objective is deleted automatically once it expires. A scheduled task runs
+            <strong>every 30 minutes</strong> and removes every objective whose availability time has
+            passed. In practice this means an objective is deleted at its expiry time plus
+            <strong>30 minutes at most</strong>.
+        </p>
+
+        <p>
+            Deletion requires no action on your part, and no copy is retained afterwards. An
+            objective can also be deleted earlier at any time using the <code>/remove</code> command.
+        </p>
+
+        <h2>Who else receives this data</h2>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>Recipient</th>
+                    <th>Role</th>
+                    <th>What it receives</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Discord</td>
+                    <td>Platform</td>
+                    <td>Every interaction with the bot transits through Discord</td>
+                </tr>
+                <tr>
+                    <td>Infomaniak (Switzerland)</td>
+                    <td>Hosting and offsite backups</td>
+                    <td>The running application, its database, and encrypted backup snapshots</td>
+                </tr>
+                <tr>
+                    <td>Better Stack (Logtail)</td>
+                    <td>Application logs</td>
+                    <td>Server and channel identifiers only — never your user identifier</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <p>
+            These are processors acting on the controller's instructions. No one else receives your
+            data.
+        </p>
+
+        <h2>Data transfers outside the European Union</h2>
+
+        <p>
+            Hosting and backups are located in <strong>Switzerland</strong> (Infomaniak). Switzerland
+            benefits from an adequacy decision of the European Commission, which recognises its level
+            of data protection as equivalent to that of the European Union. No additional safeguards
+            are required for this transfer.
+        </p>
+
+        <p>
+            Application logs are handled by Better Stack, whose stated default is storage in EU
+            regions in ISO/IEC 27001-certified data centres. These logs contain server and channel
+            identifiers only.
+        </p>
+
+        <h2>Your rights</h2>
+
+        <p>Under the GDPR you have the right to:</p>
+
+        <ul>
+            <li><strong>Access</strong> — obtain a copy of the data concerning you</li>
+            <li><strong>Rectification</strong> — have inaccurate data corrected</li>
+            <li><strong>Erasure</strong> — have your data deleted</li>
+            <li><strong>Restriction</strong> — have processing limited</li>
+            <li><strong>Objection</strong> — object to processing based on legitimate interest</li>
+            <li><strong>Portability</strong> — receive your data in a structured, machine-readable format</li>
+        </ul>
+
+        <p>
+            To exercise any of them, contact us through the Discord server or by email. We respond
+            within <strong>one month</strong>. If a request is complex, that period may be extended by
+            two further months, and we will tell you why within the first month.
+        </p>
+
+        <h3>Deleting your data</h3>
+
+        <p>
+            You can delete an objective you reported at any time with the <code>/remove</code>
+            command — no request needed. To have every record associated with your Discord user
+            identifier deleted, contact us through either channel and we will action it.
+        </p>
+
+        <p>
+            Removing the bot from a server stops all further processing for that server. Existing
+            objectives expire and are deleted by the scheduled task as described above.
+        </p>
+
+        <h3>Lodging a complaint</h3>
+
+        <p>
+            If you believe your data is being processed unlawfully, you have the right to lodge a
+            complaint with a supervisory authority. In France this is the
+            <a href="https://www.cnil.fr" target="_blank" rel="noopener noreferrer">
+                Commission Nationale de l'Informatique et des Libertés (CNIL)
+            </a>. You may also contact the authority of your country of residence.
+        </p>
+
+        <h2>Automated decision-making</h2>
+
+        <p>
+            The bot performs no automated decision-making and no profiling. It does not analyse your
+            behaviour, build a profile, or make decisions producing legal or similarly significant
+            effects.
+        </p>
+
+        <h2>Is providing this data required?</h2>
+
+        <p>
+            No. Using the bot is entirely voluntary. If you do not report an objective, no data about
+            you is stored. There is no contractual or statutory obligation to provide anything — the
+            only consequence of not doing so is that you do not use the bot.
+        </p>
+
+        <h2>Changes to this policy</h2>
+
+        <p>
+            This policy may be updated if the service changes. The date at the top of this page
+            always reflects the current version. Material changes will be announced on the support
+            Discord server.
+        </p>
+
+        <p>
+            See also our <a href="/terms">Terms of Service</a>.
+        </p>
+    </main>
+</BaseLayout>

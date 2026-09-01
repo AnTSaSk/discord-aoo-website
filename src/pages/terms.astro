@@ -1,0 +1,159 @@
+---
+import { BOT } from "@data/config";
+
+import BaseLayout from "@/layouts/BaseLayout.astro";
+
+const lastUpdated = "1 September 2026";
+---
+
+<BaseLayout
+    title="Terms of Service"
+    description="Terms governing the use of the AOO bot for tracking Albion Online Black Zone objectives on your Discord server."
+>
+    <main class="prose mx-auto max-w-3xl px-4 py-12">
+        <h1>Terms of Service</h1>
+
+        <p class="text-muted-foreground">Last updated: {lastUpdated}</p>
+
+        <h2>1. Acceptance</h2>
+
+        <p>
+            By adding the AOO bot (Albion Online Objectives) to a Discord server, or by using any of
+            its commands, you agree to these terms. If you do not agree, do not add the bot and do
+            not use it.
+        </p>
+
+        <p>
+            These terms are an agreement between you and the bot's operator. They do not replace
+            Discord's own terms, which continue to apply to your use of the platform.
+        </p>
+
+        <h2>2. What the service does</h2>
+
+        <p>
+            The AOO bot tracks end-game objectives in Albion Online — resource nodes, Cores and
+            Vortexes located in the Black Zone. Members of your server report an objective, and the
+            bot maintains a shared list showing when each one becomes available.
+        </p>
+
+        <p>The bot provides four commands:</p>
+
+        <ul>
+            <li><code>/add</code> — report a new objective</li>
+            <li><code>/list</code> — display the server's tracked objectives</li>
+            <li><code>/edit</code> — modify an objective already reported</li>
+            <li><code>/remove</code> — delete an objective</li>
+        </ul>
+
+        <p>
+            The service is free of charge. It is an independent project and is not affiliated with,
+            endorsed by, or sponsored by Sandbox Interactive GmbH, the developer of Albion Online, or
+            by Discord.
+        </p>
+
+        <h2>3. Eligibility</h2>
+
+        <p>
+            You must have a Discord account in good standing and meet Discord's minimum age
+            requirement for your country. Your use of the bot is also subject to the
+            <a href="https://discord.com/terms" target="_blank" rel="noopener noreferrer">
+                Discord Terms of Service
+            </a>
+            and the
+            <a href="https://discord.com/guidelines" target="_blank" rel="noopener noreferrer">
+                Discord Community Guidelines
+            </a>. Where these terms conflict with Discord's developer terms, Discord's terms prevail.
+        </p>
+
+        <h2>4. Acceptable use</h2>
+
+        <p>When using the bot, you agree not to:</p>
+
+        <ul>
+            <li>Submit deliberately false objective data to disrupt other players</li>
+            <li>Automate or script command calls to generate abnormal request volumes</li>
+            <li>Attempt to gain unauthorised access to the bot, its database, or its infrastructure</li>
+            <li>Use the bot to harass, spam, or otherwise harm other users</li>
+            <li>Use the bot in a way that breaches Discord's terms or Albion Online's own rules</li>
+        </ul>
+
+        <p>
+            Server administrators are responsible for how the bot is used on their server, including
+            deciding which members may modify or delete objectives.
+        </p>
+
+        <h2>5. Availability</h2>
+
+        <p>
+            The service is provided <strong>as is</strong> and <strong>as available</strong>, without
+            warranty of any kind. We do not guarantee that it will be uninterrupted, error-free, or
+            that objective data will be accurate — that data is submitted by players, not verified by
+            us.
+        </p>
+
+        <p>
+            The service may be suspended, modified, or discontinued at any time, including for
+            maintenance, or because a change to Discord or to Albion Online makes it unworkable.
+        </p>
+
+        <h2>6. Limitation of liability</h2>
+
+        <p>
+            To the fullest extent permitted by law, the operator is not liable for any indirect or
+            consequential loss arising from your use of the bot, including lost in-game time,
+            resources or opportunities resulting from inaccurate, missing, or delayed objective data.
+        </p>
+
+        <p>
+            Nothing in these terms excludes liability that cannot be excluded under applicable law.
+        </p>
+
+        <h2>7. Termination</h2>
+
+        <p>
+            You may stop using the service at any time by removing the bot from your server. Doing so
+            ends all processing for that server; remaining objectives expire and are deleted
+            automatically, as described in our
+            <a href="/privacy">Privacy Policy</a>.
+        </p>
+
+        <p>
+            We may restrict or withdraw access for a server that breaches section 4, or where
+            continued operation would breach Discord's terms.
+        </p>
+
+        <h2>8. Changes to these terms</h2>
+
+        <p>
+            These terms may be updated as the service evolves. The date at the top of this page
+            always reflects the current version, and material changes will be announced on the
+            support Discord server. Continuing to use the bot after a change means you accept the
+            revised terms.
+        </p>
+
+        <h2>9. Governing law</h2>
+
+        <p>
+            These terms are governed by French law. If you are a consumer resident in the European
+            Union, you keep the protection of the mandatory provisions of the law of your country of
+            residence.
+        </p>
+
+        <h2>10. Contact</h2>
+
+        <p>For any question about these terms:</p>
+
+        <ul>
+            <li>
+                <strong>Support Discord server</strong> —
+                <a href={BOT.discordInvite} target="_blank" rel="noopener noreferrer">
+                    join the server
+                </a>
+            </li>
+            <li>
+                <strong>Email</strong> —
+                <a href={`mailto:${BOT.contactEmail}`}>{BOT.contactEmail}</a>
+            </li>
+        </ul>
+    </main>
+</BaseLayout>

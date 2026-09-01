@@ -1,0 +1,257 @@
+---
+import { BOT } from "@data/config";
+
+import BaseLayout from "@/layouts/BaseLayout.astro";
+
+const lastUpdated = "1er septembre 2026";
+---
+
+<BaseLayout
+    lang="fr"
+    title="Politique de confidentialité"
+    description="Quelles données le bot AOO conserve, pourquoi, combien de temps, et comment exercer vos droits."
+>
+    <main class="prose mx-auto max-w-3xl px-4 py-12">
+        <h1>Politique de confidentialité</h1>
+
+        <p class="text-muted-foreground">Dernière mise à jour : {lastUpdated}</p>
+
+        <p>
+            Cette politique explique quelles données personnelles le bot AOO (Albion Online
+            Objectives) traite, pourquoi, pendant combien de temps, et comment exercer vos droits.
+            Elle couvre le bot Discord et ce site.
+        </p>
+
+        <h2>Responsable du traitement</h2>
+
+        <p>
+            Le bot AOO est exploité par un développeur indépendant, agissant en qualité de
+            responsable du traitement. Aucun délégué à la protection des données n'a été désigné,
+            cette désignation n'étant pas requise pour un traitement de cette nature et de cette
+            ampleur.
+        </p>
+
+        <p>Vous pouvez le contacter par l'un ou l'autre de ces canaux :</p>
+
+        <ul>
+            <li>
+                <strong>Serveur Discord de support</strong> —
+                <a href={BOT.discordInvite} target="_blank" rel="noopener noreferrer">
+                    rejoindre le serveur
+                </a>. C'est la voie la plus rapide.
+            </li>
+            <li>
+                <strong>E-mail</strong> —
+                <a href={`mailto:${BOT.contactEmail}`}>{BOT.contactEmail}</a>
+            </li>
+        </ul>
+
+        <p>
+            Les deux canaux acceptent toute demande relevant de cette politique. Utilisez celui qui
+            vous convient : l'adresse e-mail reste joignable même si vous n'utilisez plus Discord.
+        </p>
+
+        <h2>Données collectées</h2>
+
+        <p>
+            Lorsqu'un membre de votre serveur rapporte un objectif, le bot enregistre une fiche
+            contenant :
+        </p>
+
+        <ul>
+            <li><strong>L'identifiant du serveur Discord</strong> — le serveur auquel l'objectif appartient</li>
+            <li><strong>L'identifiant du salon Discord</strong> — le salon où le message de suivi est publié</li>
+            <li><strong>L'identifiant de l'utilisateur Discord</strong> — qui a rapporté l'objectif</li>
+            <li><strong>Les données de jeu</strong> — type, rareté, nom de la carte, heure d'apparition et un indicateur de fenêtre de maintenance</li>
+            <li><strong>Les horodatages</strong> — date de création et de dernière modification de la fiche</li>
+        </ul>
+
+        <p>
+            Parmi ces éléments, l'identifiant de l'utilisateur Discord constitue une donnée
+            personnelle. Le reste relève des données de jeu ou de métadonnées techniques.
+        </p>
+
+        <p><strong>Le bot ne collecte pas :</strong></p>
+
+        <ul>
+            <li>Le contenu de vos messages</li>
+            <li>D'adresse e-mail</li>
+            <li>D'adresse IP</li>
+            <li>De pseudonyme, de nom d'affichage ou d'avatar conservés</li>
+            <li>De données de paiement</li>
+        </ul>
+
+        <p>
+            Le bot ne gère aucun compte utilisateur et ne détient aucun identifiant de connexion
+            propre : il s'appuie entièrement sur Discord pour l'identification.
+        </p>
+
+        <h2>Affichage sans conservation</h2>
+
+        <p>
+            Lorsque le bot publie un objectif dans votre salon, il affiche le nom du membre qui l'a
+            rapporté — votre <strong>pseudo sur ce serveur</strong> si vous en avez un, sinon votre
+            nom Discord global. Ce nom est lu depuis Discord au moment où le message est généré et
+            n'est <strong>jamais enregistré dans notre base de données</strong>. Si vous modifiez
+            votre pseudo, le changement est répercuté automatiquement au message suivant : nous n'en
+            conservons aucune copie.
+        </p>
+
+        <h2>Finalités et base légale</h2>
+
+        <p>
+            La seule finalité est de fournir le service de suivi d'objectifs : enregistrer les
+            objectifs rapportés par votre serveur, les afficher dans le salon, et les supprimer une
+            fois expirés.
+        </p>
+
+        <p>
+            La base légale est l'<strong>intérêt légitime</strong> du responsable du traitement et de
+            votre serveur à disposer d'un outil de suivi fonctionnel (article 6.1.f du RGPD).
+            L'ajout du bot à un serveur et l'usage de ses commandes sont volontaires.
+        </p>
+
+        <p>
+            Les données ne servent à rien d'autre. Elles ne sont ni vendues, ni concédées sous
+            licence, ni transmises à des régies publicitaires ou à des courtiers en données, et ne
+            servent pas à entraîner de modèles d'apprentissage automatique.
+        </p>
+
+        <h2>Durée de conservation</h2>
+
+        <p>
+            Un objectif est supprimé automatiquement dès qu'il expire. Une tâche planifiée s'exécute
+            <strong>toutes les 30 minutes</strong> et supprime tout objectif dont l'heure
+            d'apparition est passée. Concrètement, un objectif est donc supprimé au plus tard
+            <strong>30 minutes après son expiration</strong>.
+        </p>
+
+        <p>
+            Cette suppression ne demande aucune action de votre part, et aucune copie n'est
+            conservée ensuite. Un objectif peut aussi être supprimé à tout moment, plus tôt, avec la
+            commande <code>/remove</code>.
+        </p>
+
+        <h2>Destinataires des données</h2>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>Destinataire</th>
+                    <th>Rôle</th>
+                    <th>Ce qu'il reçoit</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Discord</td>
+                    <td>Plateforme</td>
+                    <td>Toute interaction avec le bot transite par Discord</td>
+                </tr>
+                <tr>
+                    <td>Infomaniak (Suisse)</td>
+                    <td>Hébergement et sauvegardes externalisées</td>
+                    <td>L'application, sa base de données et les instantanés de sauvegarde chiffrés</td>
+                </tr>
+                <tr>
+                    <td>Better Stack (Logtail)</td>
+                    <td>Journaux applicatifs</td>
+                    <td>Identifiants de serveur et de salon uniquement — jamais votre identifiant utilisateur</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <p>
+            Ces prestataires agissent en qualité de sous-traitants, sur instruction du responsable du
+            traitement. Aucun autre destinataire ne reçoit vos données.
+        </p>
+
+        <h2>Transferts hors Union européenne</h2>
+
+        <p>
+            L'hébergement et les sauvegardes sont situés en <strong>Suisse</strong> (Infomaniak). La
+            Suisse bénéficie d'une décision d'adéquation de la Commission européenne, qui reconnaît
+            son niveau de protection des données comme équivalent à celui de l'Union européenne.
+            Aucune garantie supplémentaire n'est requise pour ce transfert.
+        </p>
+
+        <p>
+            Les journaux applicatifs sont traités par Better Stack, dont le stockage s'effectue par
+            défaut dans des régions de l'Union européenne, au sein de centres de données certifiés
+            ISO/CEI 27001. Ces journaux ne contiennent que des identifiants de serveur et de salon.
+        </p>
+
+        <h2>Vos droits</h2>
+
+        <p>Le RGPD vous confère les droits suivants :</p>
+
+        <ul>
+            <li><strong>Accès</strong> — obtenir une copie des données vous concernant</li>
+            <li><strong>Rectification</strong> — faire corriger des données inexactes</li>
+            <li><strong>Effacement</strong> — faire supprimer vos données</li>
+            <li><strong>Limitation</strong> — faire limiter le traitement</li>
+            <li><strong>Opposition</strong> — vous opposer à un traitement fondé sur l'intérêt légitime</li>
+            <li><strong>Portabilité</strong> — recevoir vos données dans un format structuré et lisible par machine</li>
+        </ul>
+
+        <p>
+            Pour exercer l'un de ces droits, contactez-nous via le serveur Discord ou par e-mail.
+            Nous répondons dans un délai d'<strong>un mois</strong>. Si la demande est complexe, ce
+            délai peut être prolongé de deux mois supplémentaires ; nous vous en informerons, motifs
+            à l'appui, dans le premier mois.
+        </p>
+
+        <h3>Supprimer vos données</h3>
+
+        <p>
+            Vous pouvez supprimer vous-même, à tout moment, un objectif que vous avez rapporté avec
+            la commande <code>/remove</code> — aucune demande n'est nécessaire. Pour faire supprimer
+            l'ensemble des fiches associées à votre identifiant utilisateur Discord, contactez-nous
+            par l'un des deux canaux : nous y donnerons suite.
+        </p>
+
+        <p>
+            Retirer le bot d'un serveur met fin à tout traitement pour ce serveur. Les objectifs
+            existants expirent puis sont supprimés par la tâche planifiée décrite ci-dessus.
+        </p>
+
+        <h3>Introduire une réclamation</h3>
+
+        <p>
+            Si vous estimez que vos données font l'objet d'un traitement illicite, vous avez le droit
+            d'introduire une réclamation auprès d'une autorité de contrôle. En France, il s'agit de la
+            <a href="https://www.cnil.fr" target="_blank" rel="noopener noreferrer">
+                Commission Nationale de l'Informatique et des Libertés (CNIL)
+            </a>. Vous pouvez également saisir l'autorité de votre pays de résidence.
+        </p>
+
+        <h2>Décision automatisée</h2>
+
+        <p>
+            Le bot ne met en œuvre aucune décision automatisée ni aucun profilage. Il n'analyse pas
+            votre comportement, ne constitue aucun profil et ne prend aucune décision produisant des
+            effets juridiques ou vous affectant de manière significative.
+        </p>
+
+        <h2>La fourniture de ces données est-elle obligatoire ?</h2>
+
+        <p>
+            Non. L'utilisation du bot est entièrement volontaire. Si vous ne rapportez aucun
+            objectif, aucune donnée vous concernant n'est enregistrée. Aucune obligation légale ou
+            contractuelle ne vous impose de fournir quoi que ce soit : la seule conséquence d'un
+            refus est que vous n'utilisez pas le bot.
+        </p>
+
+        <h2>Modification de cette politique</h2>
+
+        <p>
+            Cette politique peut être mise à jour si le service évolue. La date figurant en haut de
+            cette page correspond toujours à la version en vigueur. Toute modification substantielle
+            sera annoncée sur le serveur Discord de support.
+        </p>
+
+        <p>
+            Voir également nos <a href="/fr/terms">Conditions d'utilisation</a>.
+        </p>
+    </main>
+</BaseLayout>

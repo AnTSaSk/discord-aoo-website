@@ -57,6 +57,9 @@ export const ui = {
     // --- Footer ---
     "footer.builtWith": "Built with",
     "footer.love": "love",
+    "footer.terms": "Terms of Service",
+    "footer.privacy": "Privacy Policy",
+    "footer.legal": "Legal",
 
     // --- 404 ---
     "notFound.title": "404 - Page not found",
@@ -217,6 +220,9 @@ export const ui = {
     // --- Footer ---
     "footer.builtWith": "Fait avec",
     "footer.love": "amour",
+    "footer.terms": "Conditions d'utilisation",
+    "footer.privacy": "Politique de confidentialité",
+    "footer.legal": "Mentions légales",
 
     // --- 404 ---
     "notFound.title": "404 - Page non trouvée",

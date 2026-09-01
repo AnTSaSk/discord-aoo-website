@@ -2,7 +2,7 @@
 import { SITE, FOOTER_SOCIAL_LINKS } from "@data/config";
 import { Icon } from "astro-icon/components";
 
-import { defaultLang, useTranslations, type Lang } from "@/i18n";
+import { defaultLang, useTranslations, useTranslatedPath, type Lang } from "@/i18n";
 import { buttonVariants } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 
@@ -13,7 +13,12 @@ interface Props {
 
 const { class: className = "", lang = defaultLang } = Astro.props;
 const t = useTranslations(lang);
+const tp = useTranslatedPath(lang);
 const activeSocials = FOOTER_SOCIAL_LINKS.filter((social) => social.active);
+const legalLinks = [
+    { href: tp("/terms"), label: t("footer.terms") },
+    { href: tp("/privacy"), label: t("footer.privacy") },
+];
 const authorHref = SITE.authorUrl;
 const showAuthorLine = Boolean(authorHref && SITE.author);
 ---
@@ -37,6 +42,16 @@ const showAuthorLine = Boolean(authorHref && SITE.author);
                 </p>
             )
         }
+
+        <nav class="flex justify-center gap-4 sm:justify-center" aria-label={t("footer.legal")}>
+            {
+                legalLinks.map(({ href, label }) => (
+                    <a href={href} class="hover:text-foreground underline underline-offset-4">
+                        {label}
+                    </a>
+                ))
+            }
+        </nav>
 
         <div class="flex justify-center gap-3 sm:justify-end">
             {

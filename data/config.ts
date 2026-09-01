@@ -17,6 +17,7 @@ export const BOT: BotConfig = {
   repo: "https://github.com/AnTSaSk/discord-aoo-bot",
   clientId: "1401556946435440872",
   discordInvite: "https://discord.gg/qBSbrE8EAZ",
+  contactEmail: "contact@albion-online-objectives.com",
 };
 
 // ---------------------------------------------------------------------------

@@ -60,6 +60,7 @@ export interface BotConfig {
   repo: string;
   clientId: string;
   discordInvite: string;
+  contactEmail: string;
 }
 
 export interface LocaleConfig {

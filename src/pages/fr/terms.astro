@@ -1,0 +1,166 @@
+---
+import { BOT } from "@data/config";
+
+import BaseLayout from "@/layouts/BaseLayout.astro";
+
+const lastUpdated = "1er septembre 2026";
+---
+
+<BaseLayout
+    lang="fr"
+    title="Conditions d'utilisation"
+    description="Conditions régissant l'utilisation du bot AOO pour le suivi des objectifs de Black Zone d'Albion Online sur votre serveur Discord."
+>
+    <main class="prose mx-auto max-w-3xl px-4 py-12">
+        <h1>Conditions d'utilisation</h1>
+
+        <p class="text-muted-foreground">Dernière mise à jour : {lastUpdated}</p>
+
+        <h2>1. Acceptation</h2>
+
+        <p>
+            En ajoutant le bot AOO (Albion Online Objectives) à un serveur Discord, ou en utilisant
+            l'une de ses commandes, vous acceptez les présentes conditions. Si vous ne les acceptez
+            pas, n'ajoutez pas le bot et ne l'utilisez pas.
+        </p>
+
+        <p>
+            Ces conditions constituent un accord entre vous et l'exploitant du bot. Elles ne
+            remplacent pas les conditions propres à Discord, qui continuent de s'appliquer à votre
+            usage de la plateforme.
+        </p>
+
+        <h2>2. Description du service</h2>
+
+        <p>
+            Le bot AOO assure le suivi des objectifs de fin de partie d'Albion Online — nodes de
+            ressources, Cores et Vortex situés en Black Zone. Les membres de votre serveur rapportent
+            un objectif, et le bot tient à jour une liste partagée indiquant quand chacun devient
+            disponible.
+        </p>
+
+        <p>Le bot met à disposition quatre commandes :</p>
+
+        <ul>
+            <li><code>/add</code> — rapporter un nouvel objectif</li>
+            <li><code>/list</code> — afficher les objectifs suivis du serveur</li>
+            <li><code>/edit</code> — modifier un objectif déjà rapporté</li>
+            <li><code>/remove</code> — supprimer un objectif</li>
+        </ul>
+
+        <p>
+            Le service est gratuit. Il s'agit d'un projet indépendant, sans affiliation, approbation
+            ni parrainage de Sandbox Interactive GmbH, développeur d'Albion Online, ni de Discord.
+        </p>
+
+        <h2>3. Conditions d'éligibilité</h2>
+
+        <p>
+            Vous devez disposer d'un compte Discord en règle et satisfaire à l'âge minimum requis par
+            Discord dans votre pays. Votre utilisation du bot est également soumise aux
+            <a href="https://discord.com/terms" target="_blank" rel="noopener noreferrer">
+                Conditions d'utilisation de Discord
+            </a>
+            et aux
+            <a href="https://discord.com/guidelines" target="_blank" rel="noopener noreferrer">
+                Règles de la communauté Discord
+            </a>. En cas de contradiction entre les présentes conditions et les conditions
+            développeur de Discord, ces dernières prévalent.
+        </p>
+
+        <h2>4. Usage acceptable</h2>
+
+        <p>En utilisant le bot, vous vous engagez à ne pas :</p>
+
+        <ul>
+            <li>Soumettre délibérément des données d'objectif erronées pour nuire aux autres joueurs</li>
+            <li>Automatiser ou scripter les appels de commandes afin de générer un volume anormal de requêtes</li>
+            <li>Tenter d'accéder sans autorisation au bot, à sa base de données ou à son infrastructure</li>
+            <li>Utiliser le bot pour harceler, spammer ou nuire de quelque manière que ce soit à d'autres utilisateurs</li>
+            <li>Utiliser le bot en violation des conditions de Discord ou des règles propres à Albion Online</li>
+        </ul>
+
+        <p>
+            Les administrateurs de serveur sont responsables de l'usage qui est fait du bot sur leur
+            serveur, y compris du choix des membres autorisés à modifier ou supprimer des objectifs.
+        </p>
+
+        <h2>5. Disponibilité</h2>
+
+        <p>
+            Le service est fourni <strong>en l'état</strong> et <strong>selon disponibilité</strong>,
+            sans garantie d'aucune sorte. Nous ne garantissons ni son fonctionnement ininterrompu, ni
+            l'absence d'erreurs, ni l'exactitude des données d'objectifs — celles-ci sont soumises
+            par les joueurs et ne font l'objet d'aucune vérification de notre part.
+        </p>
+
+        <p>
+            Le service peut être suspendu, modifié ou interrompu à tout moment, notamment pour
+            maintenance, ou parce qu'une évolution de Discord ou d'Albion Online le rendrait
+            inopérant.
+        </p>
+
+        <h2>6. Limitation de responsabilité</h2>
+
+        <p>
+            Dans les limites permises par la loi, l'exploitant ne saurait être tenu responsable des
+            préjudices indirects ou consécutifs résultant de votre utilisation du bot, notamment la
+            perte de temps de jeu, de ressources ou d'opportunités liée à des données d'objectifs
+            inexactes, manquantes ou tardives.
+        </p>
+
+        <p>
+            Aucune stipulation des présentes conditions n'exclut une responsabilité qui ne peut être
+            écartée en vertu du droit applicable.
+        </p>
+
+        <h2>7. Résiliation</h2>
+
+        <p>
+            Vous pouvez cesser d'utiliser le service à tout moment en retirant le bot de votre
+            serveur. Ce retrait met fin à tout traitement pour ce serveur ; les objectifs restants
+            expirent et sont supprimés automatiquement, comme décrit dans notre
+            <a href="/fr/privacy">Politique de confidentialité</a>.
+        </p>
+
+        <p>
+            Nous pouvons restreindre ou retirer l'accès à un serveur qui contreviendrait à
+            l'article 4, ou lorsque la poursuite du service contreviendrait aux conditions de
+            Discord.
+        </p>
+
+        <h2>8. Modification des conditions</h2>
+
+        <p>
+            Ces conditions peuvent être mises à jour au fil de l'évolution du service. La date
+            figurant en haut de cette page correspond toujours à la version en vigueur, et toute
+            modification substantielle sera annoncée sur le serveur Discord de support. Continuer à
+            utiliser le bot après une modification vaut acceptation des conditions révisées.
+        </p>
+
+        <h2>9. Droit applicable</h2>
+
+        <p>
+            Les présentes conditions sont régies par le droit français. Si vous êtes un consommateur
+            résidant dans l'Union européenne, vous conservez le bénéfice des dispositions impératives
+            de la loi de votre pays de résidence.
+        </p>
+
+        <h2>10. Contact</h2>
+
+        <p>Pour toute question relative aux présentes conditions :</p>
+
+        <ul>
+            <li>
+                <strong>Serveur Discord de support</strong> —
+                <a href={BOT.discordInvite} target="_blank" rel="noopener noreferrer">
+                    rejoindre le serveur
+                </a>
+            </li>
+            <li>
+                <strong>E-mail</strong> —
+                <a href={`mailto:${BOT.contactEmail}`}>{BOT.contactEmail}</a>
+            </li>
+        </ul>
+    </main>
+</BaseLayout>
