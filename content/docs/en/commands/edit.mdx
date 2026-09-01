@@ -1,0 +1,147 @@
+---
+title: /edit — Modify an objective
+description: Reference for the /edit command. Change the type, rarity, map or time of an objective already reported, without removing and re-adding it.
+navLabel: /edit
+---
+
+import CommandPreview from '@/components/docs/CommandPreview';
+import Callout from '@/components/docs/Callout.astro';
+
+The `/edit` command modifies an objective already tracked on your server. Before it existed, correcting a mistake meant running [`/remove`](/docs/commands/remove/) then [`/add`](/docs/commands/add/) again.
+
+<CommandPreview
+  client:load
+  command="/edit"
+  syntax="/edit index:<index> [type:<type>] [rarity:<rarity>] [map:<map>] [time:<time>]"
+  ephemeral
+  example={{
+    input: "/edit index:#3 rarity:Gold",
+    output: "Your objective has been successfully updated!\nrarity: Purple → Gold"
+  }}
+  parameters={[
+    { name: "index", type: "autocomplete", description: "The objective to edit — pick it from the suggestions", required: true },
+    { name: "type", type: "autocomplete", description: "New objective type", required: false },
+    { name: "rarity", type: "autocomplete", description: "New tier or colour", required: false },
+    { name: "map", type: "autocomplete", description: "New Black Zone map name", required: false },
+    { name: "time", type: "string", description: "New time remaining until spawn", required: false }
+  ]}
+/>
+
+## Syntax
+
+```
+/edit index:<index> [type:<type>] [rarity:<rarity>] [map:<map>] [time:<time>]
+```
+
+## Parameters
+
+Only `index` is **required**. Every other parameter is optional — supply just the ones you want to change.
+
+| Parameter | Type | Required | Description |
+|-----------|------|----------|-------------|
+| `index` | Autocomplete | Yes | The objective to edit. Pick it from the suggestions rather than typing it. |
+| `type` | Autocomplete | No | New objective type — one of the 6 values (see [objective types](/docs/guides/objective-types/)) |
+| `rarity` | Autocomplete | No | New tier for nodes (`4.4`–`8.4`) or colour for cores and vortexes (`Green`, `Blue`, `Purple`, `Gold`) |
+| `map` | Autocomplete | No | New Black Zone map name (see [map list](/docs/guides/black-zone-maps/)) |
+| `time` | Text | No | New time remaining until spawn |
+
+### Accepted time formats
+
+The `time` parameter accepts several notations. A bare number is always **minutes**.
+
+| Input | Interpretation |
+|-------|---------------|
+| `1:30` | 1 hour 30 minutes |
+| `02:30` | 2 hours 30 minutes |
+| `1h30` | 1 hour 30 minutes |
+| `1h30m` | 1 hour 30 minutes |
+| `1h 30` | 1 hour 30 minutes |
+| `1h 30m` | 1 hour 30 minutes |
+| `1h` | 1 hour |
+| `90` | 90 minutes |
+| `45m` | 45 minutes |
+| `90m` | 90 minutes |
+
+The value is a **delay from now**, never a clock time. It is recounted from the moment you submit the edit, not from when the objective was first reported.
+
+## Selecting the objective
+
+Start typing in the `index` field and the bot lists your server's active objectives:
+
+```
+#1 — Vortex Gold Thetford (14:20 UTC)
+#2 — Ore node 8.4 Avalanche Ravine (16:05 UTC)
+#3 — Core Purple Martlock (18:45 UTC)
+```
+
+The list shows up to **25** objectives and covers **active** ones only — expired objectives are gone and cannot be edited.
+
+<Callout variant="tip">Pick an entry from the suggestions instead of typing the number. A picked entry carries a fingerprint of the objective, so if the list shifts between opening the command and submitting it, the bot refuses the edit rather than modifying the wrong objective.</Callout>
+
+Typing the number by hand still works, but without that safeguard.
+
+## Permissions
+
+You can edit an objective if **any** of these is true:
+
+- You have the **Administrator** permission
+- You have the **Manage Messages** permission
+- You reported the objective yourself
+
+These are alternatives, not cumulative requirements. The same rule governs [`/remove`](/docs/commands/remove/).
+
+## Behavior
+
+### Partial updates
+
+Only the parameters you supply are changed; everything else stays as it was. To change just the rarity, supply only `rarity`.
+
+If you supply no field at all, nothing is modified and the bot replies:
+
+```
+No changes were supplied, nothing to update.
+```
+
+### Confirmation
+
+The confirmation is ephemeral — only you see it — and lists each field that actually changed:
+
+```
+Your objective has been successfully updated!
+rarity: Purple → Gold
+map: Thetford → Martlock
+```
+
+A field you supplied with its existing value is not listed, since nothing changed.
+
+### Validation
+
+The bot refuses an edit that would produce an invalid objective:
+
+| Situation | Response |
+|-----------|----------|
+| Unknown type, rarity or map | `One or multiple value(s) are incorrect, please try again.` |
+| Rarity invalid for the resulting type | `This rarity is not valid for the selected type` |
+| Time in an unrecognised format | `Invalid time format. Accepted formats: 1:30, 02:30, 1h30, 1h30m, 1h 30, 1h 30m, 1h, 90, 45m, 90m` |
+| Time beyond the accepted range | `The provided time is out of the accepted range` |
+| The edit would duplicate an existing objective | `It appears that the objective you are trying to add already exists` |
+
+The type and rarity check applies to the **resulting** combination. Changing only the type on a `Core Purple` objective is rejected if the new type does not accept `Purple`.
+
+### Maintenance detection
+
+Editing `time` recalculates whether the new spawn time crosses the daily **10:00 UTC** maintenance window, exactly as [`/add`](/docs/commands/add/) does.
+
+### Message refresh
+
+After a successful edit, the bot deletes its tracking message in the channel and posts an updated one, so the shared list always reflects current data.
+
+### Cooldown
+
+This command has a **2-second cooldown** per user.
+
+## Related commands
+
+- [`/add`](/docs/commands/add/) — report a new objective
+- [`/list`](/docs/commands/list/) — display tracked objectives
+- [`/remove`](/docs/commands/remove/) — delete an objective

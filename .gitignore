@@ -25,10 +25,12 @@ Thumbs.db
 pnpm-debug.log*
 
 # Claude Code
-CLAUDE.md
-.claude/
-tasks/
-docs/
+# Anchored to the repo root: an unanchored `docs/` also matched content/docs/,
+# the site's published documentation.
+/CLAUDE.md
+/.claude/
+/tasks/
+/docs/
 
 # Git worktrees
 .worktrees/

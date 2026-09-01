@@ -1,0 +1,147 @@
+---
+title: /edit — Modifier un objectif
+description: Référence de la commande /edit. Modifiez le type, la rareté, la carte ou le temps d'un objectif déjà rapporté, sans le supprimer puis le recréer.
+navLabel: /edit
+---
+
+import CommandPreview from '@/components/docs/CommandPreview';
+import Callout from '@/components/docs/Callout.astro';
+
+La commande `/edit` modifie un objectif déjà suivi sur votre serveur. Avant son arrivée, corriger une erreur imposait d'enchaîner [`/remove`](/docs/commands/remove/) puis [`/add`](/docs/commands/add/).
+
+<CommandPreview
+  client:load
+  command="/edit"
+  syntax="/edit index:<index> [type:<type>] [rarity:<rarity>] [map:<map>] [time:<time>]"
+  ephemeral
+  example={{
+    input: "/edit index:#3 rarity:Gold",
+    output: "Your objective has been successfully updated!\nrarity: Purple → Gold"
+  }}
+  parameters={[
+    { name: "index", type: "autocomplete", description: "L'objectif à modifier — choisissez-le dans les suggestions", required: true },
+    { name: "type", type: "autocomplete", description: "Nouveau type d'objectif", required: false },
+    { name: "rarity", type: "autocomplete", description: "Nouveau tier ou nouvelle couleur", required: false },
+    { name: "map", type: "autocomplete", description: "Nouveau nom de carte de Black Zone", required: false },
+    { name: "time", type: "string", description: "Nouveau temps restant avant l'apparition", required: false }
+  ]}
+/>
+
+## Syntaxe
+
+```
+/edit index:<index> [type:<type>] [rarity:<rarity>] [map:<map>] [time:<time>]
+```
+
+## Paramètres
+
+Seul `index` est **obligatoire**. Tous les autres paramètres sont facultatifs : ne fournissez que ceux que vous souhaitez modifier.
+
+| Paramètre | Type | Obligatoire | Description |
+|-----------|------|-------------|-------------|
+| `index` | Autocomplétion | Oui | L'objectif à modifier. Choisissez-le dans les suggestions plutôt que de le saisir. |
+| `type` | Autocomplétion | Non | Nouveau type d'objectif — une des 6 valeurs (voir [types d'objectifs](/docs/guides/objective-types/)) |
+| `rarity` | Autocomplétion | Non | Nouveau tier pour les nodes (`4.4`–`8.4`) ou nouvelle couleur pour les cores et vortex (`Green`, `Blue`, `Purple`, `Gold`) |
+| `map` | Autocomplétion | Non | Nouveau nom de carte de Black Zone (voir [liste des cartes](/docs/guides/black-zone-maps/)) |
+| `time` | Texte | Non | Nouveau temps restant avant l'apparition |
+
+### Formats de temps acceptés
+
+Le paramètre `time` accepte plusieurs notations. Un nombre seul correspond toujours à des **minutes**.
+
+| Saisie | Interprétation |
+|--------|---------------|
+| `1:30` | 1 heure 30 minutes |
+| `02:30` | 2 heures 30 minutes |
+| `1h30` | 1 heure 30 minutes |
+| `1h30m` | 1 heure 30 minutes |
+| `1h 30` | 1 heure 30 minutes |
+| `1h 30m` | 1 heure 30 minutes |
+| `1h` | 1 heure |
+| `90` | 90 minutes |
+| `45m` | 45 minutes |
+| `90m` | 90 minutes |
+
+La valeur est un **délai à partir de maintenant**, jamais une heure absolue. Elle est recalculée au moment où vous validez la modification, et non depuis le premier signalement de l'objectif.
+
+## Sélectionner l'objectif
+
+Commencez à saisir dans le champ `index` : le bot liste les objectifs actifs de votre serveur.
+
+```
+#1 — Vortex Gold Thetford (14:20 UTC)
+#2 — Ore node 8.4 Avalanche Ravine (16:05 UTC)
+#3 — Core Purple Martlock (18:45 UTC)
+```
+
+La liste affiche jusqu'à **25** objectifs et ne couvre que les objectifs **actifs** : un objectif expiré n'existe plus et ne peut pas être modifié.
+
+<Callout variant="tip">Choisissez une entrée dans les suggestions plutôt que de saisir le numéro. Une entrée choisie embarque une empreinte de l'objectif : si la liste change entre l'ouverture de la commande et sa validation, le bot refuse la modification au lieu d'altérer le mauvais objectif.</Callout>
+
+La saisie manuelle du numéro reste possible, mais sans cette protection.
+
+## Permissions
+
+Vous pouvez modifier un objectif si **l'une** de ces conditions est remplie :
+
+- Vous disposez de la permission **Administrateur**
+- Vous disposez de la permission **Gérer les messages**
+- Vous avez rapporté l'objectif vous-même
+
+Ces conditions sont alternatives, non cumulatives. La même règle s'applique à [`/remove`](/docs/commands/remove/).
+
+## Comportement
+
+### Modification partielle
+
+Seuls les paramètres fournis sont modifiés ; tout le reste est conservé. Pour ne changer que la rareté, ne fournissez que `rarity`.
+
+Si vous ne fournissez aucun champ, rien n'est modifié et le bot répond :
+
+```
+No changes were supplied, nothing to update.
+```
+
+### Confirmation
+
+La confirmation est éphémère — vous seul la voyez — et détaille chaque champ réellement modifié :
+
+```
+Your objective has been successfully updated!
+rarity: Purple → Gold
+map: Thetford → Martlock
+```
+
+Un champ fourni avec sa valeur actuelle n'apparaît pas, puisque rien n'a changé.
+
+### Validation
+
+Le bot refuse une modification qui produirait un objectif invalide :
+
+| Situation | Réponse |
+|-----------|---------|
+| Type, rareté ou carte inconnus | `One or multiple value(s) are incorrect, please try again.` |
+| Rareté incompatible avec le type résultant | `This rarity is not valid for the selected type` |
+| Format de temps non reconnu | `Invalid time format. Accepted formats: 1:30, 02:30, 1h30, 1h30m, 1h 30, 1h 30m, 1h, 90, 45m, 90m` |
+| Temps hors de la plage acceptée | `The provided time is out of the accepted range` |
+| La modification créerait un doublon | `It appears that the objective you are trying to add already exists` |
+
+Le contrôle type/rareté porte sur la combinaison **résultante**. Modifier uniquement le type d'un objectif `Core Purple` est refusé si le nouveau type n'accepte pas `Purple`.
+
+### Détection de maintenance
+
+Modifier `time` recalcule si la nouvelle heure d'apparition traverse la fenêtre de maintenance quotidienne de **10:00 UTC**, exactement comme [`/add`](/docs/commands/add/).
+
+### Rafraîchissement du message
+
+Après une modification réussie, le bot supprime son message de suivi dans le salon et en publie un nouveau, afin que la liste partagée reflète toujours les données à jour.
+
+### Cooldown
+
+Cette commande a un **cooldown de 2 secondes** par utilisateur.
+
+## Commandes associées
+
+- [`/add`](/docs/commands/add/) — rapporter un nouvel objectif
+- [`/list`](/docs/commands/list/) — afficher les objectifs suivis
+- [`/remove`](/docs/commands/remove/) — supprimer un objectif
