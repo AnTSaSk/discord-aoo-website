@@ -5,6 +5,19 @@ description: Version history and release notes for Albion Online Objectives. Tra
 
 import TimelineEntry from '@/components/docs/TimelineEntry.astro';
 
+<TimelineEntry version="v0.2.0" date="2026-09-01">
+  <Fragment slot="features">
+    - **`/edit` command** — Modify the type, rarity, map or time of an objective already reported, instead of removing and re-adding it
+    - **Flexible time input** — `/add` and `/edit` accept `1h30`, `1h`, `90`, `45m`, `02:30` and more; a bare number means minutes
+    - **Autocomplete selection** — `/edit` and `/remove` list your server's active objectives instead of requiring a typed index
+    - **Safer selection** — an objective picked from autocomplete carries a fingerprint, so a shifting list can no longer cause the wrong objective to be edited or removed
+  </Fragment>
+  <Fragment slot="fixes">
+    - **Index resolution** — indexes now resolve against the active objectives shown in `/list`. Previously an expired objective could shift the list and make `/remove` delete a different objective than the one targeted
+    - **Reporter name** — the objective line now credits the member by their server nickname instead of their global account name
+  </Fragment>
+</TimelineEntry>
+
 <TimelineEntry version="v0.1.0" date="2025-06-01">
   <Fragment slot="features">
     - **`/add` command** — Report Black Zone objectives with type, rarity, map, and time remaining

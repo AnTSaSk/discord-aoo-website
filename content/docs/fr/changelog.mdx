@@ -6,6 +6,19 @@ navLabel: Changelog
 
 import TimelineEntry from '@/components/docs/TimelineEntry.astro';
 
+<TimelineEntry version="v0.2.0" date="2026-09-01">
+  <Fragment slot="features">
+    - **Commande `/edit`** — Modifiez le type, la rareté, la carte ou le temps d'un objectif déjà rapporté, au lieu de le supprimer puis le recréer
+    - **Saisie du temps assouplie** — `/add` et `/edit` acceptent `1h30`, `1h`, `90`, `45m`, `02:30` et d'autres notations ; un nombre seul correspond à des minutes
+    - **Sélection par autocomplétion** — `/edit` et `/remove` listent les objectifs actifs de votre serveur au lieu d'exiger un index saisi à la main
+    - **Sélection sécurisée** — un objectif choisi dans l'autocomplétion embarque une empreinte : une liste qui change ne peut plus provoquer la modification ou la suppression du mauvais objectif
+  </Fragment>
+  <Fragment slot="fixes">
+    - **Résolution de l'index** — les index se résolvent désormais sur les objectifs actifs affichés par `/list`. Auparavant, un objectif expiré pouvait décaler la liste et faire supprimer par `/remove` un autre objectif que celui visé
+    - **Nom de l'auteur** — la ligne d'objectif crédite désormais le membre par son pseudo de serveur plutôt que par son nom de compte global
+  </Fragment>
+</TimelineEntry>
+
 <TimelineEntry version="v0.1.0" date="2025-06-01">
   <Fragment slot="features">
     - **Commande `/add`** -- Rapportez des objectifs de Black Zone avec le type, la rareté, la carte et le temps restant
