@@ -1,0 +1,127 @@
+---
+title: /settings — Configurer le bot
+description: Référence de la commande /settings. Choisissez le salon des annonces de version, activez-les ou non, et autorisez la mention @everyone.
+navLabel: /settings
+---
+
+import CommandPreview from '@/components/docs/CommandPreview';
+import Callout from '@/components/docs/Callout.astro';
+
+La commande `/settings` configure le comportement du bot sur votre serveur. Elle régit aujourd'hui les **annonces de version** — les messages publiés par le bot à chaque nouvelle version.
+
+Les réglages sont propres à chaque serveur. Les modifier sur l'un n'affecte jamais les autres.
+
+<CommandPreview
+  client:load
+  command="/settings"
+  syntax="/settings show | announcement-channel channel:<channel> | announcements [enabled:<bool>] [mention-everyone:<bool>]"
+  ephemeral
+  example={{
+    input: "/settings announcement-channel channel:#bot-news",
+    output: "Announcements will now be posted in #bot-news."
+  }}
+  parameters={[
+    { name: "show", type: "subcommand", description: "Afficher la configuration actuelle", required: false },
+    { name: "announcement-channel", type: "subcommand", description: "Choisir le salon des annonces", required: false },
+    { name: "announcements", type: "subcommand", description: "Activer ou désactiver les annonces", required: false }
+  ]}
+/>
+
+## Permissions
+
+`/settings` exige la permission **Gérer le serveur**. Les membres qui n'en disposent pas ne voient tout simplement pas la commande dans l'interface Discord : elle est masquée, et non refusée.
+
+Cela diffère de [`/add`](/docs/commands/add/), [`/edit`](/docs/commands/edit/) et [`/remove`](/docs/commands/remove/), utilisables par tout membre.
+
+## Sous-commandes
+
+### `/settings show`
+
+Affiche la configuration actuelle :
+
+```
+**Announcement channel:** #bot-news
+**Announcements:** enabled
+**Mention `@everyone`:** disabled
+```
+
+Lorsqu'aucun salon n'a été choisi, la première ligne devient :
+
+```
+**Announcement channel:** not set, announcements fall back to the last channel the bot was used in
+```
+
+### `/settings announcement-channel`
+
+Choisit le salon où les annonces de version sont publiées.
+
+| Paramètre | Type | Obligatoire | Description |
+|-----------|------|-------------|-------------|
+| `channel` | Salon | Oui | Salon textuel où publier les annonces |
+
+Seuls les **salons textuels** apparaissent dans le sélecteur. Le bot vérifie qu'il peut réellement y écrire avant d'enregistrer :
+
+```
+Announcements will now be posted in #bot-news.
+```
+
+Sinon, rien n'est enregistré et le bot nomme la permission manquante :
+
+```
+I cannot post in that channel: the **View Channel** permission is missing. Grant it there, then run the command again.
+```
+
+Le même message apparaît avec **Send Messages** lorsque c'est cette permission qui manque. Accordez-la sur le salon, puis relancez la commande.
+
+### `/settings announcements`
+
+Active ou désactive les annonces, et contrôle la mention `@everyone`.
+
+| Paramètre | Type | Obligatoire | Description |
+|-----------|------|-------------|-------------|
+| `enabled` | Booléen | Non | Recevoir les annonces de version sur ce serveur |
+| `mention-everyone` | Booléen | Non | Mentionner `@everyone` lors d'une annonce |
+
+Les deux paramètres sont facultatifs et indépendants : ne fournissez que celui que vous souhaitez modifier. Le bot répond avec la configuration complète après application.
+
+Lancer la sous-commande **sans aucun** paramètre affiche la configuration actuelle sans rien modifier, exactement comme `/settings show`.
+
+## Valeurs par défaut
+
+| Réglage | Défaut |
+|---------|--------|
+| Annonces | **Activées** |
+| Mention `@everyone` | **Désactivée** |
+| Salon d'annonces | **Non défini** — repli sur le dernier salon où le bot a été utilisé |
+
+<Callout variant="note">La mention `@everyone` est désactivée par défaut et seul un administrateur peut l'activer. Le bot ne notifie jamais l'ensemble de votre serveur sans qu'une personne disposant de **Gérer le serveur** l'ait explicitement autorisé.</Callout>
+
+## Où atterrissent les annonces
+
+Sans salon d'annonces défini, le bot se replie sur le **dernier salon où une commande a été utilisée** sur votre serveur. Ce message porte alors une notice expliquant le repli et renvoyant vers `/settings announcement-channel`.
+
+Si le bot n'a jamais été utilisé dans aucun salon, il cherche un salon contenant un objectif encore actif. À défaut des deux, votre serveur est ignoré pour cette annonce : rien n'est publié.
+
+Définir un salon explicitement supprime cette part de devinette, et la notice de repli disparaît.
+
+## Comportement
+
+### Permission @everyone manquante
+
+Si votre serveur a autorisé la mention `@everyone` mais que le bot ne dispose pas de la permission **Mentionner @everyone** dans le salon visé, l'annonce est tout de même publiée — simplement sans la mention. Rien n'est bloqué.
+
+### Annonces déjà reçues
+
+Chaque annonce n'est envoyée qu'une fois par serveur. Relancer `/settings` ne renvoie jamais une annonce déjà reçue.
+
+Un serveur qui installe le bot **après** la publication d'une version ne reçoit pas cette annonce rétroactivement : il démarre à la version suivante.
+
+### Désactiver les annonces
+
+Avec `enabled` à `false`, votre serveur est intégralement ignoré pour les annonces futures. Le réglage persiste jusqu'à ce qu'un administrateur le réactive.
+
+## Commandes associées
+
+- [`/about`](/docs/commands/) — version du bot et documents légaux
+- [`/add`](/docs/commands/add/) — rapporter un nouvel objectif
+- [`/list`](/docs/commands/list/) — afficher les objectifs suivis

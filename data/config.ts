@@ -114,6 +114,7 @@ export const SIDEBAR_NAVIGATION: SidebarNavigation = {
           { slug: "commands/list" },
           { slug: "commands/edit" },
           { slug: "commands/remove" },
+          { slug: "commands/settings" },
         ],
       },
       {

@@ -1,0 +1,127 @@
+---
+title: /settings — Configure the bot
+description: Reference for the /settings command. Choose where release announcements are posted, turn them on or off, and opt in to the @everyone mention.
+navLabel: /settings
+---
+
+import CommandPreview from '@/components/docs/CommandPreview';
+import Callout from '@/components/docs/Callout.astro';
+
+The `/settings` command configures how the bot behaves on your server. It currently governs **release announcements** — the messages the bot posts when a new version ships.
+
+Settings are stored per server. Changing them on one server never affects another.
+
+<CommandPreview
+  client:load
+  command="/settings"
+  syntax="/settings show | announcement-channel channel:<channel> | announcements [enabled:<bool>] [mention-everyone:<bool>]"
+  ephemeral
+  example={{
+    input: "/settings announcement-channel channel:#bot-news",
+    output: "Announcements will now be posted in #bot-news."
+  }}
+  parameters={[
+    { name: "show", type: "subcommand", description: "Display the current configuration", required: false },
+    { name: "announcement-channel", type: "subcommand", description: "Choose where announcements are posted", required: false },
+    { name: "announcements", type: "subcommand", description: "Turn announcements on or off", required: false }
+  ]}
+/>
+
+## Permissions
+
+`/settings` requires the **Manage Server** permission. Members without it do not see the command in the Discord interface at all — it is hidden rather than refused.
+
+This differs from [`/add`](/docs/commands/add/), [`/edit`](/docs/commands/edit/) and [`/remove`](/docs/commands/remove/), which any member can use.
+
+## Subcommands
+
+### `/settings show`
+
+Displays the current configuration:
+
+```
+**Announcement channel:** #bot-news
+**Announcements:** enabled
+**Mention `@everyone`:** disabled
+```
+
+When no channel has been chosen, the first line reads:
+
+```
+**Announcement channel:** not set, announcements fall back to the last channel the bot was used in
+```
+
+### `/settings announcement-channel`
+
+Chooses the channel where release announcements are posted.
+
+| Parameter | Type | Required | Description |
+|-----------|------|----------|-------------|
+| `channel` | Channel | Yes | Text channel to post announcements in |
+
+Only **text channels** appear in the picker. The bot verifies it can actually post there before saving:
+
+```
+Announcements will now be posted in #bot-news.
+```
+
+If it cannot, nothing is saved and the bot names the missing permission:
+
+```
+I cannot post in that channel: the **View Channel** permission is missing. Grant it there, then run the command again.
+```
+
+The same message appears with **Send Messages** when that is what is missing. Grant the permission on the channel, then run the command again.
+
+### `/settings announcements`
+
+Turns announcements on or off, and controls the `@everyone` mention.
+
+| Parameter | Type | Required | Description |
+|-----------|------|----------|-------------|
+| `enabled` | Boolean | No | Receive release announcements on this server |
+| `mention-everyone` | Boolean | No | Mention `@everyone` when an announcement is posted |
+
+Both parameters are optional and independent — supply just the one you want to change. The bot replies with the full configuration after applying it.
+
+Running the subcommand with **neither** parameter displays the current configuration without changing anything, exactly like `/settings show`.
+
+## Defaults
+
+| Setting | Default |
+|---------|---------|
+| Announcements | **Enabled** |
+| `@everyone` mention | **Disabled** |
+| Announcement channel | **Not set** — falls back to the last channel the bot was used in |
+
+<Callout variant="note">The `@everyone` mention is off by default and only an admin can turn it on. The bot never pings your whole server unless someone with **Manage Server** has explicitly opted in.</Callout>
+
+## Where announcements land
+
+When no announcement channel is set, the bot falls back to the **last channel a command was used in** on your server. That message carries a notice explaining the fallback and pointing to `/settings announcement-channel`.
+
+If the bot has never been used in any channel, it looks for a channel holding an objective that has not expired yet. If it finds neither, your server is skipped for that announcement — nothing is posted.
+
+Setting a channel explicitly removes this guesswork, and the fallback notice disappears.
+
+## Behavior
+
+### Missing @everyone permission
+
+If your server opted in to the `@everyone` mention but the bot lacks the **Mention Everyone** permission in the target channel, the announcement is still posted — just without the mention. Nothing is blocked.
+
+### Announcements already received
+
+Each announcement is sent once per server. Re-running `/settings` never re-sends one that already arrived.
+
+A server that installs the bot **after** a version was announced does not receive that announcement retroactively — it starts fresh from the next release.
+
+### Turning announcements off
+
+With `enabled` set to `false`, your server is skipped entirely for future announcements. The setting persists until an admin turns it back on.
+
+## Related commands
+
+- [`/about`](/docs/commands/) — bot version and legal documents
+- [`/add`](/docs/commands/add/) — report a new objective
+- [`/list`](/docs/commands/list/) — display tracked objectives
