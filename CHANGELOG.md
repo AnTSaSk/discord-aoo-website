@@ -5,6 +5,13 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.1.9](https://github.com/AnTSaSk/discord-aoo-website/compare/discord-aoo-website-v0.1.8...discord-aoo-website-v0.1.9) (2026-09-01)
+
+
+### Features
+
+* **legal:** add bilingual terms of service and privacy policy pages ([2b11916](https://github.com/AnTSaSk/discord-aoo-website/commit/2b119164c04d149ee4d236eef985cede4e04f20f))
+
 ## [0.1.8](https://github.com/AnTSaSk/discord-aoo-website/compare/discord-aoo-website-v0.1.7...discord-aoo-website-v0.1.8) (2026-03-25)
 
 
