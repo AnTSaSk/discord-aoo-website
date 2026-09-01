@@ -68,6 +68,25 @@ const lastUpdated = "1 September 2026";
             technical metadata.
         </p>
 
+        <p>
+            Separately, the bot stores <strong>one settings record per server</strong>, created when
+            an administrator configures the bot or when the bot first posts an announcement:
+        </p>
+
+        <ul>
+            <li><strong>Discord server identifier</strong> — the server the settings belong to</li>
+            <li><strong>Announcement channel identifier</strong> — the channel chosen for release announcements, if one was set</li>
+            <li><strong>Last used channel identifier</strong> — the channel where the bot was last used, its fallback when no announcement channel is set</li>
+            <li><strong>Announcement preferences</strong> — whether announcements are enabled, and whether the <code>@everyone</code> mention is allowed</li>
+            <li><strong>Last announced version</strong> — so an announcement is never sent twice to the same server</li>
+            <li><strong>Record timestamps</strong> — when the record was created and last modified</li>
+        </ul>
+
+        <p>
+            This record contains <strong>no user identifier</strong>. It describes a server's
+            configuration, not a person.
+        </p>
+
         <p><strong>The bot does not collect:</strong></p>
 
         <ul>
@@ -123,6 +142,13 @@ const lastUpdated = "1 September 2026";
         <p>
             Deletion requires no action on your part, and no copy is retained afterwards. An
             objective can also be deleted earlier at any time using the <code>/remove</code> command.
+        </p>
+
+        <p>
+            <strong>Server settings follow a different rule.</strong> They are kept for as long as
+            the bot is installed on the server, since they describe how it should behave there. They
+            are <strong>not deleted automatically</strong> when the bot is removed from a server. If
+            you want a server's settings erased, ask us at the address below and we will delete them.
         </p>
 
         <h2>Who else receives this data</h2>

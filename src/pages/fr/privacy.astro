@@ -71,6 +71,25 @@ const lastUpdated = "1er septembre 2026";
             personnelle. Le reste relève des données de jeu ou de métadonnées techniques.
         </p>
 
+        <p>
+            Le bot conserve par ailleurs <strong>une fiche de réglages par serveur</strong>, créée
+            lorsqu'un administrateur configure le bot ou lors de la première annonce publiée :
+        </p>
+
+        <ul>
+            <li><strong>Identifiant du serveur Discord</strong> — le serveur auquel les réglages se rapportent</li>
+            <li><strong>Identifiant du salon d'annonces</strong> — le salon choisi pour les annonces de version, s'il a été défini</li>
+            <li><strong>Identifiant du dernier salon utilisé</strong> — le salon où le bot a servi en dernier, son repli lorsqu'aucun salon d'annonces n'est défini</li>
+            <li><strong>Préférences d'annonces</strong> — annonces activées ou non, mention <code>@everyone</code> autorisée ou non</li>
+            <li><strong>Dernière version annoncée</strong> — afin qu'une annonce ne soit jamais envoyée deux fois au même serveur</li>
+            <li><strong>Horodatages</strong> — date de création et de dernière modification de la fiche</li>
+        </ul>
+
+        <p>
+            Cette fiche ne contient <strong>aucun identifiant d'utilisateur</strong>. Elle décrit la
+            configuration d'un serveur, pas une personne.
+        </p>
+
         <p><strong>Le bot ne collecte pas :</strong></p>
 
         <ul>
@@ -130,6 +149,14 @@ const lastUpdated = "1er septembre 2026";
             Cette suppression ne demande aucune action de votre part, et aucune copie n'est
             conservée ensuite. Un objectif peut aussi être supprimé à tout moment, plus tôt, avec la
             commande <code>/remove</code>.
+        </p>
+
+        <p>
+            <strong>Les réglages de serveur suivent une règle différente.</strong> Ils sont conservés
+            aussi longtemps que le bot est installé sur le serveur, puisqu'ils décrivent la manière
+            dont il doit s'y comporter. Ils ne sont <strong>pas supprimés automatiquement</strong>
+            lorsque le bot est retiré d'un serveur. Pour faire effacer les réglages d'un serveur,
+            écrivez-nous à l'adresse indiquée plus bas : nous procéderons à leur suppression.
         </p>
 
         <h2>Destinataires des données</h2>
