@@ -73,9 +73,38 @@ La commande [`/list`](/docs/commands/list/) affiche tous les objectifs actifs de
 - **Type** saisi manuellement au lieu d'être sélectionné via l'autocomplétion, ce qui produit une valeur absente de la liste supportée
 - **Rarity** ne correspond pas au type sélectionné (par exemple, `7.4` pour un Core, ou `Gold` pour un node)
 - **Map** mal orthographiée ou absente des [276 cartes supportées](/docs/guides/black-zone-maps/)
-- **Time** ne respecte pas le format 24 heures `HH:MM` (par exemple, `2:30` au lieu de `02:30`, ou `14:60` avec des minutes invalides)
+- **Time** utilise une notation que l'analyseur ne reconnaît pas
 
-**Résolution :** Relancez `/add` et utilisez les suggestions d'autocomplétion pour `type`, `rarity` et `map`. Pour l'heure, utilisez deux chiffres pour les heures et les minutes : `01:30`, `04:00`, `12:45`.
+**Résolution :** Relancez `/add` et utilisez les suggestions d'autocomplétion pour `type`, `rarity` et `map`. Pour le temps, plusieurs notations fonctionnent — `1h30`, `90`, `02:30` — voir [la liste complète](/docs/commands/add/#formats-de-temps-acceptés).
+
+### Format de temps invalide
+
+**Message :**
+> Invalid time format. Accepted formats: 1:30, 02:30, 1h30, 1h30m, 1h 30, 1h 30m, 1h, 90, 45m, 90m
+
+**Cause :** La valeur `time` n'a pas pu être analysée. Un nombre seul est interprété comme des minutes ; `1h30` et `1:30` signifient tous deux une heure trente.
+
+**Résolution :** Utilisez l'une des notations listées dans le message. Les séparateurs `;`, `.` et `,` sont tolérés comme fautes de frappe pour `:`.
+
+### Temps hors plage
+
+**Message :**
+> The provided time is out of the accepted range
+
+**Cause :** Le délai a bien été analysé mais sort de la fenêtre acceptée. Un objectif se rapporte sous forme de délai à partir de maintenant, borné à 24 heures.
+
+**Résolution :** Saisissez un délai compris dans cette limite.
+
+### Combinaison type / rareté invalide
+
+**Message :**
+> This rarity is not valid for the selected type
+
+**Cause :** La rareté ne s'applique pas au type d'objectif — les tiers `4.4` à `8.4` concernent les nodes, tandis que les couleurs `Green`, `Blue`, `Purple` et `Gold` concernent les Cores et les Vortex.
+
+Avec [`/edit`](/docs/commands/edit/), ce contrôle porte sur la combinaison **résultante** : modifier uniquement le type peut échouer à cause de la rareté déjà enregistrée sur l'objectif.
+
+**Résolution :** Fournissez une rareté compatible avec le type, ou modifiez les deux ensemble.
 
 ### Valeurs manquantes
 

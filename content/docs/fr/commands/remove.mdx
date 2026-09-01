@@ -5,6 +5,7 @@ navLabel: /remove
 ---
 
 import CommandPreview from '@/components/docs/CommandPreview';
+import Callout from '@/components/docs/Callout.astro';
 import Screenshot from '@/components/docs/Screenshot.astro';
 import ScrollReveal from '@/components/docs/ScrollReveal.astro';
 
@@ -34,7 +35,7 @@ La commande `/remove` supprime un objectif rapporté de la liste active de votre
 
 | Paramètre | Type | Obligatoire | Description |
 |-----------|------|----------|-------------|
-| `index` | Nombre | Oui | Le numéro d'index de l'objectif à supprimer (affiché dans le résultat de [`/list`](/docs/commands/list/)) |
+| `index` | Autocomplétion | Oui | L'objectif à supprimer. Commencez à saisir et choisissez-le dans les suggestions. |
 
 ## Permissions
 
@@ -48,11 +49,21 @@ Vous pouvez supprimer un objectif si vous remplissez **l'une** de ces conditions
 
 Si vous n'avez pas la permission requise, le bot répond avec un message d'erreur (visible uniquement par vous).
 
-## Comment trouver l'index
+## Sélectionner l'objectif
 
-1. Exécutez [`/list`](/docs/commands/list/) pour voir tous les objectifs actifs
-2. Chaque entrée commence par `#N` — c'est le numéro d'index
-3. Utilisez ce numéro avec `/remove`
+Commencez à saisir dans le champ `index` : le bot liste les objectifs actifs de votre serveur.
+
+```
+#1 — Vortex Gold Thetford (14:20 UTC)
+#2 — Ore node 8.4 Avalanche Ravine (16:05 UTC)
+#3 — Core Purple Martlock (18:45 UTC)
+```
+
+La liste affiche jusqu'à **25** objectifs et ne couvre que les objectifs **actifs** : l'index correspond à la position d'un objectif parmi ceux encore en cours, c'est-à-dire exactement ce qu'affiche [`/list`](/docs/commands/list/).
+
+<Callout variant="tip">Choisissez une entrée dans les suggestions plutôt que de saisir le numéro. Une entrée choisie embarque une empreinte de l'objectif : si la liste change entre l'ouverture de la commande et sa validation, le bot refuse au lieu de supprimer le mauvais objectif.</Callout>
+
+La saisie manuelle du numéro reste possible, mais sans cette protection.
 
 <ScrollReveal animation="fade-in">
   <Screenshot src="/screenshots/remove-autocomplete.png" alt="Autocomplétion Discord pour les paramètres de la commande /remove" mode="discord" />

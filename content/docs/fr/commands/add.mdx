@@ -14,7 +14,7 @@ La commande `/add` rapporte un nouvel objectif de Black Zone dans la liste de su
 <CommandPreview
   client:load
   command="/add"
-  syntax="/add type:<type> rarity:<rarity> map:<map> time:<HH:MM>"
+  syntax="/add type:<type> rarity:<rarity> map:<map> time:<time>"
   ephemeral
   example={{
     input: "/add type:Core rarity:Purple map:Avalanche Ravine time:00:45",
@@ -24,14 +24,14 @@ La commande `/add` rapporte un nouvel objectif de Black Zone dans la liste de su
     { name: "type", type: "choice", description: "The objective type (node, core, or vortex)", required: true },
     { name: "rarity", type: "choice", description: "Tier for nodes or color for cores/vortexes", required: true },
     { name: "map", type: "string", description: "Black Zone map name", required: true },
-    { name: "time", type: "string", description: "Time remaining until spawn (HH:MM format)", required: true }
+    { name: "time", type: "string", description: "Time remaining until spawn (e.g. 1h30, 90, 02:30)", required: true }
   ]}
 />
 
 ## Syntaxe
 
 ```
-/add type:<type> rarity:<rarity> map:<map> time:<HH:MM>
+/add type:<type> rarity:<rarity> map:<map> time:<time>
 ```
 
 ## Paramètres
@@ -43,7 +43,7 @@ Les quatre paramètres sont **obligatoires**.
 | `type` | Autocomplétion | Le type d'objectif — une des 6 valeurs (voir [types d'objectifs](/docs/guides/objective-types/)) |
 | `rarity` | Autocomplétion | Tier pour les nodes (`4.4`–`8.4`) ou couleur pour les cores/vortex (`Green`, `Blue`, `Purple`, `Gold`) |
 | `map` | Autocomplétion | Nom de la carte de Black Zone — 276 cartes supportées (voir [liste des cartes](/docs/guides/black-zone-maps/)) |
-| `time` | Texte | Temps restant avant l'apparition de l'objectif, au format `HH:MM` (24 heures). Exemple : `02:30` (2 heures et 30 minutes à partir de maintenant) |
+| `time` | Texte | Temps restant avant l'apparition de l'objectif. Plusieurs formats sont acceptés — voir [ci-dessous](#formats-de-temps-acceptés). Exemple : `1h30` ou `02:30` (2 heures et 30 minutes à partir de maintenant) |
 
 ### Valeurs de type
 
@@ -102,9 +102,24 @@ La maintenance quotidienne des serveurs d'Albion Online a lieu à **10:00 UTC**.
 
 Cette commande a un **temps de recharge de 2 secondes** par utilisateur.
 
-### Validation du temps
+### Formats de temps acceptés
 
-Le paramètre `time` doit respecter le format 24 heures `HH:MM` (ex. : `01:30`, `04:00`, `12:45`). Les formats invalides sont rejetés.
+Le paramètre `time` accepte plusieurs notations. Un nombre seul correspond toujours à des **minutes**.
+
+| Saisie | Interprétation |
+|--------|---------------|
+| `1:30` | 1 heure 30 minutes |
+| `02:30` | 2 heures 30 minutes |
+| `1h30` | 1 heure 30 minutes |
+| `1h30m` | 1 heure 30 minutes |
+| `1h 30` | 1 heure 30 minutes |
+| `1h 30m` | 1 heure 30 minutes |
+| `1h` | 1 heure |
+| `90` | 90 minutes |
+| `45m` | 45 minutes |
+| `90m` | 90 minutes |
+
+La valeur est un **délai à partir de maintenant**, jamais une heure absolue. Les formats non reconnus sont rejetés avec un message listant les formats acceptés.
 
 ## Après l'ajout
 

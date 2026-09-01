@@ -1,6 +1,6 @@
 ---
 title: Référence des commandes
-description: Référence de toutes les commandes slash d'Albion Online Objectives — /add pour rapporter, /list pour consulter les objectifs actifs et /remove pour supprimer.
+description: Référence de toutes les commandes slash d'Albion Online Objectives — /add pour rapporter, /list pour consulter, /edit pour modifier et /remove pour supprimer.
 navLabel: Vue d'ensemble
 ---
 
@@ -9,7 +9,7 @@ import Callout from '@/components/docs/Callout.astro';
 
 Toutes les interactions avec Albion Online Objectives (AOO) passent par les commandes slash Discord. Tapez `/` dans n'importe quel salon où le bot a accès pour voir les commandes disponibles.
 
-<Callout variant="info">Les commandes ont des temps de recharge pour éviter le spam — 2 secondes pour /add et /remove, 5 secondes pour /list.</Callout>
+<Callout variant="info">Les commandes ont des temps de recharge pour éviter le spam — 2 secondes pour /add, /edit et /remove, 5 secondes pour /list.</Callout>
 
 ## Commandes
 
@@ -17,6 +17,7 @@ Toutes les interactions avec Albion Online Objectives (AOO) passent par les comm
 |----------|-------------|-------------------|
 | [`/add`](/docs/commands/add/) | Rapporter un nouvel objectif de Black Zone | 2 secondes |
 | [`/list`](/docs/commands/list/) | Voir tous les objectifs actifs de votre serveur | 5 secondes |
+| [`/edit`](/docs/commands/edit/) | Modifier un objectif déjà rapporté | 2 secondes |
 | [`/remove`](/docs/commands/remove/) | Supprimer un objectif rapporté | 2 secondes |
 
 ## Démarrage rapide
@@ -25,11 +26,12 @@ Vous découvrez Albion Online Objectives ? Suivez le tutoriel [Rapporter votre p
 
 1. **Rapportez** un objectif trouvé en Black Zone avec [`/add`](/docs/commands/add/)
 2. **Consultez** tous les objectifs actifs de votre guilde avec [`/list`](/docs/commands/list/)
-3. **Supprimez** une entrée expirée ou incorrecte avec [`/remove`](/docs/commands/remove/)
+3. **Corrigez** une erreur avec [`/edit`](/docs/commands/edit/) — sans supprimer puis recréer
+4. **Supprimez** une entrée expirée ou incorrecte avec [`/remove`](/docs/commands/remove/)
 
 ## Permissions
 
-<Badge variant="green">Aucune permission requise</Badge> Les trois commandes sont accessibles à tous les membres de votre serveur. La seule exception est `/remove`, qui nécessite l'une des conditions suivantes pour supprimer le rapport d'un autre joueur :
+<Badge variant="green">Aucune permission requise</Badge> Les quatre commandes sont accessibles à tous les membres de votre serveur. Les exceptions sont `/edit` et `/remove`, qui nécessitent l'une des conditions suivantes pour modifier ou supprimer le rapport d'un autre joueur :
 
 - Permission **Administrateur**
 - Permission **Gérer les messages**

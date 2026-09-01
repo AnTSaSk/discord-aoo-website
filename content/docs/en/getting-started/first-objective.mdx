@@ -57,7 +57,7 @@ This tutorial walks you through reporting your first Albion Online Black Zone ob
    | `type` | The objective type (autocomplete) | `Ore node` |
    | `rarity` | The rarity or tier (autocomplete) | `7.4` |
    | `map` | The Black Zone map name (autocomplete) | `Murdergulch Ravine` |
-   | `time` | Time remaining until spawn, `HH:MM` format | `02:30` |
+   | `time` | Time remaining until spawn — [several formats accepted](/docs/commands/add/#accepted-time-formats) | `1h30` |
 
 4. **Press Enter** to submit. Albion Online Objectives confirms the objective was added.
 
@@ -68,7 +68,7 @@ This tutorial walks you through reporting your first Albion Online Black Zone ob
 <CommandPreview
   client:load
   command="/add"
-  syntax="/add type:<type> rarity:<rarity> map:<map> time:<HH:MM>"
+  syntax="/add type:<type> rarity:<rarity> map:<map> time:<time>"
   ephemeral
   example={{
     input: "/add type:Ore rarity:6.4 map:Birken Fell time:00:30",

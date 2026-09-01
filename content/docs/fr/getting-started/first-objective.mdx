@@ -58,7 +58,7 @@ Ce tutoriel vous guide pour rapporter votre premier objectif de Black Zone dans 
    | `type` | Le type d'objectif (autocomplétion) | `Ore node` |
    | `rarity` | La rareté ou le tier (autocomplétion) | `7.4` |
    | `map` | Le nom de la carte en Black Zone (autocomplétion) | `Murdergulch Ravine` |
-   | `time` | Temps restant avant l'apparition, format `HH:MM` | `02:30` |
+   | `time` | Temps restant avant l'apparition — [plusieurs formats acceptés](/docs/commands/add/#formats-de-temps-acceptés) | `1h30` |
 
 4. **Appuyez sur Entrée** pour envoyer. Albion Online Objectives confirme que l'objectif a été ajouté.
 
@@ -69,7 +69,7 @@ Ce tutoriel vous guide pour rapporter votre premier objectif de Black Zone dans 
 <CommandPreview
   client:load
   command="/add"
-  syntax="/add type:<type> rarity:<rarity> map:<map> time:<HH:MM>"
+  syntax="/add type:<type> rarity:<rarity> map:<map> time:<time>"
   ephemeral
   example={{
     input: "/add type:Ore rarity:6.4 map:Birken Fell time:00:30",

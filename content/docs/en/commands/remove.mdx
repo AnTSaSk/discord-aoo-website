@@ -5,6 +5,7 @@ navLabel: /remove
 ---
 
 import CommandPreview from '@/components/docs/CommandPreview';
+import Callout from '@/components/docs/Callout.astro';
 import Screenshot from '@/components/docs/Screenshot.astro';
 import ScrollReveal from '@/components/docs/ScrollReveal.astro';
 
@@ -34,7 +35,7 @@ The `/remove` command deletes a reported objective from your server's active lis
 
 | Parameter | Type | Required | Description |
 |-----------|------|----------|-------------|
-| `index` | Number | Yes | The index number of the objective to remove (shown in [`/list`](/docs/commands/list/) output) |
+| `index` | Autocomplete | Yes | The objective to remove. Start typing and pick it from the suggestions. |
 
 ## Permissions
 
@@ -48,11 +49,21 @@ You can remove an objective if you meet **any one** of these conditions:
 
 If you don't have permission, the bot responds with an error message (visible only to you).
 
-## How to Find the Index
+## Selecting the objective
 
-1. Run [`/list`](/docs/commands/list/) to see all active objectives
-2. Each entry starts with `#N` — that's the index number
-3. Use that number with `/remove`
+Start typing in the `index` field and the bot lists your server's active objectives:
+
+```
+#1 — Vortex Gold Thetford (14:20 UTC)
+#2 — Ore node 8.4 Avalanche Ravine (16:05 UTC)
+#3 — Core Purple Martlock (18:45 UTC)
+```
+
+The list shows up to **25** objectives and covers **active** ones only — the index refers to an objective's position among the objectives still running, which is exactly what [`/list`](/docs/commands/list/) displays.
+
+<Callout variant="tip">Pick an entry from the suggestions instead of typing the number. A picked entry carries a fingerprint of the objective, so if the list shifts between opening the command and submitting it, the bot refuses rather than removing the wrong objective.</Callout>
+
+Typing the number by hand still works, but without that safeguard.
 
 <ScrollReveal animation="fade-in">
   <Screenshot src="/screenshots/remove-autocomplete.png" alt="Discord autocomplete for /remove command parameters" mode="discord" />
