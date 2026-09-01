@@ -5,6 +5,20 @@ description: Version history and release notes for Albion Online Objectives. Tra
 
 import TimelineEntry from '@/components/docs/TimelineEntry.astro';
 
+<TimelineEntry version="v0.2.1" date="2026-09-02">
+  <Fragment slot="features">
+    - **Release announcements** — the bot now posts a message on your server whenever a new version ships. Each announcement is sent once per server, and a server that installs the bot after a release does not receive that release's announcement
+    - **`/settings` command** — configure the bot per server, reserved to members with the **Manage Server** permission. `announcement-channel` picks where announcements land, `announcements` turns them on or off with an optional `@everyone` mention, `show` displays the current configuration
+    - **`/about` command** — bot version, website link, Terms of Use and Privacy Policy, available to every member
+    - **Welcome message** — the bot introduces `/add`, `/list` and `/settings` when it joins a server, picking the system channel or the first channel it can write in
+    - **Announcement fallback** — with no channel configured, announcements land in the last channel the bot was used in, with a notice explaining how to set a dedicated one
+  </Fragment>
+  <Fragment slot="fixes">
+    - **Channel permission check** — `/settings announcement-channel` verifies the bot can actually post in the chosen channel and names the missing permission instead of failing silently later
+    - **`@everyone` safety** — the mention stays off unless an admin opts in, and a missing **Mention Everyone** permission downgrades to a plain message rather than blocking the announcement
+  </Fragment>
+</TimelineEntry>
+
 <TimelineEntry version="v0.2.0" date="2026-09-01">
   <Fragment slot="features">
     - **`/edit` command** — Modify the type, rarity, map or time of an objective already reported, instead of removing and re-adding it

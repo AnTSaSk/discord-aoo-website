@@ -6,6 +6,20 @@ navLabel: Changelog
 
 import TimelineEntry from '@/components/docs/TimelineEntry.astro';
 
+<TimelineEntry version="v0.2.1" date="2026-09-02">
+  <Fragment slot="features">
+    - **Annonces de version** — le bot publie désormais un message sur votre serveur à chaque nouvelle version. Chaque annonce n'est envoyée qu'une fois par serveur, et un serveur qui installe le bot après une version ne reçoit pas l'annonce de celle-ci
+    - **Commande `/settings`** — configurez le bot serveur par serveur, réservée aux membres disposant de la permission **Gérer le serveur**. `announcement-channel` choisit où atterrissent les annonces, `announcements` les active ou les désactive avec une mention `@everyone` facultative, `show` affiche la configuration courante
+    - **Commande `/about`** — version du bot, lien du site, Conditions d'Utilisation et Politique de Confidentialité, accessible à tous les membres
+    - **Message de bienvenue** — le bot présente `/add`, `/list` et `/settings` dès son arrivée sur un serveur, en choisissant le salon système ou le premier salon où il peut écrire
+    - **Repli des annonces** — sans salon configuré, les annonces atterrissent dans le dernier salon où le bot a été utilisé, avec une notice expliquant comment en définir un dédié
+  </Fragment>
+  <Fragment slot="fixes">
+    - **Vérification des permissions du salon** — `/settings announcement-channel` vérifie que le bot peut réellement écrire dans le salon choisi et nomme la permission manquante, au lieu d'échouer silencieusement plus tard
+    - **Sécurité de `@everyone`** — la mention reste désactivée sans accord explicite d'un administrateur, et une permission **Mentionner @everyone** manquante fait publier un message simple plutôt que de bloquer l'annonce
+  </Fragment>
+</TimelineEntry>
+
 <TimelineEntry version="v0.2.0" date="2026-09-01">
   <Fragment slot="features">
     - **Commande `/edit`** — Modifiez le type, la rareté, la carte ou le temps d'un objectif déjà rapporté, au lieu de le supprimer puis le recréer
