@@ -5,6 +5,14 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.1.10](https://github.com/AnTSaSk/discord-aoo-website/compare/discord-aoo-website-v0.1.9...discord-aoo-website-v0.1.10) (2026-09-03)
+
+
+### Features
+
+* **content:** document Dragonfire objectives across docs pages ([5d38c20](https://github.com/AnTSaSk/discord-aoo-website/commit/5d38c201d307b258912494b12a515c9728964c17))
+* **home:** refresh bot descriptions and stats for v0.3.0 ([83ea087](https://github.com/AnTSaSk/discord-aoo-website/commit/83ea08786994f46b3dbb47c6b209033c862446e1))
+
 ## [0.1.9](https://github.com/AnTSaSk/discord-aoo-website/compare/discord-aoo-website-v0.1.8...discord-aoo-website-v0.1.9) (2026-09-01)
 
 
