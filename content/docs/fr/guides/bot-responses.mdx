@@ -1,6 +1,6 @@
 ---
 title: Réponses du bot et messages d'erreur
-description: Référence de toutes les réponses du bot Albion Online Objectives — confirmations de succès, messages d'erreur et leur signification. Résolvez les problèmes.
+description: Référence de toutes les réponses du bot Albion Online Objectives, confirmations de succès et messages d'erreur, avec leur cause et comment les résoudre.
 navLabel: Réponses du bot
 navIcon: 💬
 ---
@@ -8,7 +8,7 @@ navIcon: 💬
 import Screenshot from '@/components/docs/Screenshot.astro';
 import ScrollReveal from '@/components/docs/ScrollReveal.astro';
 
-Albion Online Objectives (AOO) communique par des messages éphémères — des réponses visibles uniquement par l'utilisateur qui a lancé la commande. Cette page documente chaque réponse que vous pouvez rencontrer, sa cause et comment résoudre les erreurs.
+Albion Online Objectives (AOO) communique par des messages éphémères, c'est-à-dire des réponses visibles uniquement par l'utilisateur qui a lancé la commande. Cette page documente chaque réponse que vous pouvez rencontrer, sa cause et comment résoudre les erreurs.
 
 ## Messages de succès
 
@@ -39,7 +39,7 @@ L'objectif est supprimé de la base de données et disparaît de `/list` immédi
 
 ### Affichage de /list
 
-La commande [`/list`](/docs/commands/list/) affiche tous les objectifs actifs de votre serveur, regroupés par catégorie (Nodes, Cores, Vortexes). Chaque entrée inclut la rareté, l'heure d'apparition avec un compte à rebours en temps réel et le nom de la carte. S'il n'y a aucun objectif, le bot répond :
+La commande [`/list`](/docs/commands/list/) affiche tous les objectifs actifs de votre serveur, regroupés par catégorie (Nodes, Cores, Vortexes, Ancient Lands Portals, Dragons) ; une section n'apparaît que lorsqu'elle contient au moins un objectif. Chaque entrée inclut la rareté, l'heure d'apparition avec un compte à rebours en temps réel et le nom de la carte. Les entrées d'Ancient Lands Portal affichent leur taille (`Small`, `Medium`, `Large`) à la place d'une rareté, et les entrées de Dragon n'affichent aucune rareté. S'il n'y a aucun objectif, le bot répond :
 
 > No objectives to display
 
@@ -54,7 +54,7 @@ La commande [`/list`](/docs/commands/list/) affiche tous les objectifs actifs de
 **Message :**
 > It appears that the objective you are trying to add already exists
 
-**Cause :** Quelqu'un a déjà rapporté un objectif avec le même type, la même rareté et la même carte dans une fenêtre de 8 minutes (plus ou moins 4 minutes par rapport à l'heure que vous avez indiquée). C'est intentionnel — Albion Online Objectives empêche le même objectif d'apparaître deux fois lorsque plusieurs éclaireurs le repèrent.
+**Cause :** Quelqu'un a déjà rapporté un objectif avec le même type, la même rareté et la même carte dans une fenêtre de 8 minutes (plus ou moins 4 minutes par rapport à l'heure que vous avez indiquée). C'est intentionnel : Albion Online Objectives empêche le même objectif d'apparaître deux fois lorsque plusieurs éclaireurs le repèrent.
 
 **Résolution :** Aucune action nécessaire. L'objectif est déjà suivi. Lancez `/list` pour vérifier qu'il apparaît dans la liste.
 
@@ -75,7 +75,7 @@ La commande [`/list`](/docs/commands/list/) affiche tous les objectifs actifs de
 - **Map** mal orthographiée ou absente des [276 cartes supportées](/docs/guides/black-zone-maps/)
 - **Time** utilise une notation que l'analyseur ne reconnaît pas
 
-**Résolution :** Relancez `/add` et utilisez les suggestions d'autocomplétion pour `type`, `rarity` et `map`. Pour le temps, plusieurs notations fonctionnent — `1h30`, `90`, `02:30` — voir [la liste complète](/docs/commands/add/#formats-de-temps-acceptés).
+**Résolution :** Relancez `/add` et utilisez les suggestions d'autocomplétion pour `type`, `rarity` et `map`. Pour le temps, plusieurs notations fonctionnent, par exemple `1h30`, `90` ou `02:30` ; voir [la liste complète](/docs/commands/add/#formats-de-temps-acceptés).
 
 ### Format de temps invalide
 
@@ -91,20 +91,20 @@ La commande [`/list`](/docs/commands/list/) affiche tous les objectifs actifs de
 **Message :**
 > The provided time is out of the accepted range
 
-**Cause :** Le délai a bien été analysé mais sort de la fenêtre acceptée. Un objectif se rapporte sous forme de délai à partir de maintenant, borné à 24 heures.
+**Cause :** Le délai a bien été analysé mais sort de la fenêtre acceptée. Un objectif se rapporte sous forme de délai à partir de maintenant, borné à 24 heures, sauf les Ancient Lands Portals, plafonnés par taille à 30 (`Small`), 60 (`Medium`) ou 180 (`Large`) minutes. Ces plafonds sont un garde-fou contre les fautes de frappe, pas une règle du jeu ; toute valeur inférieure est acceptée telle quelle. Lorsque la valeur est aussi mal formée, c'est l'erreur de format qui est signalée à la place.
 
-**Résolution :** Saisissez un délai compris dans cette limite.
+**Résolution :** Saisissez un délai compris dans la limite du type concerné (voir [limites de temps](/docs/commands/add/#limites-de-temps)).
 
 ### Combinaison type / rareté invalide
 
 **Message :**
 > This rarity is not valid for the selected type
 
-**Cause :** La rareté ne s'applique pas au type d'objectif — les tiers `4.4` à `8.4` concernent les nodes, tandis que les couleurs `Green`, `Blue`, `Purple` et `Gold` concernent les Cores et les Vortex.
+**Cause :** La rareté ne s'applique pas au type d'objectif. Les tiers `4.4` à `8.4` concernent les nodes, les couleurs `Green`, `Blue`, `Purple` et `Gold` les Cores et les Vortex, et les tailles `Small`, `Medium`, `Large` les Ancient Lands Portals. Un `Dragon` ne prend aucune rareté : en fournir une est refusé, tandis que laisser le champ vide pour tout autre type est refusé aussi (voir les [cinq issues de validation](/docs/commands/add/#validation-de-la-rareté)).
 
 Avec [`/edit`](/docs/commands/edit/), ce contrôle porte sur la combinaison **résultante** : modifier uniquement le type peut échouer à cause de la rareté déjà enregistrée sur l'objectif.
 
-**Résolution :** Fournissez une rareté compatible avec le type, ou modifiez les deux ensemble.
+**Résolution :** Fournissez une rareté compatible avec le type (ou aucune pour un `Dragon`), ou modifiez les deux ensemble.
 
 ### Valeurs manquantes
 
@@ -147,7 +147,7 @@ Avec [`/edit`](/docs/commands/edit/), ce contrôle porte sur la combinaison **r�
 **Message :**
 > I cannot post in that channel: the **View Channel** permission is missing. Grant it there, then run the command again.
 
-**Cause :** Vous avez désigné avec `/settings announcement-channel` un salon d'annonces où le bot ne peut pas écrire. Le message nomme la permission manquante — **View Channel** ou **Send Messages**.
+**Cause :** Vous avez désigné avec `/settings announcement-channel` un salon d'annonces où le bot ne peut pas écrire. Le message nomme la permission manquante : **View Channel** ou **Send Messages**.
 
 **Résolution :** Accordez au bot la permission nommée sur ce salon, puis relancez la commande. Rien n'est enregistré tant que la vérification échoue : votre réglage précédent reste intact.
 
@@ -167,7 +167,7 @@ Si vous utilisez une commande trop rapidement après la précédente, Discord af
 
 ## Indicateur de maintenance
 
-Lorsque l'heure d'apparition calculée d'un objectif chevauche la fenêtre de **maintenance quotidienne à 10:00 UTC**, Albion Online Objectives l'indique dans l'affichage de `/list`. Cela indique à votre guilde que l'objectif pourrait ne pas survivre au redémarrage des serveurs.
+Lorsque l'heure d'apparition calculée d'un objectif chevauche la fenêtre de **maintenance quotidienne à 10:00 UTC**, Albion Online Objectives l'indique dans l'affichage de `/list`, afin que votre guilde sache que l'objectif pourrait ne pas survivre au redémarrage des serveurs.
 
 - Un objectif marqué par l'indicateur de maintenance indique que les serveurs de jeu redémarreront avant ou autour de son heure d'apparition
 - Le reset quotidien a lieu à **10:00 UTC** chaque jour
@@ -183,7 +183,7 @@ Sans salon défini, l'annonce se replie sur le dernier salon où le bot a été 
 
 > No announcement channel is set yet, so this message landed in the last channel where the bot was used. An admin can pick a dedicated one with `/settings announcement-channel`.
 
-Définir un salon fait disparaître la notice. Chaque annonce n'est envoyée qu'**une fois par serveur** : elle n'est jamais répétée.
+Définir un salon fait disparaître la notice. Chaque annonce n'est envoyée qu'**une fois par serveur**.
 
 Un administrateur peut désactiver complètement les annonces avec `/settings announcements enabled:false`.
 

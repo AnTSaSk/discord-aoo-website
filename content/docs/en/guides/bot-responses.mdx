@@ -1,13 +1,13 @@
 ---
 title: Bot Responses & Error Messages
-description: Complete reference of all Albion Online Objectives bot responses — success confirmations, error messages, and what they mean. Troubleshoot common issues.
+description: 'Complete reference of all Albion Online Objectives bot responses: success confirmations, error messages, and what they mean. Troubleshoot common issues.'
 navIcon: 💬
 ---
 
 import Screenshot from '@/components/docs/Screenshot.astro';
 import ScrollReveal from '@/components/docs/ScrollReveal.astro';
 
-Albion Online Objectives (AOO) communicates through ephemeral messages — responses only visible to the user who triggered the command. This page documents every response you may encounter, what causes it, and how to resolve errors.
+Albion Online Objectives (AOO) communicates through ephemeral messages, responses visible only to the user who triggered the command. This page documents every response you may encounter, what causes it, and how to resolve errors.
 
 ## Success Messages
 
@@ -38,7 +38,7 @@ The objective is deleted from the database and disappears from `/list` immediate
 
 ### /list Output
 
-The [`/list`](/docs/commands/list/) command displays all active objectives for your server, grouped by category (Nodes, Cores, Vortexes). Each entry includes the rarity, spawn time with live countdown, and map name. If no objectives exist, the bot replies:
+The [`/list`](/docs/commands/list/) command displays all active objectives for your server, grouped by category (Nodes, Cores, Vortexes, Ancient Lands Portals, Dragons); a section only appears when it holds at least one objective. Each entry includes the rarity, spawn time with live countdown, and map name. Ancient Lands Portal entries show their size (`Small`, `Medium`, `Large`) in place of a rarity, and Dragon entries show no rarity at all. If no objectives exist, the bot replies:
 
 > No objectives to display
 
@@ -53,7 +53,7 @@ The [`/list`](/docs/commands/list/) command displays all active objectives for y
 **Message:**
 > It appears that the objective you are trying to add already exists
 
-**Cause:** Someone already reported an objective with the same type, rarity, and map within an 8-minute window (plus or minus 4 minutes of your reported time). This is intentional — Albion Online Objectives prevents the same objective from appearing twice when multiple scouts spot it.
+**Cause:** Someone already reported an objective with the same type, rarity, and map within an 8-minute window (plus or minus 4 minutes of your reported time). This is intentional: Albion Online Objectives prevents the same objective from appearing twice when multiple scouts spot it.
 
 **Resolution:** No action needed. The objective is already tracked. Run `/list` to verify it appears in the list.
 
@@ -74,7 +74,7 @@ The [`/list`](/docs/commands/list/) command displays all active objectives for y
 - **Map** name was misspelled or not in the [276 supported maps](/docs/guides/black-zone-maps/)
 - **Time** uses a notation the parser does not recognise
 
-**Resolution:** Re-run `/add` and use the autocomplete suggestions for `type`, `rarity`, and `map`. For time, several notations work — `1h30`, `90`, `02:30` — see [the full list](/docs/commands/add/#accepted-time-formats).
+**Resolution:** Re-run `/add` and use the autocomplete suggestions for `type`, `rarity`, and `map`. For time, several notations work (`1h30`, `90`, `02:30`); see [the full list](/docs/commands/add/#accepted-time-formats).
 
 ### Invalid Time Format
 
@@ -90,20 +90,20 @@ The [`/list`](/docs/commands/list/) command displays all active objectives for y
 **Message:**
 > The provided time is out of the accepted range
 
-**Cause:** The delay was parsed correctly but falls outside the accepted window. An objective is reported as a delay from now, bounded to 24 hours.
+**Cause:** The delay was parsed correctly but falls outside the accepted window. An objective is reported as a delay from now, bounded to 24 hours, except for Ancient Lands Portals, which are capped per size at 30 (`Small`), 60 (`Medium`) or 180 (`Large`) minutes. These caps are a typo guard, not a game rule; any lower value is accepted as-is. When the value is also malformed, the format error is reported instead.
 
-**Resolution:** Enter a delay within that bound.
+**Resolution:** Enter a delay within the bound for that type (see [time limits](/docs/commands/add/#time-limits)).
 
 ### Invalid Type and Rarity Combination
 
 **Message:**
 > This rarity is not valid for the selected type
 
-**Cause:** The rarity does not apply to the objective type — tiers `4.4`–`8.4` belong to nodes, while colours `Green`, `Blue`, `Purple` and `Gold` belong to Cores and Vortexes.
+**Cause:** The rarity does not apply to the objective type: tiers `4.4`–`8.4` belong to nodes, colours `Green`, `Blue`, `Purple` and `Gold` to Cores and Vortexes, and sizes `Small`, `Medium`, `Large` to Ancient Lands Portals. A `Dragon` takes no rarity at all: supplying one is rejected, while leaving the field empty for any other type is rejected too (see the [five validation outcomes](/docs/commands/add/#rarity-validation)).
 
 With [`/edit`](/docs/commands/edit/) this check applies to the **resulting** combination: changing only the type can fail because of the rarity already stored on the objective.
 
-**Resolution:** Supply a rarity that matches the type, or change both together.
+**Resolution:** Supply a rarity that matches the type (or none for a `Dragon`), or change both together.
 
 ### Missing Values
 
@@ -146,7 +146,7 @@ With [`/edit`](/docs/commands/edit/) this check applies to the **resulting** com
 **Message:**
 > I cannot post in that channel: the **View Channel** permission is missing. Grant it there, then run the command again.
 
-**Cause:** You picked an announcement channel with `/settings announcement-channel` where the bot cannot post. The message names the missing permission — **View Channel** or **Send Messages**.
+**Cause:** You picked an announcement channel with `/settings announcement-channel` where the bot cannot post. The message names the missing permission: **View Channel** or **Send Messages**.
 
 **Resolution:** Grant the named permission to the bot on that channel, then run the command again. Nothing is saved until the check passes, so your previous setting is untouched.
 
@@ -182,7 +182,7 @@ When no channel is set, the announcement falls back to the last channel the bot 
 
 > No announcement channel is set yet, so this message landed in the last channel where the bot was used. An admin can pick a dedicated one with `/settings announcement-channel`.
 
-Setting a channel removes the notice. Each announcement is sent **once per server** — it is never repeated.
+Setting a channel removes the notice. Each announcement is sent **once per server** and never repeated.
 
 An admin can turn announcements off entirely with `/settings announcements enabled:false`.
 

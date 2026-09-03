@@ -1,0 +1,82 @@
+---
+title: Ancient Lands Portals & Dragon Attacks
+description: 'Guide to Ancient Lands Portals and Dragon attacks in Albion Online: the three portal sizes, group capacities, and how to track both with AOO.'
+navLabel: Portals & Dragons
+navIcon: 🐉
+---
+
+import Badge from '@/components/ui/Badge.astro';
+import Callout from '@/components/docs/Callout.astro';
+
+Ancient Lands Portals and Dragon attacks are the two newest objective types tracked by Albion Online Objectives (AOO). Portals spawn in the Black Zone; Dragon attacks strike the Black Zone and the Royal Continent alike. Both are reported with the same [`/add`](/docs/commands/add/) command your guild already uses, on the bot's [276 Black Zone maps](/docs/guides/black-zone-maps/).
+
+## What Are Ancient Lands Portals?
+
+Ancient Lands Portals are timed Black Zone objectives that come in three sizes. In the bot, the size takes the place of a rarity: you pick it in the `rarity` field of `/add`, exactly where you would pick a tier for a node or a rarity for a core.
+
+The size matters because it determines the in-game group capacity:
+
+| Size | Bot value | Group capacity |
+|------|-----------|----------------|
+| **Small** | `Small` | 1–5 players |
+| **Medium** | `Medium` | 5–7 players |
+| **Large** | `Large` | 15–20 players |
+
+A <Badge variant="tier">Small</Badge> portal is content for a solo player or a small party, while a <Badge variant="tier">Large</Badge> portal calls for a full group. Knowing the size before you travel lets the shot caller send the right number of players.
+
+### Time limits per size
+
+Each portal size has its own maximum for the `time` value of `/add` and `/edit`:
+
+| Size | Maximum delay |
+|------|---------------|
+| `Small` | 30 minutes |
+| `Medium` | 60 minutes |
+| `Large` | 180 minutes |
+
+<Callout variant="info">These caps are a typo guard, not a game rule. They exist to catch slips like typing `100` instead of `10`; any lower value is accepted as-is, and the bot never derives an opening time from the size. A portal spotted late is reported with whatever time actually remains.</Callout>
+
+All other objective types keep the general limit of **1440 minutes** (24 hours). If a time value is both malformed and out of range, the format error is reported first.
+
+## What Are Dragon Attacks?
+
+Dragon attacks are open-world events that hit **both the Black Zone and the Royal Continent**. They carry **no rarity of their own**: the attack's tier follows the tier of the map it spawns on, so there is nothing to pick.
+
+When reporting a Dragon, **leave the `rarity` field empty**. The field is optional precisely for this case:
+
+- Leaving it empty for a Dragon is accepted.
+- Supplying any rarity with a Dragon is rejected; the type takes none.
+- The rarity autocomplete offers no suggestions once `Dragon` is selected.
+
+For every other type, the rarity is still expected (see the [validation rules on the `/add` page](/docs/commands/add/#rarity-validation)).
+
+## Tracking with Albion Online Objectives
+
+Report both types with [`/add`](/docs/commands/add/) as soon as a scout spots one. The rarity autocomplete is context-aware: selecting `Ancient Lands Portal` as the type restricts the suggestions to the three sizes, and selecting `Dragon` leaves them empty.
+
+### Example Commands
+
+```
+/add type:Ancient Lands Portal rarity:Small map:Murdergulch Ravine time:25
+/add type:Ancient Lands Portal rarity:Medium map:Deepwood Gorge time:00:45
+/add type:Ancient Lands Portal rarity:Large map:Hightree Enclave time:2h30
+/add type:Dragon map:Everwinter Peak time:1h15
+```
+
+Duplicate prevention applies to both types exactly as it does elsewhere: a report matching an existing objective within the 8-minute window is rejected, Dragons included.
+
+## How They Appear in /list
+
+The tracking message posted by [`/list`](/docs/commands/list/) gains two sections, shown only when they contain at least one objective, like every other section:
+
+- In `## Ancient Lands Portal ##`, each portal line shows its **size** (`Small`, `Medium`, `Large`) where other lines show a rarity
+- In `## Dragon ##`, each Dragon line shows **no rarity segment at all**
+
+Everything else on the line is unchanged: index number, spawn time with live countdown, map name, maintenance flag, and reporter.
+
+## Related
+
+- The [objective types reference](/docs/guides/objective-types/) shows all types and rarities at a glance
+- The [`/add` command page](/docs/commands/add/) has the full parameter reference
+- The [`/list` command page](/docs/commands/list/) explains how the tracking message is organised
+- The [resource nodes guide](/docs/guides/resource-nodes/) and [Power Cores & Energy Vortexes](/docs/guides/cores-and-vortexes/) cover the other Black Zone objective categories

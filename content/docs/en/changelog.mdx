@@ -5,6 +5,16 @@ description: Version history and release notes for Albion Online Objectives. Tra
 
 import TimelineEntry from '@/components/docs/TimelineEntry.astro';
 
+<TimelineEntry version="v0.3.0" date="2026-09-03">
+  <Fragment slot="features">
+    - **Ancient Lands Portal tracking** — a new objective type in three sizes (`Small`, `Medium`, `Large`) reflecting the in-game group capacity (1–5, 5–7, 15–20 players); the size is picked in the `rarity` field
+    - **Dragon attack tracking** — a new objective type with no rarity at all: report one by leaving the `rarity` field empty
+    - **Optional rarity** — `rarity` is no longer required at the Discord level on [`/add`](/docs/commands/add/) and [`/edit`](/docs/commands/edit/); the bot validates the type/rarity combination server-side per family and rejects mismatched, missing or unexpected rarities
+    - **Per-size time caps** — portal reports cap the `time` value at 30 (`Small`), 60 (`Medium`) or 180 (`Large`) minutes as a typo guard; every other type keeps the 1440-minute limit
+    - **Two new list sections** — the objectives message gains `## Ancient Lands Portal ##` and `## Dragon ##` sections, shown only when non-empty; portal lines show their size, Dragon lines carry no rarity segment
+  </Fragment>
+</TimelineEntry>
+
 <TimelineEntry version="v0.2.1" date="2026-09-02">
   <Fragment slot="features">
     - **Release announcements** — the bot now posts a message on your server whenever a new version ships. Each announcement is sent once per server, and a server that installs the bot after a release does not receive that release's announcement

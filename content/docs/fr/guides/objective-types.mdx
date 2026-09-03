@@ -1,6 +1,6 @@
 ---
-title: Types d'objectifs — Nodes, Cores et Vortex
-description: Référence des types d'objectifs en Black Zones — nodes de ressources (Fibre, Peau, Minerai, Bois), energy cores et vortex avec toutes les raretés.
+title: Types d'objectifs — Nodes, Cores, Portals…
+description: "Référence des types d'objectifs en Black Zones : nodes de ressources, energy cores, vortex, Ancient Lands Portals et Dragons avec toutes les raretés."
 navLabel: Types d'objectifs
 navIcon: ⚔️
 ---
@@ -10,13 +10,13 @@ import Badge from '@/components/ui/Badge.astro';
 import Screenshot from '@/components/docs/Screenshot.astro';
 import ScrollReveal from '@/components/docs/ScrollReveal.astro';
 
-Les objectifs de Black Zones dans Albion Online sont des événements chronométrés en monde ouvert qui font apparaître des ressources précieuses. Albion Online Objectives (AOO) suit trois catégories : les **nodes de ressources**, les **energy cores** et les **vortex**.
+Les objectifs de Black Zones dans Albion Online sont des événements chronométrés en monde ouvert qui font apparaître des ressources précieuses. Albion Online Objectives (AOO) suit cinq catégories : les **nodes de ressources**, les **energy cores**, les **vortex**, les **Ancient Lands Portals** et les **Dragons**.
 
 Cette page répertorie chaque type et rareté pris en charge par la commande [`/add`](/docs/commands/add/).
 
 ## Resource Nodes
 
-Les nodes de ressources font apparaître des matériaux récoltables en Black Zone. Chaque type de node correspond à une ressource d'artisanat. Les nodes utilisent des **raretés basées sur les tiers**, de <Badge variant="tier">4.4</Badge> à <Badge variant="tier">8.4</Badge> — les tiers supérieurs produisent des matériaux plus rares.
+Les nodes de ressources font apparaître des matériaux récoltables en Black Zone. Chaque type de node correspond à une ressource d'artisanat. Les nodes utilisent des **raretés basées sur les tiers**, de <Badge variant="tier">4.4</Badge> à <Badge variant="tier">8.4</Badge> ; les tiers supérieurs produisent des matériaux plus rares.
 
 <ScrollReveal animation="fade-up" stagger>
 <div class="grid gap-4 sm:grid-cols-2">
@@ -99,6 +99,38 @@ Les vortex sont des objectifs en monde ouvert qui offrent des récompenses simil
   <Screenshot src="/screenshots/vortex-tracked.png" alt="Vortex suivi dans la sortie de /list" mode="discord" caption="Un vortex suivi dans la sortie de /list du bot" />
 </ScrollReveal>
 
+## Ancient Lands Portals
+
+Les Ancient Lands Portals sont des portails chronométrés qui existent en **trois tailles** au lieu d'une rareté : <Badge variant="tier">Small</Badge> <Badge variant="tier">Medium</Badge> <Badge variant="tier">Large</Badge>. La taille se choisit dans le champ `rarity` de `/add` et détermine la capacité de groupe en jeu.
+
+<ObjectiveCard
+  name="Ancient Lands Portal"
+  category="Portal"
+  rarities={["Small", "Medium", "Large"]}
+  description="Portails chronométrés en trois tailles ; la taille fixe la capacité de groupe."
+/>
+
+### Tailles de portail
+
+| Taille | Capacité de groupe |
+|--------|--------------------|
+| **Small** | 1–5 joueurs |
+| **Medium** | 5–7 joueurs |
+| **Large** | 15–20 joueurs |
+
+Voir le [guide des Ancient Lands Portals et attaques de Dragons](/docs/guides/portals-and-dragons/) pour les limites de temps par taille et les détails de signalement.
+
+## Dragons
+
+Les attaques de Dragons sont le seul type d'objectif **sans aucune rareté** : le tier de l'attaque suit le tier de la carte où elle se déclenche. Elles frappent la Black Zone comme le continent Royal. Pour en rapporter une avec `/add`, laissez le champ `rarity` vide ; le bot refuse un rapport de Dragon accompagné d'une rareté.
+
+<ObjectiveCard
+  name="Dragon"
+  category="Dragon"
+  rarities={[]}
+  description="Les attaques de Dragons n'ont pas de rareté : rapportez-les en laissant le champ rarity vide."
+/>
+
 ## Tableau récapitulatif
 
 | Type | Catégorie | Raretés | Exemple `/add` |
@@ -109,10 +141,13 @@ Les vortex sont des objectifs en monde ouvert qui offrent des récompenses simil
 | Wood node | Node | 4.4, 5.4, 6.4, 7.4, 8.4 | `/add type:Wood node rarity:5.4 map:... time:...` |
 | Core | Core | Green, Blue, Purple, Gold | `/add type:Core rarity:Gold map:... time:...` |
 | Vortex | Vortex | Green, Blue, Purple, Gold | `/add type:Vortex rarity:Purple map:... time:...` |
+| Ancient Lands Portal | Portal | Small, Medium, Large | `/add type:Ancient Lands Portal rarity:Medium map:... time:...` |
+| Dragon | Dragon | Aucune — laisser le champ vide | `/add type:Dragon map:... time:...` |
 
-**Total des combinaisons :** 6 types x leurs raretés respectives = **28 variantes d'objectifs uniques**.
+**Total des combinaisons :** 8 types x leurs raretés respectives = **31 variantes d'objectifs uniques**.
 
 ## Pages associées
 
-- [Référence de la commande `/add`](/docs/commands/add/) — comment rapporter des objectifs
-- [Liste des cartes de Black Zones](/docs/guides/black-zone-maps/) — les 276 cartes prises en charge
+- La [référence de la commande `/add`](/docs/commands/add/) explique comment rapporter des objectifs
+- Le [guide des Ancient Lands Portals et attaques de Dragons](/docs/guides/portals-and-dragons/) détaille les deux types les plus récents
+- La [liste des cartes de Black Zones](/docs/guides/black-zone-maps/) recense les 276 cartes prises en charge

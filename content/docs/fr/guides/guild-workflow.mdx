@@ -1,31 +1,31 @@
 ---
 title: Workflow de coordination de guilde
-description: Comment utiliser Albion Online Objectives pour coordonner les objectifs en Black Zones lors des opérations de guilde — du repérage à la capture.
+description: Comment utiliser Albion Online Objectives pour coordonner les objectifs en Black Zones lors des opérations de guilde, du repérage à la capture.
 navLabel: Workflow de guilde
 navIcon: 🏰
 ---
 
-Le suivi des objectifs en Black Zones est un travail d'équipe. Sans système partagé, les éclaireurs repèrent des ressources qui ne sont jamais rapportées, les groupes arrivent en retard et les cores de grande valeur échappent à votre guilde au profit de rivaux.
+Le suivi des objectifs en Black Zones est un travail d'équipe. Sans système partagé, les trouvailles des éclaireurs ne sont jamais rapportées et les groupes arrivent en retard ; les cores de grande valeur échappent à votre guilde au profit de rivaux.
 
-Albion Online Objectives (AOO) offre à votre guilde une source de vérité unique — chaque objectif rapporté est visible par tous les membres, trié par heure et automatiquement nettoyé à son expiration.
+Albion Online Objectives (AOO) offre à votre guilde une source de vérité unique : chaque objectif rapporté est visible par tous les membres, trié par heure et automatiquement nettoyé à son expiration.
 
-Ce guide présente un workflow éprouvé que les guildes utilisent pour transformer un repérage dispersé en une stratégie d'objectifs organisée.
+Ce guide décrit un workflow pour transformer un repérage dispersé en une stratégie d'objectifs organisée.
 
 ## Avant la session
 
 La préparation fait la différence entre une sortie productive et une soirée gâchée.
 
-1. **Désignez un canal de suivi** — Choisissez un seul canal texte où le bot opère. Épinglez un message `/list` ou indiquez aux membres de lancer [`/list`](/docs/commands/list/) dans ce canal avant de partir.
-2. **Briefez vos membres** — Assurez-vous que les éclaireurs savent utiliser [`/add`](/docs/commands/add/). Le système d'autocomplétion rend la saisie rapide, mais les débutants devraient s'exercer une fois avant une session réelle.
-3. **Vérifiez les données obsolètes** — Lancez `/list` pour voir s'il reste des objectifs. Les entrées expirées sont nettoyées automatiquement toutes les 30 minutes, mais une vérification rapide évite toute confusion.
+1. **Désignez un canal de suivi.** Choisissez un seul canal texte où le bot opère. Épinglez un message `/list` ou indiquez aux membres de lancer [`/list`](/docs/commands/list/) dans ce canal avant de partir.
+2. **Briefez vos membres.** Assurez-vous que les éclaireurs savent utiliser [`/add`](/docs/commands/add/). Le système d'autocomplétion rend la saisie rapide, mais les débutants devraient s'exercer une fois avant une session réelle.
+3. **Vérifiez les données obsolètes.** Lancez `/list` pour voir s'il reste des objectifs. Les entrées expirées sont nettoyées automatiquement toutes les 30 minutes, mais une vérification rapide évite toute confusion.
 
 ## Phase 1 : Repérage
 
 Les éclaireurs sont vos yeux en Black Zones. Leur mission est de rapporter chaque objectif qu'ils trouvent, le plus vite possible.
 
-- **Utilisez `/add` immédiatement** lorsque vous repérez un objectif. Sélectionnez le `type`, la `rarity` et la `map` via l'autocomplétion, puis saisissez le temps restant — `1h30`, `90` et `02:30` sont tous acceptés (voir [la liste complète](/docs/commands/add/#formats-de-temps-acceptés)).
-- **Tapez n'importe quelle partie du nom de la carte** — l'autocomplétion fonctionne sur le début, le milieu ou la fin. Taper "murder" fera apparaître `Murdergulch Ravine`, `Murdergulch Cross` et les autres cartes correspondantes.
-- **Ne vous inquiétez pas des doublons** — si deux éclaireurs rapportent le même objectif dans une fenêtre de 8 minutes (même type, rareté et carte), le bot rejette automatiquement le second rapport. Aucune déduplication manuelle n'est nécessaire.
+- **Utilisez `/add` immédiatement** lorsque vous repérez un objectif. Sélectionnez le `type`, la `rarity` (à laisser vide uniquement pour une [attaque de Dragon](/docs/guides/portals-and-dragons/)) et la `map` via l'autocomplétion, puis saisissez le temps restant : `1h30`, `90` et `02:30` sont tous acceptés (voir [la liste complète](/docs/commands/add/#formats-de-temps-acceptés)).
+- **Tapez n'importe quelle partie du nom de la carte.** L'autocomplétion fonctionne sur le début, le milieu ou la fin. Taper "murder" fera apparaître `Murdergulch Ravine`, `Murdergulch Cross` et les autres cartes correspondantes.
+- **Ne vous inquiétez pas des doublons.** Si deux éclaireurs rapportent le même objectif dans une fenêtre de 8 minutes (même type, rareté et carte), le bot rejette automatiquement le second rapport. Aucune déduplication manuelle n'est nécessaire.
 
 > **Astuce :** Les éclaireurs couvrant différentes zones devraient communiquer sur les secteurs qu'ils explorent pour éviter les chevauchements. Albion Online Objectives gère la prévention des doublons, mais répartir les zones permet une couverture plus rapide.
 
@@ -35,7 +35,7 @@ Une fois que les éclaireurs ont rapporté les objectifs, le chef de guilde (ou 
 
 Lancez [`/list`](/docs/commands/list/) pour voir tous les objectifs actifs. Utilisez la rareté comme critère principal :
 
-**Pour les Cores et Vortexes :**
+**Pour les Cores et Vortex :**
 
 | Priorité | Rareté | Pourquoi |
 |----------|--------|----------|
@@ -53,15 +53,17 @@ Lancez [`/list`](/docs/commands/list/) pour voir tous les objectifs actifs. Util
 | 3 | 6.4 | Bonne valeur pour les récolteurs de niveau intermédiaire |
 | 4 | 5.4 / 4.4 | Faible valeur, à ignorer sauf si à proximité |
 
-Vérifiez les heures d'apparition. Un node 8.4 qui apparaît dans 30 minutes vaut mieux qu'un Core Gold dans 4 heures — prenez en compte le temps de trajet et la compétition.
+**Pour les Ancient Lands Portals et les Dragons :** la taille d'un portail est son critère de classement, car elle fixe la capacité de groupe en jeu (`Small` 1–5, `Medium` 5–7, `Large` 15–20 joueurs) ; alignez donc l'escouade que vous pouvez réunir sur la taille affichée dans la liste. Les attaques de Dragons n'ont aucune rareté : jugez-les uniquement sur l'heure d'apparition et l'emplacement. Consultez le [guide des Ancient Lands Portals et attaques de Dragons](/docs/guides/portals-and-dragons/).
+
+Vérifiez les heures d'apparition. Un node 8.4 qui apparaît dans 30 minutes vaut mieux qu'un Core Gold dans 4 heures ; prenez en compte le temps de trajet et la compétition.
 
 ## Phase 3 : Exécution
 
 Les priorités étant définies, assignez les groupes et lancez-vous.
 
-1. **Divisez en escouades** selon le type d'objectif. Les Cores et Vortexes nécessitent un groupe de combat. Les Nodes nécessitent des récolteurs avec escorte.
-2. **Annoncez les départs** — informez le canal de l'objectif vers lequel chaque escouade se dirige.
-3. **Supprimez les objectifs terminés** — après avoir capturé ou récolté un objectif, utilisez [`/remove`](/docs/commands/remove/) pour le retirer de la liste. Cela permet de garder `/list` à jour pour le reste de la guilde.
+1. **Divisez en escouades** selon le type d'objectif. Les Cores et Vortex nécessitent un groupe de combat. Les Nodes nécessitent des récolteurs avec escorte. Pour un Ancient Lands Portal, dimensionnez l'escouade selon la capacité de groupe du portail.
+2. **Annoncez les départs.** Informez le canal de l'objectif vers lequel chaque escouade se dirige.
+3. **Supprimez les objectifs terminés.** Après avoir capturé ou récolté un objectif, utilisez [`/remove`](/docs/commands/remove/) pour le retirer de la liste. Cela permet de garder `/list` à jour pour le reste de la guilde.
 
 ## Après la session
 
@@ -73,8 +75,8 @@ Albion Online Objectives gère le nettoyage automatiquement :
 
 ## Conseils pour les chefs de guilde
 
-- **Épinglez un rappel** dans votre canal de suivi expliquant comment utiliser `/add` — les nouveaux membres vous remercieront.
+- **Épinglez un rappel** dans votre canal de suivi expliquant comment utiliser `/add` ; les nouveaux membres vous remercieront.
 - **Encouragez tout le monde à rapporter**, pas seulement les éclaireurs désignés. Un récolteur de passage dans une zone peut rapporter un core tout aussi efficacement.
-- **Rareté égale priorité** — ancrez ce principe dans votre guilde. Un Core Gold devrait interrompre presque toute autre activité.
+- **Rareté égale priorité.** Ancrez ce principe dans votre guilde : un Core Gold devrait interrompre presque toute autre activité.
 - **Consultez les [types d'objectifs](/docs/guides/objective-types/)** pour comprendre chaque type et rareté supportés par le bot.
-- **Utilisez l'affichage de [`/list`](/docs/commands/list/)** comme carte tactique pendant les appels vocaux — lisez les objectifs prioritaires et assignez les escouades en temps réel.
+- **Utilisez l'affichage de [`/list`](/docs/commands/list/)** comme carte tactique pendant les appels vocaux : lisez les objectifs prioritaires et assignez les escouades en temps réel.

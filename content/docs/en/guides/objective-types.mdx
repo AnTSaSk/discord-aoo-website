@@ -1,6 +1,6 @@
 ---
-title: Objective Types — Nodes, Cores & Vortexes
-description: Reference of all Black Zone objective types — resource nodes (Fiber, Hide, Ore, Wood), energy cores, and vortexes with rarities from Uncommon to Legendary.
+title: 'Objective Types: Nodes, Cores, Portals & More'
+description: 'Reference of all Black Zone objective types: resource nodes, energy cores, vortexes, Ancient Lands Portals, and Dragons with every supported rarity.'
 navIcon: ⚔️
 ---
 
@@ -9,13 +9,13 @@ import Badge from '@/components/ui/Badge.astro';
 import Screenshot from '@/components/docs/Screenshot.astro';
 import ScrollReveal from '@/components/docs/ScrollReveal.astro';
 
-Black Zone objectives in Albion Online are timed open-world events that spawn valuable resources. Albion Online Objectives (AOO) tracks three categories: **resource nodes**, **energy cores**, and **vortexes**.
+Black Zone objectives in Albion Online are timed open-world events that spawn valuable resources. Albion Online Objectives (AOO) tracks five categories: **resource nodes**, **energy cores**, **vortexes**, **Ancient Lands Portals**, and **Dragons**.
 
 This page lists every type and rarity supported by the [`/add`](/docs/commands/add/) command.
 
 ## Resource Nodes
 
-Resource nodes spawn gatherable materials in the Black Zone. Each node type corresponds to a crafting resource. Nodes use **tier-based rarities** from <Badge variant="tier">4.4</Badge> to <Badge variant="tier">8.4</Badge> — higher tiers yield rarer materials.
+Resource nodes spawn gatherable materials in the Black Zone. Each node type corresponds to a crafting resource. Nodes use **tier-based rarities** from <Badge variant="tier">4.4</Badge> to <Badge variant="tier">8.4</Badge>; higher tiers yield rarer materials.
 
 <ScrollReveal animation="fade-up" stagger>
 <div class="grid gap-4 sm:grid-cols-2">
@@ -98,6 +98,38 @@ Vortexes are open-world objectives that offer rewards similar to cores, with the
   <Screenshot src="/screenshots/vortex-tracked.png" alt="Tracked vortex in /list output" mode="discord" caption="A tracked vortex in the bot's /list output" />
 </ScrollReveal>
 
+## Ancient Lands Portals
+
+Ancient Lands Portals are timed portals that come in **three sizes** instead of a rarity: <Badge variant="tier">Small</Badge> <Badge variant="tier">Medium</Badge> <Badge variant="tier">Large</Badge>. The size is picked in the `rarity` field of `/add` and determines the in-game group capacity.
+
+<ObjectiveCard
+  name="Ancient Lands Portal"
+  category="Portal"
+  rarities={["Small", "Medium", "Large"]}
+  description="Timed portals in three sizes; the size sets the group capacity."
+/>
+
+### Portal Sizes
+
+| Size | Group capacity |
+|------|----------------|
+| **Small** | 1–5 players |
+| **Medium** | 5–7 players |
+| **Large** | 15–20 players |
+
+See the [Ancient Lands Portals & Dragon attacks guide](/docs/guides/portals-and-dragons/) for time limits per size and reporting details.
+
+## Dragons
+
+Dragon attacks are the only objective type with **no rarity at all**: the attack's tier follows the tier of the map it spawns on. They strike the Black Zone and the Royal Continent alike. When reporting one with `/add`, leave the `rarity` field empty; the bot rejects a Dragon report that carries a rarity.
+
+<ObjectiveCard
+  name="Dragon"
+  category="Dragon"
+  rarities={[]}
+  description="Dragon attacks have no rarity; report them with the rarity field left empty."
+/>
+
 ## Quick Reference Table
 
 | Type | Category | Rarities | Example `/add` |
@@ -108,10 +140,13 @@ Vortexes are open-world objectives that offer rewards similar to cores, with the
 | Wood node | Node | 4.4, 5.4, 6.4, 7.4, 8.4 | `/add type:Wood node rarity:5.4 map:... time:...` |
 | Core | Core | Green, Blue, Purple, Gold | `/add type:Core rarity:Gold map:... time:...` |
 | Vortex | Vortex | Green, Blue, Purple, Gold | `/add type:Vortex rarity:Purple map:... time:...` |
+| Ancient Lands Portal | Portal | Small, Medium, Large | `/add type:Ancient Lands Portal rarity:Medium map:... time:...` |
+| Dragon | Dragon | None — leave the field empty | `/add type:Dragon map:... time:...` |
 
-**Total combinations:** 6 types × their respective rarities = **28 unique objective variants**.
+**Total combinations:** 8 types × their respective rarities = **31 unique objective variants**.
 
 ## Related
 
-- [`/add` command reference](/docs/commands/add/) — how to report objectives
-- [Black Zone maps list](/docs/guides/black-zone-maps/) — all 276 supported maps
+- The [`/add` command reference](/docs/commands/add/) explains how to report objectives
+- The [Ancient Lands Portals & Dragon attacks guide](/docs/guides/portals-and-dragons/) covers the two newest objective types in depth
+- The [Black Zone maps list](/docs/guides/black-zone-maps/) has all 276 supported maps

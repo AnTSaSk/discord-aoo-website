@@ -18,12 +18,12 @@ description: Step-by-step tutorial to report and track your first Black Zone obj
     {
       "@type": "HowToStep",
       "name": "Type the /add command",
-      "text": "Type /add — Discord will show the command with its four required parameters."
+      "text": "Type /add. Discord will show the command with its four parameters."
     },
     {
       "@type": "HowToStep",
       "name": "Fill in the parameters",
-      "text": "Fill in the type, rarity, map, and time parameters using autocomplete."
+      "text": "Fill in the type, rarity, map, and time parameters using autocomplete. Rarity is left empty only for Dragon attacks."
     },
     {
       "@type": "HowToStep",
@@ -38,13 +38,13 @@ import Screenshot from '@/components/docs/Screenshot.astro';
 import ScrollReveal from '@/components/docs/ScrollReveal.astro';
 import Callout from '@/components/docs/Callout.astro';
 
-This tutorial walks you through reporting your first Albion Online Black Zone objective. No configuration is needed — Albion Online Objectives (AOO) works immediately after [installation](/docs/getting-started/installation/).
+This tutorial walks you through reporting your first Albion Online Black Zone objective. No configuration is needed; Albion Online Objectives (AOO) works immediately after [installation](/docs/getting-started/installation/).
 
 ## Reporting an Objective
 
 1. **Open Discord** and go to any channel where the bot has access.
 
-2. **Type `/add`** — Discord will show the command with its four required parameters.
+2. **Type `/add`**. Discord will show the command with its four parameters.
 
 <ScrollReveal animation="fade-in">
   <Screenshot src="/screenshots/add-autocomplete.png" alt="Discord autocomplete showing /add command parameters" mode="discord" />
@@ -55,7 +55,7 @@ This tutorial walks you through reporting your first Albion Online Black Zone ob
    | Parameter | What to enter | Example |
    |-----------|---------------|---------|
    | `type` | The objective type (autocomplete) | `Ore node` |
-   | `rarity` | The rarity or tier (autocomplete) | `7.4` |
+   | `rarity` | The rarity, tier, or portal size (autocomplete) — leave empty for a [Dragon attack](/docs/guides/portals-and-dragons/) | `7.4` |
    | `map` | The Black Zone map name (autocomplete) | `Murdergulch Ravine` |
    | `time` | Time remaining until spawn — [several formats accepted](/docs/commands/add/#accepted-time-formats) | `1h30` |
 
@@ -76,17 +76,13 @@ This tutorial walks you through reporting your first Albion Online Black Zone ob
   }}
 />
 
-<Callout variant="tip">All three parameters with text values — `type`, `rarity`, and `map` — support **autocomplete**. Start typing and select from the suggestions. For maps, you can type any part of the name (beginning, middle, or end) and matching results will appear. Additionally, type and rarity filter each other — if you select a node rarity (e.g., 7.4), only node types appear, and vice versa.</Callout>
+<Callout variant="tip">All three parameters with text values (`type`, `rarity`, and `map`) support **autocomplete**. Start typing and select from the suggestions. For maps, you can type any part of the name (beginning, middle, or end) and matching results will appear. Type and rarity also filter each other: if you select a node rarity (e.g., 7.4), only node types appear, and vice versa.</Callout>
 
 ## Viewing Active Objectives
 
-Type `/list` to see all objectives currently reported for your server. The bot displays them grouped by category:
+Type `/list` to see all objectives currently reported for your server. The bot displays them grouped into five categories: resource nodes (Fiber, Hide, Ore, and Wood), energy cores, vortexes, Ancient Lands Portals (timed portals in three sizes), and Dragon attacks.
 
-- **Nodes** — Fiber, Hide, Ore, and Wood resource nodes
-- **Cores** — Energy cores
-- **Vortexes** — Vortexes
-
-Each entry shows the rarity, time with a live countdown, and the map name.
+Each entry shows the rarity (a size for portals, nothing for Dragons), time with a live countdown, and the map name.
 
 <ScrollReveal animation="fade-in">
   <Screenshot src="/screenshots/list-output.png" alt="Bot /list output showing objectives grouped by Node, Core, and Vortex" mode="discord" />
@@ -94,13 +90,14 @@ Each entry shows the rarity, time with a live countdown, and the map name.
 
 ## What Happens Next
 
-- **Duplicates are prevented** — if someone tries to add the same objective within an 8-minute window, the bot rejects it.
-- **Expired objectives are cleaned up** automatically every 30 minutes.
-- **Maintenance detection** — if the calculated spawn time crosses the 10:00 UTC daily maintenance window, the bot flags it.
+- If someone tries to add the same objective within an 8-minute window, the bot **rejects the duplicate**.
+- Expired objectives are **cleaned up automatically** every 30 minutes.
+- When the calculated spawn time crosses the 10:00 UTC daily maintenance window, the bot **flags the objective**.
 
 ## Next Steps
 
 - Learn about all [objective types and rarities](/docs/guides/objective-types/)
+- Discover the newest types: [Ancient Lands Portals & Dragon attacks](/docs/guides/portals-and-dragons/)
 - Browse the [276 supported Black Zone maps](/docs/guides/black-zone-maps/)
 - See the full [`/add` command reference](/docs/commands/add/) for advanced details
 - Use [`/remove`](/docs/commands/remove/) to delete an incorrect entry

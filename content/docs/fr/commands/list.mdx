@@ -31,7 +31,7 @@ Cette commande ne prend **aucun paramètre**.
 
 ## Résultat
 
-Le bot répond avec un message listant tous les objectifs actifs (non expirés), regroupés en trois catégories :
+Le bot répond avec un message listant tous les objectifs actifs (non expirés), regroupés en cinq catégories. La section d'une catégorie n'apparaît que lorsqu'elle contient au moins un objectif.
 
 ### Catégories
 
@@ -40,17 +40,14 @@ Le bot répond avec un message listant tous les objectifs actifs (non expirés),
 | **Node** | Fiber node, Hide node, Ore node, Wood node |
 | **Core** | Core |
 | **Vortex** | Vortex |
+| **Ancient Lands Portal** | Ancient Lands Portal |
+| **Dragon** | Dragon |
 
 ### Format des entrées
 
-Chaque entrée d'objectif affiche :
+Chaque entrée commence par son **numéro d'index**, celui que [`/remove`](/docs/commands/remove/) attend pour supprimer la ligne. Vient ensuite la rareté avec le type : pour les nodes, le tier et le nom du type (ex. : `7.4 Ore node`) ; pour les cores et vortex, un emoji et le nom de la couleur (ex. : `🟠 Gold`) ; pour les Ancient Lands Portals, la taille (`Small`, `Medium`, `Large`) prend la place de la rareté ; les entrées de Dragon n'affichent aucun segment de rareté.
 
-- **Numéro d'index** — utilisé avec [`/remove`](/docs/commands/remove/) pour supprimer des entrées
-- **Rareté et type** — pour les nodes, le tier et le nom du type (ex. : `7.4 Ore node`) ; pour les cores et vortex, un emoji et le nom de la couleur (ex. : `🟠 Gold`)
-- **Heure** — l'heure d'apparition calculée en UTC et sous forme de timestamp relatif Discord (ex. : « dans 2 heures »)
-- **Nom de la carte**
-- **Indicateur de maintenance** — `✅` signifie qu'aucune maintenance n'intervient entre maintenant et l'apparition (sans risque) ; `❌` signifie que la maintenance de 10:00 UTC tombe entre les deux (l'objectif pourrait être réinitialisé)
-- **Auteur du rapport** — le pseudo de serveur du membre qui a ajouté l'objectif, à défaut son nom Discord global
+L'entrée porte aussi l'heure d'apparition calculée, en UTC et sous forme de timestamp relatif Discord (ex. : « dans 2 heures »), le nom de la carte, puis un **indicateur de maintenance** : `✅` signifie qu'aucune maintenance n'intervient entre maintenant et l'apparition (sans risque), `❌` que la maintenance de 10:00 UTC tombe entre les deux (l'objectif pourrait être réinitialisé). Enfin, l'**auteur du rapport** est crédité par son pseudo de serveur, à défaut par son nom Discord global.
 
 ### Exemple de résultat
 
@@ -86,9 +83,10 @@ De plus, une tâche en arrière-plan s'exécute **toutes les 30 minutes** pour n
 
 ### Temps de recharge
 
-Cette commande a un **temps de recharge de 5 secondes** par utilisateur — plus long que les autres commandes car elle interroge la base de données et met à jour un message.
+Cette commande a un **temps de recharge de 5 secondes** par utilisateur, plus long que celui des autres commandes car elle interroge la base de données et met à jour un message.
 
 ## Commandes associées
 
-- [`/add`](/docs/commands/add/) — Rapporter un nouvel objectif
-- [`/remove`](/docs/commands/remove/) — Supprimer un objectif par son numéro d'index
+- [`/add`](/docs/commands/add/) rapporte un nouvel objectif
+- [`/remove`](/docs/commands/remove/) supprime un objectif par son numéro d'index
+- Le [guide des Ancient Lands Portals et attaques de Dragons](/docs/guides/portals-and-dragons/) détaille l'apparence des deux types les plus récents dans ce message

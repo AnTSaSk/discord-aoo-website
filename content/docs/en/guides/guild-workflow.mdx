@@ -1,12 +1,12 @@
 ---
 title: Guild Coordination Workflow
-description: Step-by-step guide to using Albion Online Objectives for guild coordination in Black Zones — from scouting objectives to organizing claims with your team.
+description: Step-by-step guide to using Albion Online Objectives for guild coordination in Black Zones, from scouting objectives to organizing claims with your team.
 navIcon: 🏰
 ---
 
 Tracking Black Zone objectives is a team effort. Without a shared system, scouts spot resources that go unreported, groups arrive late, and high-value cores slip away to rival guilds.
 
-Albion Online Objectives (AOO) gives your guild a single source of truth — every reported objective is visible to all members, sorted by time, and automatically cleaned up when it expires.
+Albion Online Objectives (AOO) gives your guild a single source of truth: every reported objective is visible to all members, sorted by time, and automatically cleaned up when it expires.
 
 This guide covers a proven workflow that guilds use to turn scattered scouting into organized objective play.
 
@@ -14,17 +14,17 @@ This guide covers a proven workflow that guilds use to turn scattered scouting i
 
 Preparation makes the difference between a productive run and a wasted evening.
 
-1. **Designate a tracking channel** — Pick one text channel where the bot operates. Pin a `/list` message or tell members to run [`/list`](/docs/commands/list/) there before heading out.
-2. **Brief your members** — Make sure scouts know how to use [`/add`](/docs/commands/add/). The autocomplete system makes it fast, but first-timers should practice once before a live session.
-3. **Check for stale data** — Run `/list` to see if any leftover objectives exist. Expired entries are cleaned automatically every 30 minutes, but a quick check avoids confusion.
+1. **Designate a tracking channel.** Pick one text channel where the bot operates. Pin a `/list` message or tell members to run [`/list`](/docs/commands/list/) there before heading out.
+2. **Brief your members.** Make sure scouts know how to use [`/add`](/docs/commands/add/). The autocomplete system makes it fast, but first-timers should practice once before a live session.
+3. **Check for stale data.** Run `/list` to see if any leftover objectives exist. Expired entries are cleaned automatically every 30 minutes, but a quick check avoids confusion.
 
 ## Phase 1: Scouting
 
 Scouts are your eyes in the Black Zone. Their job is to report every objective they find, as fast as possible.
 
-- **Use `/add` immediately** when you spot an objective. Select the `type`, `rarity`, and `map` using autocomplete, then enter the time remaining — `1h30`, `90` and `02:30` are all accepted (see [the full list](/docs/commands/add/#accepted-time-formats)).
-- **Type any part of the map name** — the autocomplete matches the beginning, middle, or end. Typing "murder" will surface `Murdergulch Ravine`, `Murdergulch Cross`, and other matching maps.
-- **Do not worry about duplicates** — if two scouts report the same objective within an 8-minute window (same type, rarity, and map), the bot rejects the second report automatically. No manual deduplication needed.
+- **Use `/add` immediately** when you spot an objective. Select the `type`, `rarity` (left empty only for a [Dragon attack](/docs/guides/portals-and-dragons/)), and `map` using autocomplete, then enter the time remaining: `1h30`, `90` and `02:30` are all accepted (see [the full list](/docs/commands/add/#accepted-time-formats)).
+- **Type any part of the map name.** The autocomplete matches the beginning, middle, or end. Typing "murder" will surface `Murdergulch Ravine`, `Murdergulch Cross`, and other matching maps.
+- **Do not worry about duplicates.** If two scouts report the same objective within an 8-minute window (same type, rarity, and map), the bot rejects the second report automatically.
 
 > **Tip:** Scouts covering different zones should communicate which areas they are sweeping to avoid overlap. Albion Online Objectives handles duplicate prevention, but splitting zones means faster coverage.
 
@@ -52,15 +52,17 @@ Run [`/list`](/docs/commands/list/) to see all active objectives. Use rarity as 
 | 3 | 6.4 | Solid value for mid-tier gatherers |
 | 4 | 5.4 / 4.4 | Lower value, skip unless nearby |
 
-Check the spawn times. An 8.4 node spawning in 30 minutes beats a Gold core that is 4 hours away — factor in travel time and competition.
+**For Ancient Lands Portals and Dragons:** a portal's size is its ranking signal, because it sets the in-game group capacity (`Small` 1–5, `Medium` 5–7, `Large` 15–20 players); match the squad you can field to the size on the list. Dragon attacks carry no rarity at all, so weigh them on spawn time and location alone. See the [Ancient Lands Portals & Dragon attacks guide](/docs/guides/portals-and-dragons/).
+
+Check the spawn times. An 8.4 node spawning in 30 minutes beats a Gold core that is 4 hours away. Factor in travel time and competition.
 
 ## Phase 3: Executing
 
 With priorities set, assign groups and move.
 
-1. **Split into squads** based on the objective type. Cores and vortexes need a combat group. Nodes need gatherers with escorts.
-2. **Call out departures** — let the channel know which objective each squad is heading toward.
-3. **Remove completed objectives** — after capturing or gathering an objective, use [`/remove`](/docs/commands/remove/) to clear it from the list. This keeps `/list` accurate for the rest of the guild.
+1. **Split into squads** based on the objective type. Cores and vortexes need a combat group. Nodes need gatherers with escorts. For an Ancient Lands Portal, size the squad to the portal's group capacity.
+2. **Call out departures.** Let the channel know which objective each squad is heading toward.
+3. **Remove completed objectives.** After capturing or gathering an objective, use [`/remove`](/docs/commands/remove/) to clear it from the list. This keeps `/list` accurate for the rest of the guild.
 
 ## After the Session
 
@@ -72,8 +74,8 @@ Albion Online Objectives handles cleanup automatically:
 
 ## Tips for Guild Leaders
 
-- **Pin a reminder** in your tracking channel explaining how to use `/add` — new members will thank you.
+- **Pin a reminder** in your tracking channel explaining how to use `/add`; new members will thank you.
 - **Encourage everyone to report**, not just designated scouts. A gatherer passing through a zone can report a core just as effectively.
-- **Rarity equals priority** — drill this into your guild. A Gold core should interrupt almost any other activity.
+- **Rarity equals priority.** Drill this into your guild. A Gold core should interrupt almost any other activity.
 - **Review [objective types](/docs/guides/objective-types/)** so you understand every type and rarity the bot supports.
-- **Use the [/list command](/docs/commands/list/)** output as your tactical map during voice calls — read out the top-priority objectives and assign squads in real time.
+- **Use the [/list command](/docs/commands/list/)** output as your tactical map during voice calls: read out the top-priority objectives and assign squads in real time.

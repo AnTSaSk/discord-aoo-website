@@ -21,7 +21,7 @@ The `/edit` command modifies an objective already tracked on your server. Before
   parameters={[
     { name: "index", type: "autocomplete", description: "The objective to edit — pick it from the suggestions", required: true },
     { name: "type", type: "autocomplete", description: "New objective type", required: false },
-    { name: "rarity", type: "autocomplete", description: "New tier or colour", required: false },
+    { name: "rarity", type: "autocomplete", description: "Rarity of the objective — leave empty for Dragon", required: false },
     { name: "map", type: "autocomplete", description: "New Black Zone map name", required: false },
     { name: "time", type: "string", description: "New time remaining until spawn", required: false }
   ]}
@@ -35,13 +35,13 @@ The `/edit` command modifies an objective already tracked on your server. Before
 
 ## Parameters
 
-Only `index` is **required**. Every other parameter is optional — supply just the ones you want to change.
+Only `index` is **required**. Every other parameter is optional: supply just the ones you want to change.
 
 | Parameter | Type | Required | Description |
 |-----------|------|----------|-------------|
 | `index` | Autocomplete | Yes | The objective to edit. Pick it from the suggestions rather than typing it. |
-| `type` | Autocomplete | No | New objective type — one of the 6 values (see [objective types](/docs/guides/objective-types/)) |
-| `rarity` | Autocomplete | No | New tier for nodes (`4.4`–`8.4`) or colour for cores and vortexes (`Green`, `Blue`, `Purple`, `Gold`) |
+| `type` | Autocomplete | No | New objective type — one of the 8 values (see [objective types](/docs/guides/objective-types/)) |
+| `rarity` | Autocomplete | No | New tier for nodes (`4.4`–`8.4`), colour for cores and vortexes (`Green`, `Blue`, `Purple`, `Gold`), or size for portals (`Small`, `Medium`, `Large`). A `Dragon` takes none. |
 | `map` | Autocomplete | No | New Black Zone map name (see [map list](/docs/guides/black-zone-maps/)) |
 | `time` | Text | No | New time remaining until spawn |
 
@@ -64,6 +64,8 @@ The `time` parameter accepts several notations. A bare number is always **minute
 
 The value is a **delay from now**, never a clock time. It is recounted from the moment you submit the edit, not from when the objective was first reported.
 
+The delay is capped per type, as with `/add`: 30, 60 or 180 minutes for a `Small`, `Medium` or `Large` Ancient Lands Portal, and 1440 minutes (24 hours) for every other type. These caps are a typo guard rather than a game rule (see [time limits](/docs/commands/add/#time-limits)). When a value is both malformed and out of range, the format error is reported first.
+
 ## Selecting the objective
 
 Start typing in the `index` field and the bot lists your server's active objectives:
@@ -74,7 +76,7 @@ Start typing in the `index` field and the bot lists your server's active objecti
 #3 — Core Purple Martlock (18:45 UTC)
 ```
 
-The list shows up to **25** objectives and covers **active** ones only — expired objectives are gone and cannot be edited.
+The list shows up to **25** objectives and covers **active** ones only; expired objectives are gone and cannot be edited.
 
 <Callout variant="tip">Pick an entry from the suggestions instead of typing the number. A picked entry carries a fingerprint of the objective, so if the list shifts between opening the command and submitting it, the bot refuses the edit rather than modifying the wrong objective.</Callout>
 
@@ -104,7 +106,7 @@ No changes were supplied, nothing to update.
 
 ### Confirmation
 
-The confirmation is ephemeral — only you see it — and lists each field that actually changed:
+The confirmation is ephemeral (only you see it) and lists each field that actually changed:
 
 ```
 Your objective has been successfully updated!
@@ -126,7 +128,13 @@ The bot refuses an edit that would produce an invalid objective:
 | Time beyond the accepted range | `The provided time is out of the accepted range` |
 | The edit would duplicate an existing objective | `It appears that the objective you are trying to add already exists` |
 
-The type and rarity check applies to the **resulting** combination. Changing only the type on a `Core Purple` objective is rejected if the new type does not accept `Purple`.
+The type and rarity check applies to the **resulting** combination: the fields you supply merged with the stored ones. Changing only the type on a `Core Purple` objective is rejected if the new type does not accept `Purple`. The [five rarity-validation outcomes of `/add`](/docs/commands/add/#rarity-validation) apply to that resulting combination, Dragons included.
+
+Three cases are specific to mutations between families:
+
+- Editing a stored `Dragon` into a rarity-bearing type without supplying `rarity` is rejected: the rarity is missing. A Dragon has no stored rarity to reuse, so you must supply one along with the new type.
+- Editing a stored rarity-bearing type into a `Dragon` without supplying `rarity` is accepted. The old rarity is discarded, since a Dragon takes none.
+- Resizing a portal to a smaller size without supplying `time` is rejected as out of range when the **remaining** time (whole minutes, seconds truncated) exceeds the new size's cap. Supply a `time` within the new cap in the same edit.
 
 ### Maintenance detection
 
@@ -142,6 +150,6 @@ This command has a **2-second cooldown** per user.
 
 ## Related commands
 
-- [`/add`](/docs/commands/add/) — report a new objective
-- [`/list`](/docs/commands/list/) — display tracked objectives
-- [`/remove`](/docs/commands/remove/) — delete an objective
+- [`/add`](/docs/commands/add/) reports a new objective
+- [`/list`](/docs/commands/list/) displays tracked objectives
+- [`/remove`](/docs/commands/remove/) deletes an objective

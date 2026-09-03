@@ -31,7 +31,7 @@ This command takes **no parameters**.
 
 ## Output
 
-The bot responds with a message listing all active (non-expired) objectives, grouped into three categories:
+The bot responds with a message listing all active (non-expired) objectives, grouped into five categories. A category's section only appears when it contains at least one objective; empty sections are omitted.
 
 ### Categories
 
@@ -40,17 +40,19 @@ The bot responds with a message listing all active (non-expired) objectives, gro
 | **Node** | Fiber node, Hide node, Ore node, Wood node |
 | **Core** | Core |
 | **Vortex** | Vortex |
+| **Ancient Lands Portal** | Ancient Lands Portal |
+| **Dragon** | Dragon |
 
 ### Entry Format
 
 Each objective entry displays:
 
-- **Index number** — used with [`/remove`](/docs/commands/remove/) to delete entries
-- **Rarity and type** — for nodes, the tier and type name (e.g., `7.4 Ore node`); for cores and vortexes, an emoji and color name (e.g., `🟠 Gold`)
-- **Time** — the calculated spawn time in UTC and as a Discord relative timestamp (e.g., "in 2 hours")
-- **Map name**
-- **Maintenance flag** — `✅` means no maintenance between now and spawn time (safe); `❌` means the 10:00 UTC maintenance falls in between (objective may be reset)
-- **Reporter** — the server nickname of the member who added the objective, falling back to their global Discord name
+- The **index number**, used with [`/remove`](/docs/commands/remove/) to delete entries
+- The **rarity and type**: the tier and type name for nodes (e.g., `7.4 Ore node`), an emoji and color name for cores and vortexes (e.g., `🟠 Gold`), the size (`Small`, `Medium`, `Large`) in place of the rarity for Ancient Lands Portals, and no rarity segment at all for Dragon entries
+- The **time**, as the calculated spawn time in UTC and as a Discord relative timestamp (e.g., "in 2 hours")
+- The **map name**
+- The **maintenance flag**: `✅` means no maintenance between now and spawn time (safe), while `❌` means the 10:00 UTC maintenance falls in between (objective may be reset)
+- The **reporter**, shown as the server nickname of the member who added the objective, falling back to their global Discord name
 
 ### Example Output
 
@@ -86,9 +88,10 @@ Each time `/list` is called or the cron task runs, the bot updates the existing 
 
 ### Cooldown
 
-This command has a **5-second cooldown** per user — longer than other commands because it queries the database and updates a message.
+This command has a **5-second cooldown** per user, longer than other commands because it queries the database and updates a message.
 
 ## Related Commands
 
-- [`/add`](/docs/commands/add/) — Report a new objective
-- [`/remove`](/docs/commands/remove/) — Delete an objective by its index number
+- [`/add`](/docs/commands/add/) reports a new objective
+- [`/remove`](/docs/commands/remove/) deletes an objective by its index number
+- The [Ancient Lands Portals & Dragon attacks guide](/docs/guides/portals-and-dragons/) shows how the two newest types appear in this message

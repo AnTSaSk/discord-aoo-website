@@ -1,0 +1,82 @@
+---
+title: Ancient Lands Portals et attaques de Dragons
+description: "Guide des Ancient Lands Portals et des attaques de Dragons dans Albion Online : les trois tailles de portail, capacités de groupe et suivi avec AOO."
+navLabel: Portals et Dragons
+navIcon: 🐉
+---
+
+import Badge from '@/components/ui/Badge.astro';
+import Callout from '@/components/docs/Callout.astro';
+
+Les Ancient Lands Portals et les attaques de Dragons sont les deux types d'objectifs les plus récents suivis par Albion Online Objectives (AOO). Les portails apparaissent en Black Zone ; les attaques de Dragons frappent aussi bien la Black Zone que le continent Royal. Les deux se rapportent avec la même commande [`/add`](/docs/commands/add/) que votre guilde utilise déjà, sur les [276 cartes de Black Zone](/docs/guides/black-zone-maps/) du bot.
+
+## Que sont les Ancient Lands Portals ?
+
+Les Ancient Lands Portals sont des objectifs chronométrés de Black Zone qui existent en trois tailles. Dans le bot, la taille prend la place d'une rareté : vous la choisissez dans le champ `rarity` de `/add`, exactement là où vous choisiriez un tier pour un node ou une rareté pour un core.
+
+La taille compte, car elle détermine la capacité de groupe en jeu :
+
+| Taille | Valeur dans le bot | Capacité de groupe |
+|--------|--------------------|--------------------|
+| **Small** | `Small` | 1–5 joueurs |
+| **Medium** | `Medium` | 5–7 joueurs |
+| **Large** | `Large` | 15–20 joueurs |
+
+Un portail <Badge variant="tier">Small</Badge> est un contenu pour un joueur seul ou un petit groupe, tandis qu'un portail <Badge variant="tier">Large</Badge> réclame un groupe complet. Connaître la taille avant de se déplacer permet au shot caller d'envoyer le bon nombre de joueurs.
+
+### Limites de temps par taille
+
+Chaque taille de portail a son propre maximum pour la valeur `time` de `/add` et `/edit` :
+
+| Taille | Délai maximum |
+|--------|---------------|
+| `Small` | 30 minutes |
+| `Medium` | 60 minutes |
+| `Large` | 180 minutes |
+
+<Callout variant="info">Ces plafonds sont un garde-fou contre les fautes de frappe, pas une règle du jeu. Ils existent pour attraper une coquille comme `100` tapé à la place de `10` ; toute valeur inférieure est acceptée telle quelle, et le bot ne déduit jamais une heure d'ouverture à partir de la taille. Un portail repéré tardivement se rapporte avec le temps qu'il reste réellement.</Callout>
+
+Tous les autres types d'objectifs conservent la limite générale de **1440 minutes** (24 heures). Si une valeur de temps est à la fois mal formée et hors plage, c'est l'erreur de format qui est signalée en premier.
+
+## Que sont les attaques de Dragons ?
+
+Les attaques de Dragons sont des événements de monde ouvert qui frappent **la Black Zone comme le continent Royal**. Elles ne portent **aucune rareté propre** : le tier de l'attaque suit le tier de la carte où elle se déclenche, il n'y a donc rien à choisir.
+
+Pour rapporter un Dragon, **laissez le champ `rarity` vide**. Le champ est facultatif précisément pour ce cas :
+
+- Le laisser vide pour un Dragon est accepté.
+- Fournir une rareté avec un Dragon est refusé, car ce type n'en prend aucune.
+- L'autocomplétion de rareté ne propose aucune suggestion une fois `Dragon` sélectionné.
+
+Pour tous les autres types, la rareté reste attendue ; voir les [règles de validation sur la page `/add`](/docs/commands/add/#validation-de-la-rareté).
+
+## Suivi avec Albion Online Objectives
+
+Rapportez les deux types avec [`/add`](/docs/commands/add/) dès qu'un éclaireur en repère un. L'autocomplétion de rareté est contextuelle : sélectionner `Ancient Lands Portal` comme type restreint les suggestions aux trois tailles, et sélectionner `Dragon` les laisse vides.
+
+### Exemples de commandes
+
+```
+/add type:Ancient Lands Portal rarity:Small map:Murdergulch Ravine time:25
+/add type:Ancient Lands Portal rarity:Medium map:Deepwood Gorge time:00:45
+/add type:Ancient Lands Portal rarity:Large map:Hightree Enclave time:2h30
+/add type:Dragon map:Everwinter Peak time:1h15
+```
+
+La prévention des doublons s'applique aux deux types exactement comme ailleurs : un rapport correspondant à un objectif existant dans la fenêtre de 8 minutes est rejeté, Dragons compris.
+
+## Leur apparence dans /list
+
+Le message de suivi publié par [`/list`](/docs/commands/list/) gagne deux sections, affichées uniquement lorsqu'elles contiennent au moins un objectif, comme toutes les autres :
+
+- `## Ancient Lands Portal ##`, où chaque ligne de portail affiche sa **taille** (`Small`, `Medium`, `Large`) là où les autres lignes affichent une rareté
+- `## Dragon ##`, dont les lignes n'affichent **aucun segment de rareté**
+
+Tout le reste de la ligne est inchangé : numéro d'index, heure d'apparition avec compte à rebours en temps réel, nom de la carte, indicateur de maintenance et auteur du rapport.
+
+## Pages associées
+
+- La [référence des types d'objectifs](/docs/guides/objective-types/) montre tous les types et raretés en un coup d'œil
+- La page de la [commande `/add`](/docs/commands/add/) porte la référence complète des paramètres
+- La page de la [commande `/list`](/docs/commands/list/) explique l'organisation du message de suivi
+- Le [guide des nodes de ressources](/docs/guides/resource-nodes/) et [Power Cores et Energy Vortex](/docs/guides/cores-and-vortexes/) couvrent les autres catégories d'objectifs de Black Zone

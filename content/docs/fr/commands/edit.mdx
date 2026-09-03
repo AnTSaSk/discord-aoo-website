@@ -21,7 +21,7 @@ La commande `/edit` modifie un objectif déjà suivi sur votre serveur. Avant so
   parameters={[
     { name: "index", type: "autocomplete", description: "L'objectif à modifier — choisissez-le dans les suggestions", required: true },
     { name: "type", type: "autocomplete", description: "Nouveau type d'objectif", required: false },
-    { name: "rarity", type: "autocomplete", description: "Nouveau tier ou nouvelle couleur", required: false },
+    { name: "rarity", type: "autocomplete", description: "Rareté de l'objectif — laisser vide pour Dragon", required: false },
     { name: "map", type: "autocomplete", description: "Nouveau nom de carte de Black Zone", required: false },
     { name: "time", type: "string", description: "Nouveau temps restant avant l'apparition", required: false }
   ]}
@@ -40,8 +40,8 @@ Seul `index` est **obligatoire**. Tous les autres paramètres sont facultatifs :
 | Paramètre | Type | Obligatoire | Description |
 |-----------|------|-------------|-------------|
 | `index` | Autocomplétion | Oui | L'objectif à modifier. Choisissez-le dans les suggestions plutôt que de le saisir. |
-| `type` | Autocomplétion | Non | Nouveau type d'objectif — une des 6 valeurs (voir [types d'objectifs](/docs/guides/objective-types/)) |
-| `rarity` | Autocomplétion | Non | Nouveau tier pour les nodes (`4.4`–`8.4`) ou nouvelle couleur pour les cores et vortex (`Green`, `Blue`, `Purple`, `Gold`) |
+| `type` | Autocomplétion | Non | Nouveau type d'objectif — une des 8 valeurs (voir [types d'objectifs](/docs/guides/objective-types/)) |
+| `rarity` | Autocomplétion | Non | Nouveau tier pour les nodes (`4.4`–`8.4`), couleur pour les cores et vortex (`Green`, `Blue`, `Purple`, `Gold`) ou taille pour les portails (`Small`, `Medium`, `Large`). Un `Dragon` n'en prend aucune. |
 | `map` | Autocomplétion | Non | Nouveau nom de carte de Black Zone (voir [liste des cartes](/docs/guides/black-zone-maps/)) |
 | `time` | Texte | Non | Nouveau temps restant avant l'apparition |
 
@@ -63,6 +63,8 @@ Le paramètre `time` accepte plusieurs notations. Un nombre seul correspond touj
 | `90m` | 90 minutes |
 
 La valeur est un **délai à partir de maintenant**, jamais une heure absolue. Elle est recalculée au moment où vous validez la modification, et non depuis le premier signalement de l'objectif.
+
+Le délai est plafonné selon le type, comme avec `/add` : 30, 60 ou 180 minutes pour un Ancient Lands Portal `Small`, `Medium` ou `Large`, et 1440 minutes (24 heures) pour tous les autres types. C'est un garde-fou contre les fautes de frappe, pas une règle du jeu (voir [limites de temps](/docs/commands/add/#limites-de-temps)). Lorsqu'une valeur est à la fois mal formée et hors plage, c'est l'erreur de format qui est signalée en premier.
 
 ## Sélectionner l'objectif
 
@@ -126,7 +128,13 @@ Le bot refuse une modification qui produirait un objectif invalide :
 | Temps hors de la plage acceptée | `The provided time is out of the accepted range` |
 | La modification créerait un doublon | `It appears that the objective you are trying to add already exists` |
 
-Le contrôle type/rareté porte sur la combinaison **résultante**. Modifier uniquement le type d'un objectif `Core Purple` est refusé si le nouveau type n'accepte pas `Purple`.
+Le contrôle type/rareté porte sur la combinaison **résultante**, c'est-à-dire les champs fournis fusionnés avec les champs enregistrés. Modifier uniquement le type d'un objectif `Core Purple` est refusé si le nouveau type n'accepte pas `Purple`. Les [cinq issues de validation de la rareté de `/add`](/docs/commands/add/#validation-de-la-rareté) s'appliquent à cette combinaison résultante, Dragons compris.
+
+Trois cas sont spécifiques aux mutations entre familles :
+
+- **`Dragon` enregistré → type à rareté, sans fournir `rarity`** : refusé, car la rareté manque. Un Dragon n'a aucune rareté enregistrée à réutiliser ; il faut en fournir une avec le nouveau type.
+- **Type à rareté enregistré → `Dragon`, sans fournir `rarity`** : accepté. L'ancienne rareté est abandonnée, puisqu'un Dragon n'en prend aucune.
+- **Portail redimensionné vers une taille plus petite, sans fournir `time`** : refusé comme hors plage si le temps **restant** (en minutes entières, secondes tronquées) dépasse le plafond de la nouvelle taille. Fournissez un `time` sous le nouveau plafond dans la même modification.
 
 ### Détection de maintenance
 
@@ -142,6 +150,6 @@ Cette commande a un **cooldown de 2 secondes** par utilisateur.
 
 ## Commandes associées
 
-- [`/add`](/docs/commands/add/) — rapporter un nouvel objectif
-- [`/list`](/docs/commands/list/) — afficher les objectifs suivis
-- [`/remove`](/docs/commands/remove/) — supprimer un objectif
+- [`/add`](/docs/commands/add/) rapporte un nouvel objectif
+- [`/list`](/docs/commands/list/) affiche les objectifs suivis
+- [`/remove`](/docs/commands/remove/) supprime un objectif

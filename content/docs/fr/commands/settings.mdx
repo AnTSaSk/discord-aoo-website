@@ -7,7 +7,7 @@ navLabel: /settings
 import CommandPreview from '@/components/docs/CommandPreview';
 import Callout from '@/components/docs/Callout.astro';
 
-La commande `/settings` configure le comportement du bot sur votre serveur. Elle régit aujourd'hui les **annonces de version** — les messages publiés par le bot à chaque nouvelle version.
+La commande `/settings` configure le comportement du bot sur votre serveur. Elle régit aujourd'hui les **annonces de version**, c'est-à-dire les messages publiés par le bot à chaque nouvelle version.
 
 Les réglages sont propres à chaque serveur. Les modifier sur l'un n'affecte jamais les autres.
 
@@ -29,7 +29,7 @@ Les réglages sont propres à chaque serveur. Les modifier sur l'un n'affecte ja
 
 ## Permissions
 
-`/settings` exige la permission **Gérer le serveur**. Les membres qui n'en disposent pas ne voient tout simplement pas la commande dans l'interface Discord : elle est masquée, et non refusée.
+`/settings` exige la permission **Gérer le serveur**. Les membres qui n'en disposent pas ne voient pas du tout la commande dans l'interface Discord : elle est masquée, et non refusée.
 
 Cela diffère de [`/add`](/docs/commands/add/), [`/edit`](/docs/commands/edit/) et [`/remove`](/docs/commands/remove/), utilisables par tout membre.
 
@@ -108,7 +108,7 @@ Définir un salon explicitement supprime cette part de devinette, et la notice d
 
 ### Permission @everyone manquante
 
-Si votre serveur a autorisé la mention `@everyone` mais que le bot ne dispose pas de la permission **Mentionner @everyone** dans le salon visé, l'annonce est tout de même publiée — simplement sans la mention. Rien n'est bloqué.
+Si votre serveur a autorisé la mention `@everyone` mais que le bot ne dispose pas de la permission **Mentionner @everyone** dans le salon visé, l'annonce est tout de même publiée, sans la mention. Rien n'est bloqué.
 
 ### Annonces déjà reçues
 
@@ -122,6 +122,6 @@ Avec `enabled` à `false`, votre serveur est intégralement ignoré pour les ann
 
 ## Commandes associées
 
-- [`/about`](/docs/commands/) — version du bot et documents légaux
-- [`/add`](/docs/commands/add/) — rapporter un nouvel objectif
-- [`/list`](/docs/commands/list/) — afficher les objectifs suivis
+- [`/about`](/docs/commands/) affiche la version du bot et les documents légaux
+- [`/add`](/docs/commands/add/) rapporte un nouvel objectif
+- [`/list`](/docs/commands/list/) affiche les objectifs suivis

@@ -1,6 +1,6 @@
 ---
 title: /add — Report an Objective
-description: Full reference for the /add slash command. Report Black Zone objectives — resource nodes, energy cores, and vortexes — with type, rarity, map, and time.
+description: Full reference for the /add slash command. Report Black Zone objectives (nodes, cores, vortexes, Ancient Lands Portals, and Dragons) in one command.
 navLabel: /add
 ---
 
@@ -14,15 +14,15 @@ The `/add` command reports a new Black Zone objective to your server's tracking 
 <CommandPreview
   client:load
   command="/add"
-  syntax="/add type:<type> rarity:<rarity> map:<map> time:<time>"
+  syntax="/add type:<type> [rarity:<rarity>] map:<map> time:<time>"
   ephemeral
   example={{
     input: "/add type:Core rarity:Purple map:Avalanche Ravine time:00:45",
     output: "Your objective (Core) has been successfully added!\nIt will be available at 15:20 UTC (<t:1709730000:R>) on the map Avalanche Ravine"
   }}
   parameters={[
-    { name: "type", type: "choice", description: "The objective type (node, core, or vortex)", required: true },
-    { name: "rarity", type: "choice", description: "Tier for nodes or color for cores/vortexes", required: true },
+    { name: "type", type: "choice", description: "The objective type — one of 8 values", required: true },
+    { name: "rarity", type: "choice", description: "Rarity of the objective — leave empty for Dragon", required: false },
     { name: "map", type: "string", description: "Black Zone map name", required: true },
     { name: "time", type: "string", description: "Time remaining until spawn (e.g. 1h30, 90, 02:30)", required: true }
   ]}
@@ -31,17 +31,17 @@ The `/add` command reports a new Black Zone objective to your server's tracking 
 ## Syntax
 
 ```
-/add type:<type> rarity:<rarity> map:<map> time:<time>
+/add type:<type> [rarity:<rarity>] map:<map> time:<time>
 ```
 
 ## Parameters
 
-All four parameters are **required**.
+The `type`, `map`, and `time` parameters are **required**. `rarity` is optional at the Discord level, but the bot still expects it for every type except `Dragon` (see [rarity validation](#rarity-validation) below).
 
 | Parameter | Type | Description |
 |-----------|------|-------------|
-| `type` | Autocomplete | The objective type — one of 6 values (see [objective types](/docs/guides/objective-types/)) |
-| `rarity` | Autocomplete | Tier for nodes (`4.4`–`8.4`) or color for cores/vortexes (`Green`, `Blue`, `Purple`, `Gold`) |
+| `type` | Autocomplete | The objective type — one of 8 values (see [objective types](/docs/guides/objective-types/)) |
+| `rarity` | Autocomplete | Tier for nodes (`4.4`–`8.4`), color for cores/vortexes (`Green`, `Blue`, `Purple`, `Gold`), or size for portals (`Small`, `Medium`, `Large`). Leave empty for `Dragon`. |
 | `map` | Autocomplete | Black Zone map name — 276 maps supported (see [maps list](/docs/guides/black-zone-maps/)) |
 | `time` | Text | Time remaining until the objective spawns. Several formats are accepted — see [below](#accepted-time-formats). Example: `1h30` or `02:30` (2 hours 30 minutes from now) |
 
@@ -55,6 +55,8 @@ All four parameters are **required**.
 | `Wood node` | Node |
 | `Core` | Core |
 | `Vortex` | Vortex |
+| `Ancient Lands Portal` | Portal |
+| `Dragon` | Dragon |
 
 ### Rarity Values
 
@@ -62,11 +64,27 @@ All four parameters are **required**.
 
 **For cores and vortexes:** `Green`, `Blue`, `Purple`, `Gold`
 
+**For Ancient Lands Portals:** `Small`, `Medium`, `Large`. The size reflects the in-game group capacity (1–5, 5–7, and 15–20 players; see the [portals and dragons guide](/docs/guides/portals-and-dragons/))
+
+**For Dragons:** none; leave the field empty
+
+### Rarity Validation
+
+The bot checks that the rarity matches the chosen type's family. Five outcomes are possible:
+
+| Type chosen | Rarity supplied | Result |
+|-------------|-----------------|--------|
+| Rarity-bearing type (node, core, vortex, portal) | From its own family | Accepted |
+| Rarity-bearing type | From another family | Rejected — invalid type and rarity combination |
+| Rarity-bearing type | Left empty | Rejected — a rarity is required for this type |
+| `Dragon` | Left empty | Accepted |
+| `Dragon` | Supplied | Rejected — a Dragon takes no rarity |
+
 ## Autocomplete
 
-The `type`, `rarity`, and `map` parameters all support Discord's autocomplete feature. Start typing and matching options will appear. For maps, the search matches anywhere in the name — beginning, middle, or end.
+The `type`, `rarity`, and `map` parameters all support Discord's autocomplete feature. Start typing and matching options will appear. For maps, the search matches anywhere in the name: beginning, middle, or end.
 
-Additionally, the `type` and `rarity` fields are context-aware: selecting a node rarity (4.4–8.4) filters the type list to nodes only, and selecting a core or vortex type filters rarities to colors only.
+Additionally, the `type` and `rarity` fields are context-aware. The rarity autocomplete only offers the family of the type you already chose: tiers for a node, colors for a core or vortex, sizes for an Ancient Lands Portal. Once `Dragon` is selected, it offers **nothing**, since a Dragon takes no rarity. The filtering works the other way too: selecting a node rarity (4.4–8.4) filters the type list to nodes only.
 
 <ScrollReveal animation="fade-in">
   <Screenshot src="/screenshots/add-autocomplete.png" alt="Discord autocomplete dropdown for /add command" mode="discord" />
@@ -78,6 +96,8 @@ Additionally, the `type` and `rarity` fields are context-aware: selecting a node
 /add type:Ore node rarity:7.4 map:Murdergulch Ravine time:02:30
 /add type:Core rarity:Gold map:Hightree Enclave time:01:15
 /add type:Vortex rarity:Purple map:Deepwood Gorge time:04:00
+/add type:Ancient Lands Portal rarity:Medium map:Deepwood Gorge time:00:45
+/add type:Dragon map:Everwinter Peak time:1h15
 ```
 
 ## Behavior
@@ -86,7 +106,7 @@ Additionally, the `type` and `rarity` fields are context-aware: selecting a node
 
 <Callout variant="info">Albion Online Objectives prevents duplicates automatically. If the same objective type, rarity, and map is reported within 8 minutes, the bot rejects it.</Callout>
 
-If an objective with the same type, rarity, and map already exists within an **8-minute window** (±4 minutes of the reported time), the bot rejects the new report and notifies you. This prevents accidental duplicates when multiple guild members spot the same objective.
+If an objective with the same type, rarity, and map already exists within an **8-minute window** (±4 minutes of the reported time), the bot rejects the new report and notifies you. This prevents accidental duplicates when multiple guild members spot the same objective. Dragons are covered like any other type: a second Dragon report on the same map within the window is rejected.
 
 <ScrollReveal animation="fade-in">
   <Screenshot src="/screenshots/add-error.png" alt="Error message when a duplicate objective is detected" mode="discord" />
@@ -120,6 +140,19 @@ The `time` parameter accepts several notations. A bare number is always **minute
 | `90m` | 90 minutes |
 
 The value is a **delay from now**, never a clock time. Unrecognised formats are rejected with an error message listing the accepted ones.
+
+### Time limits
+
+The accepted delay is capped per type. For Ancient Lands Portals the cap depends on the size; every other type uses the general 24-hour limit:
+
+| Type | Maximum delay |
+|------|---------------|
+| `Ancient Lands Portal` — `Small` | 30 minutes |
+| `Ancient Lands Portal` — `Medium` | 60 minutes |
+| `Ancient Lands Portal` — `Large` | 180 minutes |
+| All other types | 1440 minutes (24 hours) |
+
+These caps are a **typo guard**, not a game rule: they catch slips like typing `100` instead of `10`. Any lower value is accepted as-is, and the bot never derives an opening time from a portal's size: a portal spotted late is reported with whatever time actually remains. When a time value is both malformed and out of range, the **format error** is reported first.
 
 ## After Reporting
 

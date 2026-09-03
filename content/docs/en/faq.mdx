@@ -1,6 +1,6 @@
 ---
 title: Frequently Asked Questions
-description: Frequently asked questions about Albion Online Objectives — pricing, supported features, and troubleshooting the Albion Online objectives tracker.
+description: 'Frequently asked questions about Albion Online Objectives: pricing, supported features, and troubleshooting the Albion Online objectives tracker.'
 navLabel: FAQ
 ---
 
@@ -33,7 +33,7 @@ import { BOT } from '@data/config';
       "name": "Which Albion Online objectives are supported?",
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "Albion Online Objectives supports three categories of Black Zone objectives: Resource Nodes (Fiber, Hide, Ore, and Wood, rarities 4.4 through 8.4), Energy Cores (Green, Blue, Purple, and Gold), and Vortexes (Green, Blue, Purple, and Gold)."
+        "text": "Albion Online Objectives supports five categories of Black Zone objectives: Resource Nodes (Fiber, Hide, Ore, and Wood, rarities 4.4 through 8.4), Energy Cores (Green, Blue, Purple, and Gold), Vortexes (Green, Blue, Purple, and Gold), Ancient Lands Portals (Small, Medium, and Large sizes), and Dragon attacks, which carry no rarity (the rarity field is left empty)."
       }
     },
     {
@@ -113,7 +113,7 @@ import { BOT } from '@data/config';
       "name": "I get a \"cooldown\" error",
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "Commands have cooldowns to prevent spam — 2 seconds for /add, /edit, /remove and /about, 5 seconds for /list. Wait briefly and try again."
+        "text": "Commands have cooldowns to prevent spam: 2 seconds for /add, /edit, /remove and /about, 5 seconds for /list. Wait briefly and try again."
       }
     },
     {
@@ -164,7 +164,7 @@ import { BOT } from '@data/config';
   },
   {
     question: "Which Albion Online objectives are supported?",
-    answer: 'Albion Online Objectives supports three categories of Black Zone objectives:<ul class="mt-2 list-disc pl-6 space-y-1"><li><strong>Resource Nodes</strong> — Fiber, Hide, Ore, and Wood (rarities 4.4 through 8.4)</li><li><strong>Energy Cores</strong> — Green, Blue, Purple, and Gold</li><li><strong>Vortexes</strong> — Green, Blue, Purple, and Gold</li></ul><p class="mt-2">See the full <a href="/docs/guides/objective-types/">objective types reference</a> for details.</p>'
+    answer: 'Albion Online Objectives supports five categories of Black Zone objectives:<ul class="mt-2 list-disc pl-6 space-y-1"><li><strong>Resource Nodes</strong> in Fiber, Hide, Ore, and Wood variants (rarities 4.4 through 8.4)</li><li><strong>Energy Cores</strong> in Green, Blue, Purple, and Gold</li><li><strong>Vortexes</strong>, also Green, Blue, Purple, and Gold</li><li><strong>Ancient Lands Portals</strong> in three sizes: Small, Medium, and Large</li><li><strong>Dragon attacks</strong>, which carry no rarity (the rarity field is left empty)</li></ul><p class="mt-2">See the full <a href="/docs/guides/objective-types/">objective types reference</a> and the <a href="/docs/guides/portals-and-dragons/">Ancient Lands Portals &amp; Dragon attacks guide</a> for details.</p>'
   },
   {
     question: "How many maps does the bot support?",
@@ -205,7 +205,7 @@ import { BOT } from '@data/config';
   },
   {
     question: "What happens during Albion Online maintenance?",
-    answer: "The daily server maintenance at 10:00 UTC resets all objectives. When the calculated spawn time of your objective crosses the 10:00 UTC maintenance window, the bot flags it — so your guildmates know the objective may not survive the reset."
+    answer: "The daily server maintenance at 10:00 UTC resets all objectives. When the calculated spawn time of your objective crosses the 10:00 UTC maintenance window, the bot flags it so your guildmates know the objective may not survive the reset."
   },
   {
     question: "Can the same objective be reported twice?",
@@ -226,7 +226,7 @@ import { BOT } from '@data/config';
   },
   {
     question: 'I get a "cooldown" error',
-    answer: "Commands have cooldowns to prevent spam — 2 seconds for <code>/add</code>, <code>/edit</code> and <code>/remove</code>, 5 seconds for <code>/list</code>. Wait briefly and try again."
+    answer: "Commands have cooldowns to prevent spam: 2 seconds for <code>/add</code>, <code>/edit</code>, <code>/remove</code> and <code>/about</code>, 5 seconds for <code>/list</code>. Wait briefly and try again."
   },
   {
     question: "How do I report a bug?",

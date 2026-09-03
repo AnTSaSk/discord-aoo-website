@@ -6,6 +6,16 @@ navLabel: Changelog
 
 import TimelineEntry from '@/components/docs/TimelineEntry.astro';
 
+<TimelineEntry version="v0.3.0" date="2026-09-03">
+  <Fragment slot="features">
+    - **Suivi des Ancient Lands Portals** — un nouveau type d'objectif en trois tailles (`Small`, `Medium`, `Large`) reflétant la capacité de groupe en jeu (1–5, 5–7, 15–20 joueurs) ; la taille se choisit dans le champ `rarity`
+    - **Suivi des attaques de Dragons** — un nouveau type d'objectif sans aucune rareté : rapportez-en une en laissant le champ `rarity` vide
+    - **Rareté facultative** — `rarity` n'est plus exigé côté Discord sur [`/add`](/docs/commands/add/) et [`/edit`](/docs/commands/edit/) ; le bot valide la combinaison type/rareté côté serveur, famille par famille, et rejette les raretés incompatibles, manquantes ou inattendues
+    - **Plafonds de temps par taille** — les rapports de portail plafonnent la valeur `time` à 30 (`Small`), 60 (`Medium`) ou 180 (`Large`) minutes comme garde-fou contre les fautes de frappe ; tous les autres types conservent la limite de 1440 minutes
+    - **Deux nouvelles sections de liste** — le message des objectifs gagne les sections `## Ancient Lands Portal ##` et `## Dragon ##`, affichées uniquement lorsqu'elles sont non vides ; les lignes de portail affichent leur taille, les lignes de Dragon ne portent aucun segment de rareté
+  </Fragment>
+</TimelineEntry>
+
 <TimelineEntry version="v0.2.1" date="2026-09-02">
   <Fragment slot="features">
     - **Annonces de version** — le bot publie désormais un message sur votre serveur à chaque nouvelle version. Chaque annonce n'est envoyée qu'une fois par serveur, et un serveur qui installe le bot après une version ne reçoit pas l'annonce de celle-ci

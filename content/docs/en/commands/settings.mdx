@@ -7,7 +7,7 @@ navLabel: /settings
 import CommandPreview from '@/components/docs/CommandPreview';
 import Callout from '@/components/docs/Callout.astro';
 
-The `/settings` command configures how the bot behaves on your server. It currently governs **release announcements** — the messages the bot posts when a new version ships.
+The `/settings` command configures how the bot behaves on your server. It currently governs **release announcements**: the messages the bot posts when a new version ships.
 
 Settings are stored per server. Changing them on one server never affects another.
 
@@ -29,7 +29,7 @@ Settings are stored per server. Changing them on one server never affects anothe
 
 ## Permissions
 
-`/settings` requires the **Manage Server** permission. Members without it do not see the command in the Discord interface at all — it is hidden rather than refused.
+`/settings` requires the **Manage Server** permission. Members without it do not see the command in the Discord interface at all. It is hidden rather than refused.
 
 This differs from [`/add`](/docs/commands/add/), [`/edit`](/docs/commands/edit/) and [`/remove`](/docs/commands/remove/), which any member can use.
 
@@ -82,7 +82,7 @@ Turns announcements on or off, and controls the `@everyone` mention.
 | `enabled` | Boolean | No | Receive release announcements on this server |
 | `mention-everyone` | Boolean | No | Mention `@everyone` when an announcement is posted |
 
-Both parameters are optional and independent — supply just the one you want to change. The bot replies with the full configuration after applying it.
+Both parameters are optional and independent, so supply just the one you want to change. The bot replies with the full configuration after applying it.
 
 Running the subcommand with **neither** parameter displays the current configuration without changing anything, exactly like `/settings show`.
 
@@ -100,7 +100,7 @@ Running the subcommand with **neither** parameter displays the current configura
 
 When no announcement channel is set, the bot falls back to the **last channel a command was used in** on your server. That message carries a notice explaining the fallback and pointing to `/settings announcement-channel`.
 
-If the bot has never been used in any channel, it looks for a channel holding an objective that has not expired yet. If it finds neither, your server is skipped for that announcement — nothing is posted.
+If the bot has never been used in any channel, it looks for a channel holding an objective that has not expired yet. If it finds neither, your server is skipped for that announcement: nothing is posted.
 
 Setting a channel explicitly removes this guesswork, and the fallback notice disappears.
 
@@ -108,13 +108,13 @@ Setting a channel explicitly removes this guesswork, and the fallback notice dis
 
 ### Missing @everyone permission
 
-If your server opted in to the `@everyone` mention but the bot lacks the **Mention Everyone** permission in the target channel, the announcement is still posted — just without the mention. Nothing is blocked.
+If your server opted in to the `@everyone` mention but the bot lacks the **Mention Everyone** permission in the target channel, the announcement is still posted, just without the mention. Nothing is blocked.
 
 ### Announcements already received
 
 Each announcement is sent once per server. Re-running `/settings` never re-sends one that already arrived.
 
-A server that installs the bot **after** a version was announced does not receive that announcement retroactively — it starts fresh from the next release.
+A server that installs the bot **after** a version was announced does not receive that announcement retroactively. It starts fresh from the next release.
 
 ### Turning announcements off
 
@@ -122,6 +122,6 @@ With `enabled` set to `false`, your server is skipped entirely for future announ
 
 ## Related commands
 
-- [`/about`](/docs/commands/) — bot version and legal documents
-- [`/add`](/docs/commands/add/) — report a new objective
-- [`/list`](/docs/commands/list/) — display tracked objectives
+- [`/about`](/docs/commands/) shows the bot version and the legal documents
+- [`/add`](/docs/commands/add/) reports a new objective
+- [`/list`](/docs/commands/list/) displays the tracked objectives

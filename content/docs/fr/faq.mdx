@@ -33,7 +33,7 @@ import { BOT } from '@data/config';
       "name": "Quels objectifs d'Albion Online sont pris en charge ?",
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "Albion Online Objectives prend en charge trois catégories d'objectifs de Black Zone : les Resource Nodes (Fibre, Peau, Minerai et Bois, raretés 4.4 à 8.4), les Energy Cores (Green, Blue, Purple et Gold) et les Vortex (Green, Blue, Purple et Gold)."
+        "text": "Albion Online Objectives prend en charge cinq catégories d'objectifs de Black Zone : les Resource Nodes (Fibre, Peau, Minerai et Bois, raretés 4.4 à 8.4), les Energy Cores (Green, Blue, Purple et Gold), les Vortex (Green, Blue, Purple et Gold), les Ancient Lands Portals (tailles Small, Medium et Large) et les attaques de Dragons (sans rareté, le champ rarity se laisse vide)."
       }
     },
     {
@@ -113,7 +113,7 @@ import { BOT } from '@data/config';
       "name": "J'obtiens une erreur \"cooldown\"",
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "Les commandes ont des cooldowns pour éviter le spam -- 2 secondes pour /add, /edit, /remove et /about, 5 secondes pour /list. Patientez un instant et réessayez."
+        "text": "Les commandes ont des cooldowns pour éviter le spam : 2 secondes pour /add, /edit, /remove et /about, 5 secondes pour /list. Patientez un instant et réessayez."
       }
     },
     {
@@ -164,7 +164,7 @@ import { BOT } from '@data/config';
   },
   {
     question: "Quels objectifs d'Albion Online sont pris en charge ?",
-    answer: 'Albion Online Objectives prend en charge trois catégories d\'objectifs de Black Zone :<ul class="mt-2 list-disc pl-6 space-y-1"><li><strong>Resource Nodes</strong> — Fibre, Peau, Minerai et Bois (raretés 4.4 à 8.4)</li><li><strong>Energy Cores</strong> — Green, Blue, Purple et Gold</li><li><strong>Vortex</strong> — Green, Blue, Purple et Gold</li></ul><p class="mt-2">Consultez la <a href="/docs/guides/objective-types/">référence des types d\'objectifs</a> pour plus de détails.</p>'
+    answer: 'Albion Online Objectives prend en charge cinq catégories d\'objectifs de Black Zone : les <strong>Resource Nodes</strong> (Fibre, Peau, Minerai et Bois, raretés 4.4 à 8.4), les <strong>Energy Cores</strong> (Green, Blue, Purple et Gold), les <strong>Vortex</strong> (Green, Blue, Purple et Gold), les <strong>Ancient Lands Portals</strong> (tailles Small, Medium et Large) et les <strong>attaques de Dragons</strong>, sans rareté, rapportées en laissant le champ rarity vide.<p class="mt-2">Consultez la <a href="/docs/guides/objective-types/">référence des types d\'objectifs</a> et le <a href="/docs/guides/portals-and-dragons/">guide des Ancient Lands Portals et attaques de Dragons</a> pour plus de détails.</p>'
   },
   {
     question: "Combien de cartes le bot prend-il en charge ?",
@@ -184,7 +184,7 @@ import { BOT } from '@data/config';
   },
   {
     question: "Où le bot publie-t-il les annonces de version ?",
-    answer: 'Dans le salon défini via <a href="/docs/commands/settings/">/settings announcement-channel</a>. Sans salon défini, l\'annonce se replie sur le dernier salon où le bot a été utilisé et porte une notice expliquant ce repli. Chaque annonce n\'est envoyée qu\'une fois par serveur, jamais répétée.'
+    answer: 'Dans le salon défini via <a href="/docs/commands/settings/">/settings announcement-channel</a>. Sans salon défini, l\'annonce se replie sur le dernier salon où le bot a été utilisé et porte une notice expliquant ce repli. Chaque annonce n\'est envoyée qu\'une fois par serveur.'
   },
   {
     question: "Le bot va-t-il mentionner @everyone ?",
@@ -205,7 +205,7 @@ import { BOT } from '@data/config';
   },
   {
     question: "Que se passe-t-il pendant la maintenance d'Albion Online ?",
-    answer: "La maintenance quotidienne du serveur à 10:00 UTC réinitialise tous les objectifs. Lorsque l'heure de spawn calculée de votre objectif chevauche la fenêtre de maintenance à 10:00 UTC, le bot l'indique — pour que vos compagnons de guilde sachent que l'objectif pourrait ne pas survivre à la réinitialisation."
+    answer: "La maintenance quotidienne du serveur à 10:00 UTC réinitialise tous les objectifs. Lorsque l'heure de spawn calculée de votre objectif chevauche la fenêtre de maintenance à 10:00 UTC, le bot l'indique, pour que vos compagnons de guilde sachent que l'objectif pourrait ne pas survivre à la réinitialisation."
   },
   {
     question: "Un même objectif peut-il être rapporté deux fois ?",
@@ -226,7 +226,7 @@ import { BOT } from '@data/config';
   },
   {
     question: "J'obtiens une erreur \"cooldown\"",
-    answer: "Les commandes ont des cooldowns pour éviter le spam — 2 secondes pour <code>/add</code>, <code>/edit</code> et <code>/remove</code>, 5 secondes pour <code>/list</code>. Patientez un instant et réessayez."
+    answer: "Les commandes ont des cooldowns pour éviter le spam : 2 secondes pour <code>/add</code>, <code>/edit</code>, <code>/remove</code> et <code>/about</code>, 5 secondes pour <code>/list</code>. Patientez un instant et réessayez."
   },
   {
     question: "Comment signaler un bug ?",

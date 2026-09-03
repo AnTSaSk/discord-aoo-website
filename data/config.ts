@@ -125,6 +125,7 @@ export const SIDEBAR_NAVIGATION: SidebarNavigation = {
           { slug: "guides/black-zone-maps" },
           { slug: "guides/cores-and-vortexes" },
           { slug: "guides/resource-nodes" },
+          { slug: "guides/portals-and-dragons" },
           { slug: "guides/guild-workflow" },
           { slug: "guides/bot-responses" },
         ],

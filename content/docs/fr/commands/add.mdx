@@ -1,6 +1,6 @@
 ---
 title: /add — Rapporter un objectif
-description: Référence de la commande /add. Rapportez les objectifs de Black Zone — nodes de ressources, cores d'énergie et vortex — avec type, rareté, carte et temps.
+description: Référence de la commande /add. Rapportez les objectifs de Black Zone — nodes, cores, vortex, Ancient Lands Portals et Dragons — en une seule commande.
 navLabel: /add
 ---
 
@@ -14,34 +14,34 @@ La commande `/add` rapporte un nouvel objectif de Black Zone dans la liste de su
 <CommandPreview
   client:load
   command="/add"
-  syntax="/add type:<type> rarity:<rarity> map:<map> time:<time>"
+  syntax="/add type:<type> [rarity:<rarity>] map:<map> time:<time>"
   ephemeral
   example={{
     input: "/add type:Core rarity:Purple map:Avalanche Ravine time:00:45",
     output: "Your objective (Core) has been successfully added!\nIt will be available at 15:20 UTC (<t:1709730000:R>) on the map Avalanche Ravine"
   }}
   parameters={[
-    { name: "type", type: "choice", description: "The objective type (node, core, or vortex)", required: true },
-    { name: "rarity", type: "choice", description: "Tier for nodes or color for cores/vortexes", required: true },
-    { name: "map", type: "string", description: "Black Zone map name", required: true },
-    { name: "time", type: "string", description: "Time remaining until spawn (e.g. 1h30, 90, 02:30)", required: true }
+    { name: "type", type: "choice", description: "Le type d'objectif — une des 8 valeurs", required: true },
+    { name: "rarity", type: "choice", description: "Rareté de l'objectif — laisser vide pour Dragon", required: false },
+    { name: "map", type: "string", description: "Nom de la carte de Black Zone", required: true },
+    { name: "time", type: "string", description: "Temps restant avant l'apparition (ex. 1h30, 90, 02:30)", required: true }
   ]}
 />
 
 ## Syntaxe
 
 ```
-/add type:<type> rarity:<rarity> map:<map> time:<time>
+/add type:<type> [rarity:<rarity>] map:<map> time:<time>
 ```
 
 ## Paramètres
 
-Les quatre paramètres sont **obligatoires**.
+Les paramètres `type`, `map` et `time` sont **obligatoires**. `rarity` est facultatif au niveau de Discord, mais le bot l'attend pour tous les types sauf `Dragon` (voir la [validation de la rareté](#validation-de-la-rareté) ci-dessous).
 
 | Paramètre | Type | Description |
 |-----------|------|-------------|
-| `type` | Autocomplétion | Le type d'objectif — une des 6 valeurs (voir [types d'objectifs](/docs/guides/objective-types/)) |
-| `rarity` | Autocomplétion | Tier pour les nodes (`4.4`–`8.4`) ou couleur pour les cores/vortex (`Green`, `Blue`, `Purple`, `Gold`) |
+| `type` | Autocomplétion | Le type d'objectif — une des 8 valeurs (voir [types d'objectifs](/docs/guides/objective-types/)) |
+| `rarity` | Autocomplétion | Tier pour les nodes (`4.4`–`8.4`), couleur pour les cores/vortex (`Green`, `Blue`, `Purple`, `Gold`) ou taille pour les portails (`Small`, `Medium`, `Large`). À laisser vide pour `Dragon`. |
 | `map` | Autocomplétion | Nom de la carte de Black Zone — 276 cartes supportées (voir [liste des cartes](/docs/guides/black-zone-maps/)) |
 | `time` | Texte | Temps restant avant l'apparition de l'objectif. Plusieurs formats sont acceptés — voir [ci-dessous](#formats-de-temps-acceptés). Exemple : `1h30` ou `02:30` (2 heures et 30 minutes à partir de maintenant) |
 
@@ -55,6 +55,8 @@ Les quatre paramètres sont **obligatoires**.
 | `Wood node` | Node |
 | `Core` | Core |
 | `Vortex` | Vortex |
+| `Ancient Lands Portal` | Portal |
+| `Dragon` | Dragon |
 
 ### Valeurs de rareté
 
@@ -62,11 +64,27 @@ Les quatre paramètres sont **obligatoires**.
 
 **Pour les cores et vortex :** `Green`, `Blue`, `Purple`, `Gold`
 
+**Pour les Ancient Lands Portals :** `Small`, `Medium`, `Large`. La taille reflète la capacité de groupe en jeu (1–5, 5–7 et 15–20 joueurs ; voir le [guide des portails et Dragons](/docs/guides/portals-and-dragons/))
+
+**Pour les Dragons :** aucune, laissez le champ vide
+
+### Validation de la rareté
+
+Le bot vérifie que la rareté correspond à la famille du type choisi. Cinq issues sont possibles :
+
+| Type choisi | Rareté fournie | Résultat |
+|-------------|----------------|----------|
+| Type à rareté (node, core, vortex, portail) | De sa propre famille | Accepté |
+| Type à rareté | D'une autre famille | Refusé — combinaison type/rareté invalide |
+| Type à rareté | Laissée vide | Refusé — une rareté est requise pour ce type |
+| `Dragon` | Laissée vide | Accepté |
+| `Dragon` | Fournie | Refusé — un Dragon ne prend aucune rareté |
+
 ## Autocomplétion
 
-Les paramètres `type`, `rarity` et `map` supportent tous la fonctionnalité d'autocomplétion de Discord. Commencez à taper et les options correspondantes apparaîtront. Pour les cartes, la recherche fonctionne sur n'importe quelle partie du nom — début, milieu ou fin.
+Les paramètres `type`, `rarity` et `map` supportent tous la fonctionnalité d'autocomplétion de Discord. Commencez à taper et les options correspondantes apparaîtront. Pour les cartes, la recherche fonctionne sur n'importe quelle partie du nom : début, milieu ou fin.
 
-De plus, les champs `type` et `rarity` sont contextuels : sélectionner une rareté de node (4.4–8.4) filtre la liste des types pour n'afficher que les nodes, et sélectionner un type core ou vortex filtre les raretés pour n'afficher que les couleurs.
+De plus, les champs `type` et `rarity` sont contextuels. L'autocomplétion de rareté ne propose que la famille du type déjà choisi : les tiers pour un node, les couleurs pour un core ou un vortex, les tailles pour un Ancient Lands Portal. Une fois `Dragon` sélectionné, elle ne propose **rien**, puisqu'un Dragon ne prend aucune rareté. Le filtrage fonctionne aussi dans l'autre sens : sélectionner une rareté de node (4.4–8.4) filtre la liste des types pour n'afficher que les nodes.
 
 <ScrollReveal animation="fade-in">
   <Screenshot src="/screenshots/add-autocomplete.png" alt="Menu déroulant d'autocomplétion Discord pour la commande /add" mode="discord" />
@@ -78,6 +96,8 @@ De plus, les champs `type` et `rarity` sont contextuels : sélectionner une rare
 /add type:Ore node rarity:7.4 map:Murdergulch Ravine time:02:30
 /add type:Core rarity:Gold map:Hightree Enclave time:01:15
 /add type:Vortex rarity:Purple map:Deepwood Gorge time:04:00
+/add type:Ancient Lands Portal rarity:Medium map:Deepwood Gorge time:00:45
+/add type:Dragon map:Everwinter Peak time:1h15
 ```
 
 ## Comportement
@@ -86,7 +106,7 @@ De plus, les champs `type` et `rarity` sont contextuels : sélectionner une rare
 
 <Callout variant="info">Albion Online Objectives empêche automatiquement les doublons. Si le même type d'objectif, la même rareté et la même carte sont rapportés dans un intervalle de 8 minutes, le bot rejette le rapport.</Callout>
 
-Si un objectif avec le même type, la même rareté et la même carte existe déjà dans une **fenêtre de 8 minutes** (±4 minutes par rapport au temps rapporté), le bot rejette le nouveau rapport et vous en informe. Cela évite les doublons accidentels lorsque plusieurs membres de la guilde repèrent le même objectif.
+Si un objectif avec le même type, la même rareté et la même carte existe déjà dans une **fenêtre de 8 minutes** (±4 minutes par rapport au temps rapporté), le bot rejette le nouveau rapport et vous en informe. Cela évite les doublons accidentels lorsque plusieurs membres de la guilde repèrent le même objectif. Les Dragons sont couverts comme les autres types : un second rapport de Dragon sur la même carte dans la fenêtre est rejeté.
 
 <ScrollReveal animation="fade-in">
   <Screenshot src="/screenshots/add-error.png" alt="Message d'erreur lors de la détection d'un objectif en doublon" mode="discord" />
@@ -96,7 +116,7 @@ Si un objectif avec le même type, la même rareté et la même carte existe dé
 
 <Callout variant="warning">Lorsque l'heure d'apparition calculée chevauche la fenêtre de maintenance quotidienne de 10:00 UTC, le bot ajoute un avertissement à l'objectif.</Callout>
 
-La maintenance quotidienne des serveurs d'Albion Online a lieu à **10:00 UTC**. Si l'heure d'apparition calculée chevauche la fenêtre de maintenance de **10:00 UTC**, le bot l'indique automatiquement. Cela indique à vos compagnons de guilde que l'objectif pourrait ne pas survivre au redémarrage du serveur.
+La maintenance quotidienne des serveurs d'Albion Online a lieu à **10:00 UTC**. Si l'heure d'apparition calculée chevauche cette fenêtre, le bot l'indique automatiquement, et vos compagnons de guilde savent que l'objectif pourrait ne pas survivre au redémarrage du serveur.
 
 ### Temps de recharge
 
@@ -120,6 +140,19 @@ Le paramètre `time` accepte plusieurs notations. Un nombre seul correspond touj
 | `90m` | 90 minutes |
 
 La valeur est un **délai à partir de maintenant**, jamais une heure absolue. Les formats non reconnus sont rejetés avec un message listant les formats acceptés.
+
+### Limites de temps
+
+Le délai accepté est plafonné selon le type. Pour les Ancient Lands Portals, le plafond dépend de la taille ; tous les autres types utilisent la limite générale de 24 heures :
+
+| Type | Délai maximum |
+|------|---------------|
+| `Ancient Lands Portal` — `Small` | 30 minutes |
+| `Ancient Lands Portal` — `Medium` | 60 minutes |
+| `Ancient Lands Portal` — `Large` | 180 minutes |
+| Tous les autres types | 1440 minutes (24 heures) |
+
+Ces plafonds sont un **garde-fou contre les fautes de frappe**, pas une règle du jeu : ils attrapent une coquille comme `100` tapé à la place de `10`. Toute valeur inférieure est acceptée telle quelle, et le bot ne déduit jamais une heure d'ouverture à partir de la taille d'un portail : un portail repéré tardivement se rapporte avec le temps qu'il reste réellement. Lorsqu'une valeur de temps est à la fois mal formée et hors plage, c'est l'**erreur de format** qui est signalée en premier.
 
 ## Après l'ajout
 
