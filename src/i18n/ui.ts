@@ -83,11 +83,11 @@ export const ui = {
     "home.stats.maps.label": "Black Zone Maps",
     "home.stats.maps.sublabel": "Full coverage",
     "home.stats.objectiveTypes.label": "Objective Types",
-    "home.stats.objectiveTypes.sublabel": "Nodes, Cores, Vortexes",
+    "home.stats.objectiveTypes.sublabel": "Nodes, Cores, Vortexes, Portals, Dragons",
     "home.stats.variants.label": "Variants",
     "home.stats.variants.sublabel": "All rarities tracked",
     "home.stats.commands.label": "Commands",
-    "home.stats.commands.sublabel": "Add, List, Remove",
+    "home.stats.commands.sublabel": "Add, Edit, List, Remove & more",
 
     // --- Homepage: Features ---
     "home.features.heading": "Why AOO?",
@@ -246,11 +246,11 @@ export const ui = {
     "home.stats.maps.label": "Cartes Black Zone",
     "home.stats.maps.sublabel": "Couverture complète",
     "home.stats.objectiveTypes.label": "Types d'objectifs",
-    "home.stats.objectiveTypes.sublabel": "Nodes, Cores, Vortex",
+    "home.stats.objectiveTypes.sublabel": "Nodes, Cores, Vortex, Portals, Dragons",
     "home.stats.variants.label": "Variantes",
     "home.stats.variants.sublabel": "Toutes les raretés",
     "home.stats.commands.label": "Commandes",
-    "home.stats.commands.sublabel": "Add, List, Remove",
+    "home.stats.commands.sublabel": "Add, Edit, List, Remove et plus",
 
     // --- Homepage: Features ---
     "home.features.heading": "Pourquoi AOO ?",

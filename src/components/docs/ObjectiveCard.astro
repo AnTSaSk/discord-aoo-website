@@ -2,7 +2,7 @@
 import Badge from "@/components/ui/Badge.astro";
 import { cn } from "@/lib/utils";
 
-type Category = "Node" | "Core" | "Vortex";
+type Category = "Node" | "Core" | "Vortex" | "Portal" | "Dragon";
 
 interface Props {
     name: string;
@@ -16,10 +16,12 @@ interface Props {
 
 const { name, category, rarities, description, image, imageAlt, class: className } = Astro.props;
 
-const categoryConfig: Record<Category, { border: string; badge: string; variant: "blue" | "purple" | "gold" }> = {
+const categoryConfig: Record<Category, { border: string; badge: string; variant: "blue" | "purple" | "gold" | "green" | "destructive" }> = {
     Node: { border: "border-l-blue", badge: "Node", variant: "blue" },
     Core: { border: "border-l-purple", badge: "Core", variant: "purple" },
     Vortex: { border: "border-l-yellow", badge: "Vortex", variant: "gold" },
+    Portal: { border: "border-l-green", badge: "Portal", variant: "green" },
+    Dragon: { border: "border-l-red", badge: "Dragon", variant: "destructive" },
 };
 
 const config = categoryConfig[category];
