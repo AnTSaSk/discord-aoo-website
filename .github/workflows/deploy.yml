@@ -90,19 +90,19 @@ jobs:
           APP_DOMAIN: ${{ vars.APP_DOMAIN }}
           GITHUB_REPOSITORY: ${{ github.repository }}
           GHCR_READ_TOKEN: ${{ secrets.GHCR_READ_TOKEN }}
-          GHCR_ACTOR: ${{ github.actor }}
+          GHCR_USERNAME: ${{ github.repository_owner }}
         with:
           host: ${{ secrets.VPS_HOST }}
           username: deploy
           key: ${{ secrets.SSH_PRIVATE_KEY }}
-          envs: IMAGE_TAG,APP_NAME,APP_DOMAIN,GITHUB_REPOSITORY,GHCR_READ_TOKEN,GHCR_ACTOR
+          envs: IMAGE_TAG,APP_NAME,APP_DOMAIN,GITHUB_REPOSITORY,GHCR_READ_TOKEN,GHCR_USERNAME
           script_stop: true
           script: |
             # Convert repository name to lowercase (Docker requirement)
             IMAGE_NAME="${GITHUB_REPOSITORY,,}"
 
             # Log in to GHCR before pulling (image is private)
-            echo "$GHCR_READ_TOKEN" | docker login ghcr.io -u "$GHCR_ACTOR" --password-stdin
+            echo "$GHCR_READ_TOKEN" | docker login ghcr.io -u "$GHCR_USERNAME" --password-stdin
 
             # Pull the new image
             docker pull "ghcr.io/${IMAGE_NAME}:${IMAGE_TAG}"
