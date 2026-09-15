@@ -5,6 +5,15 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.1.11](https://github.com/AnTSaSk/discord-aoo-website/compare/discord-aoo-website-v0.1.10...discord-aoo-website-v0.1.11) (2026-09-15)
+
+
+### Bug Fixes
+
+* **ci:** log in to GHCR as the repository owner ([3d92db2](https://github.com/AnTSaSk/discord-aoo-website/commit/3d92db2cf22bcf6f8e5e97a44b090e59179d059e))
+* **ci:** make the Swarm deployment self-contained and fail-safe ([6a0b1be](https://github.com/AnTSaSk/discord-aoo-website/commit/6a0b1bef3e983d2964d8d33019b9f965e2e012d2))
+* **deploy:** align Swarm stack with VPS2 conventions ([aad4b21](https://github.com/AnTSaSk/discord-aoo-website/commit/aad4b217ee49da75983495291e4f0b40dc2e8717))
+
 ## [0.1.10](https://github.com/AnTSaSk/discord-aoo-website/compare/discord-aoo-website-v0.1.9...discord-aoo-website-v0.1.10) (2026-09-03)
 
 
