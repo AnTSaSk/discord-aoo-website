@@ -73,6 +73,15 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4.3.1
 
+      - name: Copy compose file to VPS
+        uses: appleboy/scp-action@ff85246acaad7bdce478db94a363cd2bf7c90345 # v1.0.0
+        with:
+          host: ${{ secrets.VPS_HOST }}
+          username: deploy
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          source: "docker-compose.yml"
+          target: "/opt/stacks/${{ vars.APP_NAME }}/"
+
       - name: Deploy to Docker Swarm
         uses: appleboy/ssh-action@029f5b4aeeeb58fdfe1410a5d17f967dacf36262 # v1.0.3
         env:
@@ -80,14 +89,20 @@ jobs:
           APP_NAME: ${{ vars.APP_NAME }}
           APP_DOMAIN: ${{ vars.APP_DOMAIN }}
           GITHUB_REPOSITORY: ${{ github.repository }}
+          GHCR_READ_TOKEN: ${{ secrets.GHCR_READ_TOKEN }}
+          GHCR_ACTOR: ${{ github.actor }}
         with:
           host: ${{ secrets.VPS_HOST }}
           username: deploy
           key: ${{ secrets.SSH_PRIVATE_KEY }}
-          envs: IMAGE_TAG,APP_NAME,APP_DOMAIN,GITHUB_REPOSITORY
+          envs: IMAGE_TAG,APP_NAME,APP_DOMAIN,GITHUB_REPOSITORY,GHCR_READ_TOKEN,GHCR_ACTOR
+          script_stop: true
           script: |
             # Convert repository name to lowercase (Docker requirement)
             IMAGE_NAME="${GITHUB_REPOSITORY,,}"
+
+            # Log in to GHCR before pulling (image is private)
+            echo "$GHCR_READ_TOKEN" | docker login ghcr.io -u "$GHCR_ACTOR" --password-stdin
 
             # Pull the new image
             docker pull "ghcr.io/${IMAGE_NAME}:${IMAGE_TAG}"
@@ -111,27 +126,45 @@ jobs:
             docker service ls --filter "name=${APP_NAME}"
 
       - name: Verify deployment
+        id: verify
         uses: appleboy/ssh-action@029f5b4aeeeb58fdfe1410a5d17f967dacf36262 # v1.0.3
+        env:
+          IMAGE_TAG: ${{ github.sha }}
+          APP_NAME: ${{ vars.APP_NAME }}
+          GITHUB_REPOSITORY: ${{ github.repository }}
         with:
           host: ${{ secrets.VPS_HOST }}
           username: deploy
           key: ${{ secrets.SSH_PRIVATE_KEY }}
+          envs: IMAGE_TAG,APP_NAME,GITHUB_REPOSITORY
           script: |
-            # Check service health (1 replica for static site)
+            # {{.Replicas}} reads 1/1 from the old task during a start-first
+            # rollout: check the new task and the update state instead
+            IMAGE_NAME="${GITHUB_REPOSITORY,,}"
+            EXPECTED_IMAGE="ghcr.io/${IMAGE_NAME}:${IMAGE_TAG}"
+            SERVICE="${APP_NAME}_website"
             for i in {1..30}; do
-              REPLICAS=$(docker service ls --filter name=${{ vars.APP_NAME }} --format "{{.Replicas}}")
-              if [[ "$REPLICAS" == *"1/1"* ]]; then
-                echo "Deployment successful: $REPLICAS"
+              UPDATE_STATE=$(docker service inspect "${SERVICE}" --format '{{if .UpdateStatus}}{{.UpdateStatus.State}}{{end}}')
+              case "${UPDATE_STATE}" in
+                rollback_completed|rollback_paused)
+                  echo "Swarm rolled the update back (${UPDATE_STATE})"
+                  exit 1
+                  ;;
+              esac
+              TASKS=$(docker service ps "${SERVICE}" --filter desired-state=running --format '{{.Image}} {{.CurrentState}}')
+              if printf '%s\n' "${TASKS}" | grep -Eq "^${EXPECTED_IMAGE}(@sha256:[0-9a-f]+)? Running" \
+                && [[ "${UPDATE_STATE}" == "completed" || -z "${UPDATE_STATE}" ]]; then
+                echo "Deployment successful: ${EXPECTED_IMAGE} running, update state: ${UPDATE_STATE:-none}"
                 exit 0
               fi
-              echo "Waiting for deployment... ($REPLICAS)"
+              echo "Waiting for deployment... (update state: ${UPDATE_STATE:-none})"
               sleep 10
             done
             echo "Deployment timeout"
             exit 1
 
       - name: Rollback on failure
-        if: failure()
+        if: failure() && steps.verify.outcome == 'failure'
         uses: appleboy/ssh-action@029f5b4aeeeb58fdfe1410a5d17f967dacf36262 # v1.0.3
         with:
           host: ${{ secrets.VPS_HOST }}
